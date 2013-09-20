@@ -1,0 +1,221 @@
+@import url(http://fonts.googleapis.com/css?family=Droid+Sans:normal,bold);
+
+html, body
+{
+	font-family: "Droid Sans", Calibri, Helvetica, Arial, sans-serif;
+	font-size: 14px;
+	color: #494949;
+	background-color: #F8F8F8;
+	padding: 0 100px 25px 100px;
+}
+
+h1
+{
+	font-size: 2.25em;
+	letter-spacing: -1px;
+}
+
+h2
+{
+	color: #7A9362;
+	font-size: 1.5em;
+	font-weight: normal;
+	letter-spacing: -1px;
+	margin: 15px 0 20px 0;
+}
+
+h2 .symbol
+{
+	color: #5C7444;
+	font-weight: bold;
+}
+
+h2 u
+{
+	text-decoration: none;
+}
+
+h3
+{
+	font-size: 1.0em;
+}
+
+a
+{
+	color: #5C7444;
+	text-decoration: none;
+	border-bottom: 1px dotted #5C7444;
+}
+
+dl
+{
+	margin: 0 0 20px 30px;
+}
+
+dl dt
+{
+	color: #5C7444;
+	font-size: 1.2em;
+	font-weight: bold;
+	letter-spacing: -1px;
+	margin: 15px 0 20px 0;
+}
+
+dl dd
+{
+	margin: 0;
+}
+
+pre
+{
+	background-color: #F8F8F8;
+	font-size: 1em;
+	line-height: 1.4em;
+	border: 1px dashed #BBBBBB;
+	padding: 10px;
+	margin: 20px 0 20px 0;
+}
+
+pre .comment
+{
+	color: #999999;
+}
+
+pre .string
+{
+	color: #5C7444;
+}
+
+pre .keyword
+{
+	color: #006699;
+}
+
+pre .symbol
+{
+	color: #006699;
+}
+
+pre .parameter
+{
+	color: #006699;
+}
+
+.module-members
+{
+	background-color: #F5F5F5;
+	border: 2px dotted #E8E8E8;
+	padding: 20px 30px 20px 30px;
+}
+
+.module-members .declaration-description
+{
+	border-bottom: 2px dotted #E8E8E8;
+}
+
+/**
+ * Class members.
+ */
+.class-members h2
+{
+	font-size: 1.3em;
+	background-color: #F8F8F8;
+	border-width: 1px 1px 0 1px;
+	border-style: solid;
+	border-color: #E8E8E8;
+	padding: 20px 30px;
+	margin: 20px 0 -15px 0;
+}
+
+.class-members .declaration-description
+{
+	background-color: #F8F8F8;
+	border-width: 0 1px 1px 1px;
+	border-style: solid;
+	border-color: #E8E8E8;
+	margin: 0 0 20px 0;
+}
+
+.class-members .declaration-description .sections
+{
+	padding: 0;
+	margin: 0 30px 0 30px;
+}
+
+/**
+ * Enum members.
+ */
+.enum-members
+{
+	border: 0;
+	padding: 0;
+	margin: 0 0 0 30px;
+}
+
+.enum-members h2
+{
+	border: 0;
+	font-size: 1.2em;
+	padding: 0;
+	margin: 0;
+}
+
+.enum-members .declaration-description
+{
+	border: 0;
+	padding: 0;
+}
+
+.class-members .enum-members h2
+{
+	margin: 0 0 0 30px;
+}
+
+/**
+ * Struct members.
+ */
+.struct-members
+{
+	border: 0;
+	padding: 0;
+	margin: 0 0 0 30px;
+}
+
+.struct-members h2
+{
+	border: 0;
+	font-size: 1.2em;
+	padding: 0;
+	margin: 0;
+}
+
+.struct-members .declaration-description
+{
+	border: 0;
+	padding: 0;
+}
+
+.struct-members .enum-members h2
+{
+	margin: 0 0 0 30px;
+}
+
+/**
+ * Parameter lists.
+ */
+.parameter-list
+{
+	border: 1px solid #CCCCCC;
+	border-collapse: collapse;
+	margin: 0 0 20px 0;
+}
+
+.parameter-list td
+{
+	background-color: #F8F8F8;
+	border-width: 1px 1px 1px 1px;
+	border-style: solid dashed;
+	border-color: #CCCCCC;
+	padding: 10px;
+}
+

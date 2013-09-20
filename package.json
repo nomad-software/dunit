@@ -1,0 +1,10 @@
+{
+	"name": "DUnit",
+	"description": "Advanced unit testing toolkit.",
+	"homepage": "",
+	"authors": ["Gary Willoughby"],
+	"copyright": "Copyright (c) 2013 Gary Willoughby",
+	"license": "MIT",
+	"targetType": "sourceLibrary",
+	"dflags": ["-unittest"],
+}
