@@ -1,6 +1,5 @@
 import dunit.mockable;
 import std.algorithm;
-import std.stdio;
 
 /**
  * Simple class representing a person.
