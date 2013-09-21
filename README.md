@@ -22,13 +22,13 @@ In DUnit all errors are handled by asserting false and displaying a helpful erro
 
 ### Required
 1. Mocking behaviour is only injected in debug mode so you must used the `-debug` flag for mocking to work.
-1. Usually when using DUnit all unit testing code is placed within `unittest` blocks. If this is the case you must compile using the `-unittest` flag to enable their execution.
+1. Usually when using DUnit all unit testing code is placed within unittest blocks. If this is the case you must compile using the `-unittest` flag to enable their execution.
 
 ### Notes
 1. Because DUnit uses asserts for error reporting, compiling using `-release` will disable their output. This shouldn't really be an issue as you don't want to be compiling debug information or unittests into a release build.
 
 ## Documentation
-There is full HTML documentation in the `docs/` directory.
+There is full HTML documentation in the [docs](https://github.com/kalekold/dunit/tree/master/docs) directory.
 
 ## Example
 
