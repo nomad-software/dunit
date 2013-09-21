@@ -31,8 +31,8 @@ In DUnit all errors are handled by asserting false and displaying a helpful erro
 There is full HTML documentation within the repository inside the [docs](https://github.com/kalekold/dunit/tree/master/docs) directory.
 
 ### View online
-[Mockable mixin](http://htmlpreview.github.io/?https://github.com/kalekold/dunit/blob/master/docs/mockable.html)
-[Assert toolkit](http://htmlpreview.github.io/?https://github.com/kalekold/dunit/blob/master/docs/toolkit.html)
+- [Mockable mixin](http://htmlpreview.github.io/?https://github.com/kalekold/dunit/blob/master/docs/mockable.html)
+- [Assert toolkit](http://htmlpreview.github.io/?https://github.com/kalekold/dunit/blob/master/docs/toolkit.html)
 
 ## Example
 
