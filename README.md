@@ -1,6 +1,4 @@
-DUnit
-=====
-
+# DUnit
 **Advanced unit testing toolkit.**
 
 ---
@@ -9,105 +7,29 @@ DUnit is a unit testing toolkit for the D programming language. The toolkit comp
 
 Unit testing is necessary to assert *units* of code perform in isolation and conform to repeatable and known expectations. DUnit gives you the tools to make this task an easier one.
 
-Supported platforms
--------------------
+## Supported platforms
 DUnit was developed and tested with DMD v2.063.2 and should support any platform DMD supports as it only contains platform independent code. Other compilers have not been tested but should build fine.
 
-Documentation
--------------
+## Features
+
+### Object mocking
+DUnit features a mixin template to inject mockable behaviour into a class. Once injected a static method allows creation of mock objects from that class. Mock objects behave and act as their parent but with the added feature that all methods can be disabled or replaced by a delegate at runtime. *The mixin only injects code in debug mode.*
+
+### Helpful asserts
+In DUnit all errors are handled by asserting false and displaying a helpful error message. When something goes wrong the error tries to be as helpful as possible by showing file, line, and assert value output.
+
+## Compilier flags
+
+### Required
+1. Mocking behaviour is only injected in debug mode so you must used the `-debug` flag for mocking to work.
+1. Usually when using DUnit all unit testing code is placed within `unittest` blocks. If this is the case you must compile using the `-unittest` flag to enable their execution.
+
+### Notes
+1. Because DUnit uses asserts for error reporting, compiling using `-release` will disable their output. This shouldn't really be an issue as you don't want to be compiling debug information or unittests into a release build.
+
+## Documentation
 There is full HTML documentation in the `docs/` directory.
 
-Example
--------
-	import dunit.mockable;
-	import std.algorithm;
+## Example
 
-	/**
-	 * Simple class representing a person.
-	 */
-	class Person
-	{
-		private string _name;
-		private int _age;
-
-		this()
-		{
-		}
-
-		this(string name, int age)
-		{
-			this._name = name;
-			this._age  = age;
-		}
-
-		public string getName()
-		{
-			return this._name;
-		}
-
-		public int getAge()
-		{
-			return this._age;
-		}
-		
-		// Mixin mocking behaviour.
-		mixin Mockable!(Person);
-	}
-
-	/**
-	 * Processor class that uses Person as a dependency.
-	 */
-	class Processor
-	{
-		private Person[] _people;
-
-		public void addPerson(Person person)
-		{
-			this._people ~= person;
-		}
-
-		public ulong getAmountOfPeople()
-		{
-			return this._people.length;
-		}
-
-		public float getMeanAge()
-		{
-			return cast(float)reduce!((a, b) => a + b.getAge())(0, this._people) / this.getAmountOfPeople();
-		}
-	}
-
-	unittest
-	{
-		import dunit.toolkit;
-
-		// Create mock people.
-		auto gary  = Person.getMock();
-		auto tessa = Person.getMock();
-
-		// Mock the getAge method to return 40. Set the minimum count to 1 and the maximum count to 1.
-		gary.mockMethod("getAge", delegate(){
-			return 40;
-		}, 1, 1);
-
-		// Mock the getAge method to return 34. Set the minimum count to 1 and the maximum count to 1.
-		tessa.mockMethod("getAge", delegate(){
-			return 34;
-		}, 1, 1);
-
-		// Create the object we are unit testing.
-		auto processor = new Processor();
-
-		// Add mock people to the processor.
-		processor.addPerson(gary);
-		processor.addPerson(tessa);
-
-		// Make assertions of the processor, calling the mock methods on the mock class.
-		processor.getAmountOfPeople().assertEqual(2);
-		processor.getMeanAge().assertEqual(37);
-
-		// Assert mock method calls are within limits.
-		gary.assertMethodCalls();
-		tessa.assertMethodCalls();
-	}
-
+[Click here to see a simple example of how Dunit is used.](https://github.com/kalekold/dunit/blob/master/source/example.d)
