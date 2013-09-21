@@ -1,5 +1,5 @@
 /**
- * Reflection templates for implementing mocking.
+ * Internal reflection templates for implementing mocking behaviour.
  *
  * License:
  *     MIT. See LICENSE.txt for full details.

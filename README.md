@@ -28,8 +28,12 @@ In DUnit all errors are handled by asserting false and displaying a helpful erro
 1. Because DUnit uses asserts for error reporting, compiling using `-release` will disable their output. This shouldn't really be an issue as you don't want to be compiling debug information or unittests into a release build.
 
 ## Documentation
-There is full HTML documentation in the [docs](https://github.com/kalekold/dunit/tree/master/docs) directory.
+There is full HTML documentation within the repository inside the [docs](https://github.com/kalekold/dunit/tree/master/docs) directory.
+
+### View online
+[Mockable mixin](http://htmlpreview.github.io/?https://github.com/kalekold/dunit/blob/master/docs/mockable.html)
+[Assert toolkit](http://htmlpreview.github.io/?https://github.com/kalekold/dunit/blob/master/docs/toolkit.html)
 
 ## Example
 
-[Click here to see a simple example of how Dunit is used.](https://github.com/kalekold/dunit/blob/master/source/example.d)
+[Click here to see an example of how Dunit is used.](https://github.com/kalekold/dunit/blob/master/source/example.d)
