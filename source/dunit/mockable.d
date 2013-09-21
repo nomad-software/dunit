@@ -19,6 +19,9 @@ public import dunit.reflection;
  * Code is nested within the host class to provide access to all host types.
  * $(B Only injects code in debug mode.)
  *
+ * Caveats:
+ *     Only module level types can be made mockable.
+ *
  * Example:
  * ---
  * import dunit.mockable;
