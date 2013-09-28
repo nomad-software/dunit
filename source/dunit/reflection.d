@@ -407,7 +407,9 @@ private template MethodBody(func...)
 		code ~= "\t\t\t}\n";
 		code ~= "\t\t\telse\n";
 		code ~= "\t\t\t{\n";
-		code ~= "\t\t\t\treportError(\"Mock method not implemented\", \"Method\", \"\" ~ this.className ~ \"." ~ MethodSignature!(func) ~ "\", \"Error\", \"No delegate set.\", this._disableMethodsLocation.file, this._disableMethodsLocation.line);\n";
+		code ~= "\t\t\t\tauto error = new DUnitAssertError(\"Mock method not implemented\", this._disableMethodsLocation.file, this._disableMethodsLocation.line);\n";
+		code ~= "\t\t\t\terror.addInfo(\"Method\", this.className ~ \"." ~ MethodSignature!(func) ~ "\");\n";
+		code ~= "\t\t\t\tthrow error;\n";
 		code ~= "\t\t\t}\n";
 		code ~= "\t\t}\n";
 		code ~= "\t}\n";

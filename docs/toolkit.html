@@ -132,7 +132,7 @@
 </div>
 <h2><a name="assertFalse"></a>void <span class="symbol">assertFalse</span>(T)(T <em>value</em>, string <em>message</em> = "Failed asserting false", string <em>file</em> = __FILE__, ulong <em>line</em> = __LINE__);
 </h2>
-<div class="declaration-description"><div class="sections"><p>Assert that a value is <strong>false</strong>.
+<div class="declaration-description"><div class="sections"><p>Assert that a boolean value is <strong>false</strong>.
 </p>
 <h3>Parameters</h3><table class="parameter-list"><tr><td>value</td>
 <td>The value used during the assertion.</td></tr>
@@ -147,15 +147,35 @@
  
 <pre>
 <span class="keyword">false</span>.<span class="symbol">assertFalse</span>();
-[].<span class="symbol">assertFalse</span>();
-<span class="keyword">null</span>.<span class="symbol">assertFalse</span>();
-0.<span class="symbol">assertFalse</span>();
 </pre>
 </p></div>
 </div>
-<h2><a name="assertTrue"></a>void <span class="symbol">assertTrue</span>(T)(T <em>value</em>, string <em>message</em> = "Failed asserting true", string <em>file</em> = __FILE__, ulong <em>line</em> = __LINE__);
+<h2><a name="assertFalsey"></a>void <span class="symbol">assertFalsey</span>(T)(T <em>value</em>, string <em>message</em> = "Failed asserting falsey", string <em>file</em> = __FILE__, ulong <em>line</em> = __LINE__);
 </h2>
-<div class="declaration-description"><div class="sections"><p>Assert that a value is <strong>true</strong>.
+<div class="declaration-description"><div class="sections"><p>Assert that a value evaluates as <strong>false</strong>.
+</p>
+<h3>Parameters</h3><table class="parameter-list"><tr><td>value</td>
+<td>The value used during the assertion.</td></tr>
+<tr><td>message</td>
+<td>The error message to display.</td></tr>
+<tr><td>file</td>
+<td>The file name where the error occurred. The value is added automatically at the call site.</td></tr>
+<tr><td>line</td>
+<td>The line where the error occurred. The value is added automatically at the call site.</td></tr>
+</table>
+<h3>Examples</h3><p>A simple example.
+ 
+<pre>
+<span class="keyword">false</span>.<span class="symbol">assertFalsey</span>();
+[].<span class="symbol">assertFalsey</span>();
+<span class="keyword">null</span>.<span class="symbol">assertFalsey</span>();
+0.<span class="symbol">assertFalsey</span>();
+</pre>
+</p></div>
+</div>
+<h2><a name="assertTrue"></a>void <span class="symbol">assertTrue</span>(T)(T <em>value</em>, string <em>message</em> = "Failed asserting false", string <em>file</em> = __FILE__, ulong <em>line</em> = __LINE__);
+</h2>
+<div class="declaration-description"><div class="sections"><p>Assert that a boolean value is <strong>true</strong>.
 </p>
 <h3>Parameters</h3><table class="parameter-list"><tr><td>value</td>
 <td>The value used during the assertion.</td></tr>
@@ -170,8 +190,28 @@
  
 <pre>
 <span class="keyword">true</span>.<span class="symbol">assertTrue</span>();
-[<span class="string">"foo"</span>].<span class="symbol">assertTrue</span>();
-1.<span class="symbol">assertTrue</span>();
+</pre>
+</p></div>
+</div>
+<h2><a name="assertTruthy"></a>void <span class="symbol">assertTruthy</span>(T)(T <em>value</em>, string <em>message</em> = "Failed asserting true", string <em>file</em> = __FILE__, ulong <em>line</em> = __LINE__);
+</h2>
+<div class="declaration-description"><div class="sections"><p>Assert that a value evaluates as <strong>true</strong>.
+</p>
+<h3>Parameters</h3><table class="parameter-list"><tr><td>value</td>
+<td>The value used during the assertion.</td></tr>
+<tr><td>message</td>
+<td>The error message to display.</td></tr>
+<tr><td>file</td>
+<td>The file name where the error occurred. The value is added automatically at the call site.</td></tr>
+<tr><td>line</td>
+<td>The line where the error occurred. The value is added automatically at the call site.</td></tr>
+</table>
+<h3>Examples</h3><p>A simple example.
+ 
+<pre>
+<span class="keyword">true</span>.<span class="symbol">assertTruthy</span>();
+[<span class="string">"foo"</span>].<span class="symbol">assertTruthy</span>();
+1.<span class="symbol">assertTruthy</span>();
 </pre>
 </p></div>
 </div>

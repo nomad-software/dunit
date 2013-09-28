@@ -120,6 +120,7 @@ public mixin template Mockable(C) if (is(C == class))
 	 */
 	private static class Mock(C) : C if (is(C == class))
 	{
+		import dunit.exception;
 		import dunit.report;
 		import std.range;
 		import std.string;
@@ -300,7 +301,10 @@ public mixin template Mockable(C) if (is(C == class))
 			{
 				mixin(DUnitMethodIterator!(C, "MethodSignatureSwitch!(func)"));
 				default:
-					reportError("Delegate does not match method signature", "Method", this.className ~ "." ~ name, "Delegate", signature, file, line);
+					auto error = new DUnitAssertError("Delegate does not match method signature", file, line);
+					error.addInfo("Method name", format("%s.%s", this.className, name));
+					error.addError("Delegate signature", signature);
+					throw error;
 			}
 		}
 
@@ -345,6 +349,7 @@ public mixin template Mockable(C) if (is(C == class))
 		 * Assert all replaced methods are called the defined amount of times.
 		 *
 		 * Params:
+		 *     message = The error message to display.
 		 *     file = The file name where the error occurred. The value is added automatically at the call site.
 		 *     line = The line where the error occurred. The value is added automatically at the call site.
 		 *
@@ -381,20 +386,30 @@ public mixin template Mockable(C) if (is(C == class))
 		 * }
 		 * ---
 		 */
-		public void assertMethodCalls(string file = __FILE__, ulong line = __LINE__)
+		public void assertMethodCalls(string message = "Failed asserting call count", string file = __FILE__, ulong line = __LINE__)
 		{
 			foreach (signature, methodCount; this._methodCount)
 			{
 				if (methodCount.actual < methodCount.minimum)
 				{
-					string message = format("Failed asserting '%s.%s' minimum call count", this.className, signature);
-					reportError(message, "Minimum calls", methodCount.minimum, "Actual calls", methodCount.actual, file, line);
+					auto error = new DUnitAssertError(message, file, line);
+
+					error.addInfo("Method", format("%s.%s", this.className, signature));
+					error.addExpectation("Minimum allowed calls", methodCount.minimum);
+					error.addError("Actual calls", methodCount.actual);
+
+					throw error;
 				}
 
 				if (methodCount.actual > methodCount.maximum)
 				{
-					string message = format("Failed asserting '%s.%s' maximum call count", this.className, signature);
-					reportError(message, "Maximum calls", methodCount.maximum, "Actual calls", methodCount.actual, file, line);
+					auto error = new DUnitAssertError(message, file, line);
+
+					error.addInfo("Method", format("%s.%s", this.className, signature));
+					error.addExpectation("Maximum allowed calls", methodCount.maximum);
+					error.addError("Actual calls", methodCount.actual);
+
+					throw error;
 				}
 			}
 		}

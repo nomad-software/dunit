@@ -1,3 +1,6 @@
+/**
+ * Imports.
+ */
 import dunit.mockable;
 import std.algorithm;
 
@@ -64,15 +67,15 @@ unittest
 	auto gary  = Person.getMock();
 	auto tessa = Person.getMock();
 
-	// Mock the getAge method to return 40. Set the minimum count to 1 and the maximum count to 1.
+	// Mock the getAge method to return 40. Set the minimum count to 1 and the maximum count to 2.
 	gary.mockMethod("getAge", delegate(){
 		return 40;
-	}, 1, 1);
+	}, 1, 2);
 
-	// Mock the getAge method to return 34. Set the minimum count to 1 and the maximum count to 1.
+	// Mock the getAge method to return 34. Set the minimum count to 1 and the maximum count to 2.
 	tessa.mockMethod("getAge", delegate(){
 		return 34;
-	}, 1, 1);
+	}, 1, 2);
 
 	// Create the object we are unit testing.
 	auto processor = new Processor();

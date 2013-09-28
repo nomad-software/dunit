@@ -1,5 +1,5 @@
 /**
- * Module to handle error reporting.
+ * Module to handle reporting.
  *
  * License:
  *     MIT. See LICENSE.txt for full details.
@@ -9,31 +9,113 @@ module dunit.report;
 /**
  * Imports.
  */
-import std.string;
+import core.exception;
+import core.runtime;
+import dunit.exception;
+import dunit.output.console;
 
 /**
- * Report an error to the command line.
- *
- * Params:
- *     message = The error message to display.
- *     targetTitle = The title of the target value.
- *     target = The target value.
- *     actualTitle = The title of the actual value.
- *     value = The value used during the assertion.
- *     file = The file name where the error occurred. The value is added automatically at the call site.
- *     line = The line where the error occurred. The value is added automatically at the call site.
+ * A class to collate unit test information and present a report.
  */
-public void reportError(A, B)(string message, string targetTitle, A target, string actualTitle, B value, string file, ulong line)
+class ResultCollator
 {
-	string horizontalLine = "+--------------------------------------------------------------------------------";
-	string text = "\n";
-	text ~= format("%s\n", horizontalLine);
-	text ~= format("| %s\n", message);
-	text ~= format("%s\n", horizontalLine);
-	text ~= format("| File: %s\n", file);
-	text ~= format("| Line: %s\n", line);
-	text ~= format("%s\n", horizontalLine);
-	text ~= format("| ✓ %s %s: %s\n", targetTitle, A.stringof, target);
-	text ~= format("| ✗ %s %s: %s", actualTitle, B.stringof, value);
-	assert(false, text);
+	/**
+	 * Collection of results.
+	 *
+	 * Null elements are successfully run tests.
+	 */
+	private DUnitAssertError[string] _results;
+
+	/**
+	 * Bool representing if all tests passed successfully.
+	 */
+	private bool _resultsSuccessful = true;
+
+	/**
+	 * Return a boolean representing if the unit tests ran successfully.
+	 *
+	 * Returns:
+	 *     true if the tests ran successfully, false if not.
+	 */
+	public @property bool resultsSuccessful()
+	{
+		return this._resultsSuccessful;
+	}
+
+	/**
+	 * Add a result to the collator.
+	 *
+	 * Params:
+	 *     moduleName = The module where the error occurred.
+	 *     error = The error raised from the toolkit.
+	 */
+	public void addResult(string moduleName, DUnitAssertError error = null)
+	{
+		this._resultsSuccessful   = this._resultsSuccessful && (error is null);
+		this._results[moduleName] = error;
+	}
+
+	/**
+	 * Get the results.
+	 *
+	 * Returns:
+	 *     An array containing the results.
+	 */
+	public DUnitAssertError[string] getResults()
+	{
+		return this._results;
+	}
+}
+
+/**
+ * Replace the standard unit test handler.
+ */
+shared static this()
+{
+	Runtime.moduleUnitTester = function()
+	{
+		auto collator = new ResultCollator();
+		auto console  = new Console();
+
+		console.writeHeader();
+
+		foreach (module_; ModuleInfo)
+		{
+			if (module_)
+			{
+				auto unitTest = module_.unitTest;
+
+				if (unitTest)
+				{
+					try
+					{
+						unitTest();
+					}
+					catch (DUnitAssertError ex)
+					{
+						collator.addResult(module_.name, ex);
+						continue;
+					}
+					catch (AssertError ex)
+					{
+						collator.addResult(module_.name, new DUnitAssertError(ex.msg, ex.file, ex.line));
+						continue;
+					}
+					collator.addResult(module_.name);
+				}
+			}
+		}
+
+		if (collator.resultsSuccessful)
+		{
+			console.writeSuccess();
+		}
+		else
+		{
+			console.writeOverview(collator.getResults());
+			console.writeDetail(collator.getResults());
+		}
+
+		return collator.resultsSuccessful;
+	};
 }

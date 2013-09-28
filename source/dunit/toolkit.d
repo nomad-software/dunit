@@ -13,9 +13,11 @@ module dunit.toolkit;
  * Imports.
  */
 import dunit.report;
+import dunit.exception;
 import std.algorithm;
 import std.array;
 import std.regex;
+import std.stdio;
 import std.string;
 
 /**
@@ -32,7 +34,12 @@ public void assertEqual(A, B)(A value, B target, string message = "Failed assert
 {
 	if (target != value)
 	{
-		reportError(message, "Expected", target, "Actual", value, file, line);
+		auto error = new DUnitAssertError(message, file, line);
+
+		error.addTypedExpectation("Expected Value", target);
+		error.addTypedError("Actual Value", value);
+
+		throw error;
 	}
 }
 
@@ -59,7 +66,13 @@ public void assertHasKey(A, B)(A[B] haystack, B needle, string message = "Failed
 {
 	if (needle !in haystack)
 	{
-		reportError(message, "Array", haystack, "Key", needle, file, line);
+		auto error = new DUnitAssertError(message, file, line);
+
+		error.addInfo("Array Type", typeof(haystack).stringof);
+		error.addInfo("Elements", haystack);
+		error.addError("Missing Key", needle);
+
+		throw error;
 	}
 }
 
@@ -86,7 +99,13 @@ public void assertHasValue(A)(A[] haystack, A needle, string message = "Failed a
 {
 	if (!canFind(haystack, needle))
 	{
-		reportError(message, "Array", haystack, "Value", needle, file, line);
+		auto error = new DUnitAssertError(message, file, line);
+
+		error.addInfo("Array Type", typeof(haystack).stringof);
+		error.addInfo("Elements", haystack);
+		error.addError("Missing Value", needle);
+
+		throw error;
 	}
 }
 
@@ -114,7 +133,13 @@ public void assertCount(A)(A[] array, ulong count, string message = "Failed asse
 {
 	if (array.length != count)
 	{
-		reportError(message, "Array", array, "Count", count, file, line);
+		auto error = new DUnitAssertError(message, file, line);
+
+		error.addInfo("Elements", array);
+		error.addExpectation("Expected Count", count);
+		error.addError("Actual Count", array.length);
+
+		throw error;
 	}
 }
 
@@ -141,7 +166,13 @@ public void assertEmpty(A)(A[] array, string message = "Failed asserting empty a
 {
 	if (!array.empty())
 	{
-		reportError(message, "Array", array, "Count", array.length, file, line);
+		auto error = new DUnitAssertError(message, file, line);
+
+		error.addInfo("Elements", array);
+		error.addExpectation("Expected Count", 0);
+		error.addError("Actual Count", array.length);
+
+		throw error;
 	}
 }
 
@@ -154,7 +185,7 @@ unittest
 }
 
 /**
- * Assert that a value is false.
+ * Assert that a boolean value is false.
  *
  * Params:
  *     value = The value used during the assertion.
@@ -164,9 +195,15 @@ unittest
  */
 public void assertFalse(T)(T value, string message = "Failed asserting false", string file = __FILE__, ulong line = __LINE__)
 {
-	if (!!value)
+	value.assertType!(bool)("Wrong type for asserting false", file, line);
+
+	if (value)
 	{
-		reportError(message, "Expected", false, "Actual", !!value, file, line);
+		auto error = new DUnitAssertError(message, file, line);
+
+		error.addError("Value", value);
+
+		throw error;
 	}
 }
 
@@ -176,13 +213,10 @@ public void assertFalse(T)(T value, string message = "Failed asserting false", s
 unittest
 {
 	false.assertFalse();
-	[].assertFalse();
-	null.assertFalse();
-	0.assertFalse();
 }
 
 /**
- * Assert that a value is true.
+ * Assert that a value evaluates as false.
  *
  * Params:
  *     value = The value used during the assertion.
@@ -190,11 +224,50 @@ unittest
  *     file = The file name where the error occurred. The value is added automatically at the call site.
  *     line = The line where the error occurred. The value is added automatically at the call site.
  */
-public void assertTrue(T)(T value, string message = "Failed asserting true", string file = __FILE__, ulong line = __LINE__)
+public void assertFalsey(T)(T value, string message = "Failed asserting falsey", string file = __FILE__, ulong line = __LINE__)
 {
+	if (value)
+	{
+		auto error = new DUnitAssertError(message, file, line);
+
+		error.addTypedInfo("Value", value);
+		error.addError("Evaluates To", !!value);
+
+		throw error;
+	}
+}
+
+/**
+ * A simple example.
+ */
+unittest
+{
+	false.assertFalsey();
+	[].assertFalsey();
+	null.assertFalsey();
+	0.assertFalsey();
+}
+
+/**
+ * Assert that a boolean value is true.
+ *
+ * Params:
+ *     value = The value used during the assertion.
+ *     message = The error message to display.
+ *     file = The file name where the error occurred. The value is added automatically at the call site.
+ *     line = The line where the error occurred. The value is added automatically at the call site.
+ */
+public void assertTrue(T)(T value, string message = "Failed asserting false", string file = __FILE__, ulong line = __LINE__)
+{
+	value.assertType!(bool)("Wrong type for asserting true", file, line);
+
 	if (!value)
 	{
-		reportError(message, "Expected", true, "Actual", !!value, file, line);
+		auto error = new DUnitAssertError(message, file, line);
+
+		error.addError("Value", value);
+
+		throw error;
 	}
 }
 
@@ -204,8 +277,38 @@ public void assertTrue(T)(T value, string message = "Failed asserting true", str
 unittest
 {
 	true.assertTrue();
-	["foo"].assertTrue();
-	1.assertTrue();
+}
+
+/**
+ * Assert that a value evaluates as true.
+ *
+ * Params:
+ *     value = The value used during the assertion.
+ *     message = The error message to display.
+ *     file = The file name where the error occurred. The value is added automatically at the call site.
+ *     line = The line where the error occurred. The value is added automatically at the call site.
+ */
+public void assertTruthy(T)(T value, string message = "Failed asserting true", string file = __FILE__, ulong line = __LINE__)
+{
+	if (!value)
+	{
+		auto error = new DUnitAssertError(message, file, line);
+
+		error.addTypedInfo("Value", value);
+		error.addError("Evaluates To", !!value);
+
+		throw error;
+	}
+}
+
+/**
+ * A simple example.
+ */
+unittest
+{
+	true.assertTruthy();
+	["foo"].assertTruthy();
+	1.assertTruthy();
 }
 
 /**
@@ -221,7 +324,12 @@ public void assertType(A, B)(B value, string message = "Failed asserting type", 
 {
 	if (!is(A == B))
 	{
-		reportError(message, "Expected", typeid(A), "Actual", typeid(B), file, line);
+		auto error = new DUnitAssertError(message, file, line);
+
+		error.addExpectation("Expected type", A.stringof);
+		error.addError("Actual type", B.stringof);
+
+		throw error;
 	}
 }
 
@@ -248,9 +356,14 @@ unittest
  */
 public void assertGreaterThan(A, B)(A value, B threshold, string message = "Failed asserting greater than", string file = __FILE__, ulong line = __LINE__)
 {
-	if (threshold >= value)
+	if (value <= threshold)
 	{
-		reportError(message, "Threshold", threshold, "Actual", value, file, line);
+		auto error = new DUnitAssertError(message, file, line);
+
+		error.addExpectation("Minimum Value", threshold + 1);
+		error.addError("Actual Value", value);
+
+		throw error;
 	}
 }
 
@@ -274,9 +387,14 @@ unittest
  */
 public void assertGreaterThanOrEqual(A, B)(A value, B threshold, string message = "Failed asserting greater than or equal", string file = __FILE__, ulong line = __LINE__)
 {
-	if (threshold > value)
+	if (value < threshold)
 	{
-		reportError(message, "Threshold", threshold, "Actual", value, file, line);
+		auto error = new DUnitAssertError(message, file, line);
+
+		error.addExpectation("Minimum Value", threshold);
+		error.addError("Actual Value", value);
+
+		throw error;
 	}
 }
 
@@ -301,9 +419,14 @@ unittest
  */
 public void assertLessThan(A, B)(A value, B threshold, string message = "Failed asserting less than", string file = __FILE__, ulong line = __LINE__)
 {
-	if (threshold <= value)
+	if (value >= threshold)
 	{
-		reportError(message, "Threshold", threshold, "Actual", value, file, line);
+		auto error = new DUnitAssertError(message, file, line);
+
+		error.addExpectation("Maximum Value", threshold - 1);
+		error.addError("Actual Value", value);
+
+		throw error;
 	}
 }
 
@@ -327,9 +450,14 @@ unittest
  */
 public void assertLessThanOrEqual(A, B)(A value, B threshold, string message = "Failed asserting less than or equal", string file = __FILE__, ulong line = __LINE__)
 {
-	if (threshold < value)
+	if (value > threshold)
 	{
-		reportError(message, "Threshold", threshold, "Actual", value, file, line);
+		auto error = new DUnitAssertError(message, file, line);
+
+		error.addExpectation("Maximum Value", threshold);
+		error.addError("Actual Value", value);
+
+		throw error;
 	}
 }
 
@@ -355,7 +483,12 @@ public void assertNull(A)(A value, string message = "Failed asserting null", str
 {
 	if (value !is null)
 	{
-		reportError(message, "Expected", null, "Actual", value, file, line);
+		auto error = new DUnitAssertError(message, file, line);
+
+		error.addTypedError("Actual Value", value);
+
+		throw error;
+
 	}
 }
 
@@ -390,7 +523,12 @@ public void assertMatchRegex(string value, string pattern, string message = "Fai
 {
 	if (match(value, pattern).empty())
 	{
-		reportError(message, "Regex", pattern, "Actual", value, file, line);
+		auto error = new DUnitAssertError(message, file, line);
+
+		error.addInfo("Regex", pattern);
+		error.addError("Value", value);
+
+		throw error;
 	}
 }
 
@@ -417,7 +555,12 @@ public void assertStartsWith(string value, string prefix, string message = "Fail
 {
 	if (!startsWith(value, prefix))
 	{
-		reportError(message, "Expected prefix", prefix, "Actual", value, file, line);
+		auto error = new DUnitAssertError(message, file, line);
+
+		error.addExpectation("Expected Start", prefix ~ "...");
+		error.addError("Actual Value", value);
+
+		throw error;
 	}
 }
 
@@ -444,7 +587,12 @@ public void assertEndsWith(string value, string suffix, string message = "Failed
 {
 	if (!endsWith(value, suffix))
 	{
-		reportError(message, "Expected suffix", suffix, "Actual", value, file, line);
+		auto error = new DUnitAssertError(message, file, line);
+
+		error.addExpectation("Expected End", "..." ~ suffix);
+		error.addError("Actual Value", value);
+
+		throw error;
 	}
 }
 
