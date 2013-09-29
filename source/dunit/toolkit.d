@@ -29,6 +29,9 @@ import std.string;
  *     message = The error message to display.
  *     file = The file name where the error occurred. The value is added automatically at the call site.
  *     line = The line where the error occurred. The value is added automatically at the call site.
+ *
+ * Throws:
+ *     DUnitAssertError if the assertation fails.
  */
 public void assertEqual(A, B)(A value, B target, string message = "Failed asserting equal", string file = __FILE__, ulong line = __LINE__)
 {
@@ -61,6 +64,9 @@ unittest
  *     message = The error message to display.
  *     file = The file name where the error occurred. The value is added automatically at the call site.
  *     line = The line where the error occurred. The value is added automatically at the call site.
+ *
+ * Throws:
+ *     DUnitAssertError if the assertation fails.
  */
 public void assertHasKey(A, B)(A[B] haystack, B needle, string message = "Failed asserting array has key", string file = __FILE__, ulong line = __LINE__)
 {
@@ -94,6 +100,9 @@ unittest
  *     message = The error message to display.
  *     file = The file name where the error occurred. The value is added automatically at the call site.
  *     line = The line where the error occurred. The value is added automatically at the call site.
+ *
+ * Throws:
+ *     DUnitAssertError if the assertation fails.
  */
 public void assertHasValue(A)(A[] haystack, A needle, string message = "Failed asserting array has value", string file = __FILE__, ulong line = __LINE__)
 {
@@ -128,6 +137,9 @@ unittest
  *     message = The error message to display.
  *     file = The file name where the error occurred. The value is added automatically at the call site.
  *     line = The line where the error occurred. The value is added automatically at the call site.
+ *
+ * Throws:
+ *     DUnitAssertError if the assertation fails.
  */
 public void assertCount(A)(A[] array, ulong count, string message = "Failed asserting array count", string file = __FILE__, ulong line = __LINE__)
 {
@@ -161,6 +173,9 @@ unittest
  *     message = The error message to display.
  *     file = The file name where the error occurred. The value is added automatically at the call site.
  *     line = The line where the error occurred. The value is added automatically at the call site.
+ *
+ * Throws:
+ *     DUnitAssertError if the assertation fails.
  */
 public void assertEmpty(A)(A[] array, string message = "Failed asserting empty array", string file = __FILE__, ulong line = __LINE__)
 {
@@ -192,6 +207,9 @@ unittest
  *     message = The error message to display.
  *     file = The file name where the error occurred. The value is added automatically at the call site.
  *     line = The line where the error occurred. The value is added automatically at the call site.
+ *
+ * Throws:
+ *     DUnitAssertError if the assertation fails.
  */
 public void assertFalse(T)(T value, string message = "Failed asserting false", string file = __FILE__, ulong line = __LINE__)
 {
@@ -223,6 +241,9 @@ unittest
  *     message = The error message to display.
  *     file = The file name where the error occurred. The value is added automatically at the call site.
  *     line = The line where the error occurred. The value is added automatically at the call site.
+ *
+ * Throws:
+ *     DUnitAssertError if the assertation fails.
  */
 public void assertFalsey(T)(T value, string message = "Failed asserting falsey", string file = __FILE__, ulong line = __LINE__)
 {
@@ -256,6 +277,9 @@ unittest
  *     message = The error message to display.
  *     file = The file name where the error occurred. The value is added automatically at the call site.
  *     line = The line where the error occurred. The value is added automatically at the call site.
+ *
+ * Throws:
+ *     DUnitAssertError if the assertation fails.
  */
 public void assertTrue(T)(T value, string message = "Failed asserting false", string file = __FILE__, ulong line = __LINE__)
 {
@@ -287,6 +311,9 @@ unittest
  *     message = The error message to display.
  *     file = The file name where the error occurred. The value is added automatically at the call site.
  *     line = The line where the error occurred. The value is added automatically at the call site.
+ *
+ * Throws:
+ *     DUnitAssertError if the assertation fails.
  */
 public void assertTruthy(T)(T value, string message = "Failed asserting true", string file = __FILE__, ulong line = __LINE__)
 {
@@ -319,6 +346,9 @@ unittest
  *     message = The error message to display.
  *     file = The file name where the error occurred. The value is added automatically at the call site.
  *     line = The line where the error occurred. The value is added automatically at the call site.
+ *
+ * Throws:
+ *     DUnitAssertError if the assertation fails.
  */
 public void assertType(A, B)(B value, string message = "Failed asserting type", string file = __FILE__, ulong line = __LINE__)
 {
@@ -353,6 +383,9 @@ unittest
  *     message = The error message to display.
  *     file = The file name where the error occurred. The value is added automatically at the call site.
  *     line = The line where the error occurred. The value is added automatically at the call site.
+ *
+ * Throws:
+ *     DUnitAssertError if the assertation fails.
  */
 public void assertGreaterThan(A, B)(A value, B threshold, string message = "Failed asserting greater than", string file = __FILE__, ulong line = __LINE__)
 {
@@ -384,6 +417,9 @@ unittest
  *     message = The error message to display.
  *     file = The file name where the error occurred. The value is added automatically at the call site.
  *     line = The line where the error occurred. The value is added automatically at the call site.
+ *
+ * Throws:
+ *     DUnitAssertError if the assertation fails.
  */
 public void assertGreaterThanOrEqual(A, B)(A value, B threshold, string message = "Failed asserting greater than or equal", string file = __FILE__, ulong line = __LINE__)
 {
@@ -416,6 +452,9 @@ unittest
  *     message = The error message to display.
  *     file = The file name where the error occurred. The value is added automatically at the call site.
  *     line = The line where the error occurred. The value is added automatically at the call site.
+ *
+ * Throws:
+ *     DUnitAssertError if the assertation fails.
  */
 public void assertLessThan(A, B)(A value, B threshold, string message = "Failed asserting less than", string file = __FILE__, ulong line = __LINE__)
 {
@@ -447,6 +486,9 @@ unittest
  *     message = The error message to display.
  *     file = The file name where the error occurred. The value is added automatically at the call site.
  *     line = The line where the error occurred. The value is added automatically at the call site.
+ *
+ * Throws:
+ *     DUnitAssertError if the assertation fails.
  */
 public void assertLessThanOrEqual(A, B)(A value, B threshold, string message = "Failed asserting less than or equal", string file = __FILE__, ulong line = __LINE__)
 {
@@ -478,6 +520,9 @@ unittest
  *     message = The error message to display.
  *     file = The file name where the error occurred. The value is added automatically at the call site.
  *     line = The line where the error occurred. The value is added automatically at the call site.
+ *
+ * Throws:
+ *     DUnitAssertError if the assertation fails.
  */
 public void assertNull(A)(A value, string message = "Failed asserting null", string file = __FILE__, ulong line = __LINE__) if (A.init is null)
 {
@@ -518,6 +563,9 @@ unittest
  *     message = The error message to display.
  *     file = The file name where the error occurred. The value is added automatically at the call site.
  *     line = The line where the error occurred. The value is added automatically at the call site.
+ *
+ * Throws:
+ *     DUnitAssertError if the assertation fails.
  */
 public void assertMatchRegex(string value, string pattern, string message = "Failed asserting match to regex", string file = __FILE__, ulong line = __LINE__)
 {
@@ -550,6 +598,9 @@ unittest
  *     message = The error message to display.
  *     file = The file name where the error occurred. The value is added automatically at the call site.
  *     line = The line where the error occurred. The value is added automatically at the call site.
+ *
+ * Throws:
+ *     DUnitAssertError if the assertation fails.
  */
 public void assertStartsWith(string value, string prefix, string message = "Failed asserting starts with", string file = __FILE__, ulong line = __LINE__)
 {
@@ -582,6 +633,9 @@ unittest
  *     message = The error message to display.
  *     file = The file name where the error occurred. The value is added automatically at the call site.
  *     line = The line where the error occurred. The value is added automatically at the call site.
+ *
+ * Throws:
+ *     DUnitAssertError if the assertation fails.
  */
 public void assertEndsWith(string value, string suffix, string message = "Failed asserting ends with", string file = __FILE__, ulong line = __LINE__)
 {

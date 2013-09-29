@@ -77,7 +77,7 @@ Only module level types can be made mockable.
  An instance of this class can dynamically replace any of its methods at runtime using the 'mockMethod' method.
  All mocked methods can optionally have their call counts asserted to be within set limits.</p>
 </div>
-<div class="class-members"><h2><a name="mockMethod"></a>void <span class="symbol">mockMethod</span>(T)(string <em>name</em>, T <em>method</em>, ulong <em>minimumCount</em> = 0, ulong <em>maximumCount</em> = (ulong).max, string <em>file</em> = __FILE__, ulong <em>line</em> = __LINE__);
+<div class="class-members"><h2><a name="mockMethod"></a>void <span class="symbol">mockMethod</span>(T)(string <em>name</em>, T <em>delegate_</em>, ulong <em>minimumCount</em> = 0, ulong <em>maximumCount</em> = (ulong).max, string <em>file</em> = __FILE__, ulong <em>line</em> = __LINE__);
 </h2>
 <div class="declaration-description"><div class="sections"><p>Replace a method in the mock object by adding a mock method to be called in its place.
  <b>By default parent methods are called in lieu of any replacements unless parent methods are disabled.</b>
@@ -96,6 +96,9 @@ Only module level types can be made mockable.
 <tr><td>line</td>
 <td>The line where the error occurred. The value is added automatically at the call site.</td></tr>
 </table>
+<h3>Exceptions Thrown</h3><p>DUnitAssertError if the passed delegate does not match the signature of any overload of the method named.
+
+</p>
 <p><h3>Caveats:</h3>
 <ol>        <li>In the case of replacing overloaded methods the delegate signature defines which method to replace. Helpful errors will be raised on non matching signatures.</li>
          <li>Templated methods are final by default and therefore cannot be mocked.</li>
@@ -179,6 +182,9 @@ Only module level types can be made mockable.
 <tr><td>ulong <em>line</em></td>
 <td>The <em>line</em> where the error occurred. The value is added automatically at the call site.</td></tr>
 </table>
+<h3>Exceptions Thrown</h3><p>DUnitAssertError if any method was called outside of preset boundries.
+
+</p>
 <p><h3>Example:</h3>
 <pre><span class="keyword">import</span> dunit.mockable;
 

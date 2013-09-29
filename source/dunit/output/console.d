@@ -25,30 +25,46 @@ class Console
 	{
 		writeln("");
 		writeln("DUnit v1.0b by Gary Willoughby.");
-		writeln("Running unit tests");
-		writeln("");
+		writeln("> Running unit tests");
 	}
 
 	/**
 	 * Write the success message.
 	 */
-	public void writeSuccess()
+	public void writeSuccessMessage()
 	{
-		writeln("✓ Success");
+		writeln("> Success");
 	}
 
 	/**
-	 * Output a detailed report.
+	 * Write the fail message.
+	 */
+	public void writeFailMessage()
+	{
+		writeln("> Failed");
+	}
+
+	/**
+	 * Format and write an exception to the console.
 	 *
 	 * Params:
-	 *     results = An array of results.
+	 *     ex = The exception to output.
 	 */
-	public void writeOverview(DUnitAssertError[string] results)
+	private void writeException(DUnitAssertError ex)
 	{
-		foreach (moduleName, error; results)
+		string horizontalLine = "+----------------------------------------------------------------------";
+		string text = "\n";
+		text ~= format("%s\n", horizontalLine);
+		text ~= format("| %s\n", ex.msg);
+		text ~= format("%s\n", horizontalLine);
+		text ~= format("| File: %s\n", ex.file);
+		text ~= format("| Line: %s\n", ex.line);
+		text ~= format("%s\n", horizontalLine);
+		foreach (info; ex.log)
 		{
-			writefln("%s, %s", moduleName, (error is null));
+			text ~= format("| %s\n", info);
 		}
+		write(text);
 	}
 
 	/**
@@ -57,13 +73,13 @@ class Console
 	 * Params:
 	 *     results = An array of results.
 	 */
-	public void writeDetail(DUnitAssertError[string] results)
+	public void writeDetailedResults(DUnitAssertError[string] results)
 	{
-		foreach (moduleName, error; results)
+		foreach (ex; results)
 		{
-			if (error !is null)
+			if (ex !is null)
 			{
-				writeln(error.toString());
+				this.writeException(ex);
 			}
 		}
 	}

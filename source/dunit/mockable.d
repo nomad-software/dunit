@@ -246,12 +246,15 @@ public mixin template Mockable(C) if (is(C == class))
 		 *
 		 * Params:
 		 *     name = The name of the method to replace. (Only the name should be used, no parameters, etc.)
-		 *     method = The delegate to be used instead of calling the original method.
+		 *     delegate_ = The delegate to be used instead of calling the original method.
 		 *              The delegate must have the exact signature of the method being replaced.
 		 *     minimumCount = The minimum amount of times this method must be called when asserting calls.
 		 *     maximumCount = The maximum amount of times this method must be called when asserting calls.
 		 *     file = The file name where the error occurred. The value is added automatically at the call site.
 		 *     line = The line where the error occurred. The value is added automatically at the call site.
+		 *
+		 * Throws:
+		 *     DUnitAssertError if the passed delegate does not match the signature of any overload of the method named.
 		 *
 		 * Caveats:
 		 *     $(OL
@@ -291,9 +294,9 @@ public mixin template Mockable(C) if (is(C == class))
 		 * }
 		 * ---
 		 */
-		public void mockMethod(T)(string name, T method, ulong minimumCount = 0, ulong maximumCount = ulong.max, string file = __FILE__, ulong line = __LINE__)
+		public void mockMethod(T)(string name, T delegate_, ulong minimumCount = 0, ulong maximumCount = ulong.max, string file = __FILE__, ulong line = __LINE__)
 		{
-			string signature = this.generateSignature!(T)(name, method);
+			string signature = this.generateSignature!(T)(name, delegate_);
 
 			this._methodCount[signature] = MethodCount(minimumCount, maximumCount);
 
@@ -352,6 +355,9 @@ public mixin template Mockable(C) if (is(C == class))
 		 *     message = The error message to display.
 		 *     file = The file name where the error occurred. The value is added automatically at the call site.
 		 *     line = The line where the error occurred. The value is added automatically at the call site.
+		 *
+		 * Throws:
+		 *     DUnitAssertError if any method was called outside of preset boundries.
 		 *
 		 * Example:
 		 * ---

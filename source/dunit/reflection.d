@@ -700,7 +700,7 @@ private template MethodSignatureSwitch(func...) if (func.length == 1 && isCallab
 	{
 		string code = "";
 		code ~= "case \"" ~ MethodSignature!(func) ~ "\":\n";
-		code ~= "\tthis." ~ MethodMangledName!(func) ~ " = cast(" ~ MethodDelegateSignature!(func) ~ ")method;\n";
+		code ~= "\tthis." ~ MethodMangledName!(func) ~ " = cast(" ~ MethodDelegateSignature!(func) ~ ")delegate_;\n";
 		code ~= "\tbreak;\n";
 		return code;
 	}

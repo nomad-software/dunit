@@ -108,12 +108,12 @@ shared static this()
 
 		if (collator.resultsSuccessful)
 		{
-			console.writeSuccess();
+			console.writeSuccessMessage();
 		}
 		else
 		{
-			console.writeOverview(collator.getResults());
-			console.writeDetail(collator.getResults());
+			console.writeFailMessage();
+			console.writeDetailedResults(collator.getResults());
 		}
 
 		return collator.resultsSuccessful;
