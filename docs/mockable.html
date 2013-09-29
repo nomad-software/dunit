@@ -14,7 +14,7 @@
  It is preferred that these parameters are ignored when using these methods.
 
 </p>
-<h3>License</h3><p>MIT. See LICENSE.txt for full details.</p>
+<h3>License</h3><p>MIT. See LICENSE for full details.</p>
 </div>
 <div class="module-members"><h2><a name="Mockable"></a>template <span class="symbol">Mockable</span>(C) if (is(C == class))</h2>
 <div class="declaration-description"><div class="sections"><p>A template mixin used to inject code into a class to provide mockable behaviour.
@@ -84,7 +84,7 @@ Only module level types can be made mockable.
 </p>
 <h3>Parameters</h3><table class="parameter-list"><tr><td>name</td>
 <td>The name of the method to replace. (Only the name should be used, no parameters, etc.)</td></tr>
-<tr><td>method</td>
+<tr><td>delegate_</td>
 <td>The delegate to be used instead of calling the original method.
               The delegate must have the exact signature of the method being replaced.</td></tr>
 <tr><td>minimumCount</td>

@@ -25,7 +25,7 @@ In DUnit all errors are handled by asserting false and displaying a helpful erro
 1. Usually when using DUnit all unit testing code is placed within unittest blocks. If this is the case you must compile using the `-unittest` flag to enable their execution.
 
 ### Notes
-1. Because DUnit uses asserts for error reporting, compiling using `-release` will disable their output. This shouldn't really be an issue as you don't want to be compiling debug information or unittests into a release build.
+1. Because DUnit replaces the built-in unit test handler be mindful that standard assert functions will exit the program when compiling using the `-unittest` switch. Even when compiled with the `-release` switch! To stop this happening, remove the `-unittest` switch from the compile command.
 
 ## Documentation
 There is full HTML documentation within the repository inside the [docs](https://github.com/kalekold/dunit/tree/master/docs) directory.
