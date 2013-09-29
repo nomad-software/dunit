@@ -5,7 +5,7 @@
  * It is preferred that these parameters are ignored when using these methods.
  *
  * License:
- *     MIT. See LICENSE.txt for full details.
+ *     MIT. See LICENSE for full details.
  */
 module dunit.toolkit;
 

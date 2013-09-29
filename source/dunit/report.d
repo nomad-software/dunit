@@ -2,7 +2,7 @@
  * Module to handle reporting.
  *
  * License:
- *     MIT. See LICENSE.txt for full details.
+ *     MIT. See LICENSE for full details.
  */
 module dunit.report;
 

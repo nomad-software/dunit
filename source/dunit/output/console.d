@@ -2,7 +2,7 @@
  * Module to handle output to the console.
  *
  * License:
- *     MIT. See LICENSE.txt for full details.
+ *     MIT. See LICENSE for full details.
  */
 module dunit.output.console;
 

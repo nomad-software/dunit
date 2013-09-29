@@ -2,7 +2,7 @@
  * Internal reflection templates for implementing mocking behaviour.
  *
  * License:
- *     MIT. See LICENSE.txt for full details.
+ *     MIT. See LICENSE for full details.
  */
 module dunit.reflection;
 

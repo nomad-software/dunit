@@ -2,7 +2,7 @@
  * Module to handle exceptions.
  *
  * License:
- *     MIT. See LICENSE.txt for full details.
+ *     MIT. See LICENSE for full details.
  */
 module dunit.exception;
 
