@@ -1,10 +1,10 @@
 /**
- * Module to handle reporting.
+ * Module to handle results.
  *
  * License:
  *     MIT. See LICENSE for full details.
  */
-module dunit.report;
+module dunit.result;
 
 /**
  * Imports.

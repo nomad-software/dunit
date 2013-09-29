@@ -12,7 +12,7 @@ module dunit.toolkit;
 /**
  * Imports.
  */
-import dunit.report;
+import dunit.result;
 import dunit.exception;
 import std.algorithm;
 import std.array;
