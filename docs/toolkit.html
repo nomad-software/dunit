@@ -64,7 +64,7 @@
 </pre>
 </p></div>
 </div>
-<h2><a name="assertHasValue"></a>void <span class="symbol">assertHasValue</span>(A)(A[] <em>haystack</em>, A <em>needle</em>, string <em>message</em> = "Failed asserting array has value", string <em>file</em> = __FILE__, ulong <em>line</em> = __LINE__);
+<h2><a name="assertHasValue"></a>void <span class="symbol">assertHasValue</span>(A, B)(A <em>haystack</em>, B <em>needle</em>, string <em>message</em> = "Failed asserting array has value", string <em>file</em> = __FILE__, ulong <em>line</em> = __LINE__);
 </h2>
 <div class="declaration-description"><div class="sections"><p>Assert that an array contains a particular value.
 </p>
@@ -83,13 +83,15 @@
 <h3>Examples</h3><p>A simple example.
  
 <pre>
+<span class="string">"Hello"</span>.<span class="symbol">assertHasValue</span>(<span class="string">"H"</span>);
 [1, 2, 3, 4].<span class="symbol">assertHasValue</span>(2);
 [<span class="string">"foo"</span>, <span class="string">"bar"</span>, <span class="string">"baz"</span>, <span class="string">"qux"</span>].<span class="symbol">assertHasValue</span>(<span class="string">"foo"</span>);
 [[<span class="string">"foo"</span>, <span class="string">"bar"</span>], [<span class="string">"baz"</span>, <span class="string">"qux"</span>]].<span class="symbol">assertHasValue</span>([<span class="string">"foo"</span>, <span class="string">"bar"</span>]);
+[<span class="string">"foo"</span>:1, <span class="string">"bar"</span>:2, <span class="string">"baz"</span>:3, <span class="string">"qux"</span>:4].<span class="symbol">assertHasValue</span>(4);
 </pre>
 </p></div>
 </div>
-<h2><a name="assertCount"></a>void <span class="symbol">assertCount</span>(A)(A[] <em>array</em>, ulong <em>count</em>, string <em>message</em> = "Failed asserting <em>array</em> <em>count</em>", string <em>file</em> = __FILE__, ulong <em>line</em> = __LINE__);
+<h2><a name="assertCount"></a>void <span class="symbol">assertCount</span>(A)(A <em>array</em>, ulong <em>count</em>, string <em>message</em> = "Failed asserting <em>array</em> <em>count</em>", string <em>file</em> = __FILE__, ulong <em>line</em> = __LINE__);
 </h2>
 <div class="declaration-description"><div class="sections"><p>Assert that an array contains a particular value count.
 </p>
@@ -108,13 +110,24 @@
 <h3>Examples</h3><p>A simple example.
  
 <pre>
+<span class="keyword">int</span>[string] associativeArray;
+<span class="keyword">int</span>[] dynamicArray;
+string string_;
+
+associativeArray.<span class="symbol">assertCount</span>(0);
+dynamicArray.<span class="symbol">assertCount</span>(0);
+string_.<span class="symbol">assertCount</span>(0);
+[].<span class="symbol">assertCount</span>(0);
+
+<span class="string">"Hello"</span>.<span class="symbol">assertCount</span>(5);
 [1, 2, 3, 4].<span class="symbol">assertCount</span>(4);
 [<span class="string">"foo"</span>, <span class="string">"bar"</span>, <span class="string">"baz"</span>, <span class="string">"qux"</span>].<span class="symbol">assertCount</span>(4);
 [[<span class="string">"foo"</span>, <span class="string">"bar"</span>], [<span class="string">"baz"</span>, <span class="string">"qux"</span>]].<span class="symbol">assertCount</span>(2);
+[<span class="string">"foo"</span>:1, <span class="string">"bar"</span>:2, <span class="string">"baz"</span>:3, <span class="string">"qux"</span>:4].<span class="symbol">assertCount</span>(4);
 </pre>
 </p></div>
 </div>
-<h2><a name="assertEmpty"></a>void <span class="symbol">assertEmpty</span>(A)(A[] <em>array</em>, string <em>message</em> = "Failed asserting empty <em>array</em>", string <em>file</em> = __FILE__, ulong <em>line</em> = __LINE__);
+<h2><a name="assertEmpty"></a>void <span class="symbol">assertEmpty</span>(A)(A <em>array</em>, string <em>message</em> = "Failed asserting empty <em>array</em>", string <em>file</em> = __FILE__, ulong <em>line</em> = __LINE__);
 </h2>
 <div class="declaration-description"><div class="sections"><p>Assert that an array is empty.
 </p>
@@ -131,6 +144,13 @@
 <h3>Examples</h3><p>A simple example.
  
 <pre>
+<span class="keyword">int</span>[string] associativeArray;
+<span class="keyword">int</span>[] dynamicArray;
+string string_;
+
+associativeArray.<span class="symbol">assertEmpty</span>();
+dynamicArray.<span class="symbol">assertEmpty</span>();
+string_.<span class="symbol">assertEmpty</span>();
 [].<span class="symbol">assertEmpty</span>();
 </pre>
 </p></div>

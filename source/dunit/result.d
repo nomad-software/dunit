@@ -67,6 +67,26 @@ class ResultCollator
 	}
 }
 
+unittest
+{
+	import dunit.exception;
+	import dunit.toolkit;
+
+	auto collator = new ResultCollator();
+
+	collator.getResults().assertEmpty();
+
+	collator.addResult("Module1");
+	collator.resultsSuccessful.assertTrue();
+
+	collator.addResult("Module2", new DUnitAssertError("Message", "file.d", 1));
+	collator.resultsSuccessful.assertFalse();
+
+	collator.getResults().assertCount(2);
+	collator.getResults()["Module1"].assertNull();
+	(cast(DUnitAssertError)collator.getResults()["Module2"]).assertTruthy();
+}
+
 /**
  * Replace the standard unit test handler.
  */

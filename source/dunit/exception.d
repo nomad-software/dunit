@@ -86,3 +86,28 @@ class DUnitAssertError : AssertError
 		this.addTypedInfo!(T)(caption, value, prefix);
 	}
 }
+
+unittest
+{
+	import dunit.toolkit;
+
+	auto error = new DUnitAssertError("Error message.", "test.d", 100);
+	error.addInfo("Info", 1);
+	error.addTypedInfo("Typed info", 2);
+	error.addExpectation("Expectation", 3);
+	error.addTypedExpectation("Typed expectation", 4);
+	error.addError("Error", 5);
+	error.addTypedError("Typed error", 6);
+
+	try
+	{
+		throw error;
+	}
+	catch (DUnitAssertError ex)
+	{
+		ex.msg.assertEqual("Error message.");
+		ex.file.assertEqual("test.d");
+		ex.line.assertEqual(100);
+		ex.log.assertEqual(["ℹ Info: 1", "ℹ Typed info: (int) 2", "✓ Expectation: 3", "✓ Typed expectation: (int) 4", "✗ Error: 5", "✗ Typed error: (int) 6"]);
+	}
+}

@@ -65,7 +65,10 @@ unittest
 
 	// Create mock people.
 	auto gary  = Person.getMock();
+	gary.disableParentMethods();
+
 	auto tessa = Person.getMock();
+	tessa.disableParentMethods();
 
 	// Mock the getAge method to return 40. Set the minimum count to 1 and the maximum count to 2.
 	gary.mockMethod("getAge", delegate(){

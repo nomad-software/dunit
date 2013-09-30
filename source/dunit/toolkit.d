@@ -19,6 +19,7 @@ import std.array;
 import std.regex;
 import std.stdio;
 import std.string;
+import std.traits;
 
 /**
  * Assert that two values are equal.
@@ -39,8 +40,8 @@ public void assertEqual(A, B)(A value, B target, string message = "Failed assert
 	{
 		auto error = new DUnitAssertError(message, file, line);
 
-		error.addTypedExpectation("Expected Value", target);
-		error.addTypedError("Actual Value", value);
+		error.addTypedExpectation("Expected value", target);
+		error.addTypedError("Actual value", value);
 
 		throw error;
 	}
@@ -74,9 +75,9 @@ public void assertHasKey(A, B)(A[B] haystack, B needle, string message = "Failed
 	{
 		auto error = new DUnitAssertError(message, file, line);
 
-		error.addInfo("Array Type", typeof(haystack).stringof);
+		error.addInfo("Array type", typeof(haystack).stringof);
 		error.addInfo("Elements", haystack);
-		error.addError("Missing Key", needle);
+		error.addError("Missing key", needle);
 
 		throw error;
 	}
@@ -104,15 +105,24 @@ unittest
  * Throws:
  *     DUnitAssertError if the assertation fails.
  */
-public void assertHasValue(A)(A[] haystack, A needle, string message = "Failed asserting array has value", string file = __FILE__, ulong line = __LINE__)
+public void assertHasValue(A, B)(A haystack, B needle, string message = "Failed asserting array has value", string file = __FILE__, ulong line = __LINE__) if (isArray!(A) || isAssociativeArray!(A))
 {
-	if (!canFind(haystack, needle))
+	static if (isAssociativeArray!(A))
+	{
+		bool foundValue = canFind(haystack.values, needle);
+	}
+	else
+	{
+		bool foundValue = canFind(haystack, needle);
+	}
+
+	if (!foundValue)
 	{
 		auto error = new DUnitAssertError(message, file, line);
 
-		error.addInfo("Array Type", typeof(haystack).stringof);
+		error.addInfo("Array type", typeof(haystack).stringof);
 		error.addInfo("Elements", haystack);
-		error.addError("Missing Value", needle);
+		error.addTypedError("Missing value", needle);
 
 		throw error;
 	}
@@ -123,9 +133,11 @@ public void assertHasValue(A)(A[] haystack, A needle, string message = "Failed a
  */
 unittest
 {
+	"Hello".assertHasValue("H");
 	[1, 2, 3, 4].assertHasValue(2);
 	["foo", "bar", "baz", "qux"].assertHasValue("foo");
 	[["foo", "bar"], ["baz", "qux"]].assertHasValue(["foo", "bar"]);
+	["foo":1, "bar":2, "baz":3, "qux":4].assertHasValue(4);
 }
 
 /**
@@ -141,15 +153,15 @@ unittest
  * Throws:
  *     DUnitAssertError if the assertation fails.
  */
-public void assertCount(A)(A[] array, ulong count, string message = "Failed asserting array count", string file = __FILE__, ulong line = __LINE__)
+public void assertCount(A)(A array, ulong count, string message = "Failed asserting array count", string file = __FILE__, ulong line = __LINE__) if (isArray!(A) || isAssociativeArray!(A))
 {
 	if (array.length != count)
 	{
 		auto error = new DUnitAssertError(message, file, line);
 
 		error.addInfo("Elements", array);
-		error.addExpectation("Expected Count", count);
-		error.addError("Actual Count", array.length);
+		error.addExpectation("Expected count", count);
+		error.addError("Actual count", array.length);
 
 		throw error;
 	}
@@ -160,9 +172,20 @@ public void assertCount(A)(A[] array, ulong count, string message = "Failed asse
  */
 unittest
 {
+	int[string] associativeArray;
+	int[] dynamicArray;
+	string string_;
+
+	associativeArray.assertCount(0);
+	dynamicArray.assertCount(0);
+	string_.assertCount(0);
+	[].assertCount(0);
+
+	"Hello".assertCount(5);
 	[1, 2, 3, 4].assertCount(4);
 	["foo", "bar", "baz", "qux"].assertCount(4);
 	[["foo", "bar"], ["baz", "qux"]].assertCount(2);
+	["foo":1, "bar":2, "baz":3, "qux":4].assertCount(4);
 }
 
 /**
@@ -177,15 +200,15 @@ unittest
  * Throws:
  *     DUnitAssertError if the assertation fails.
  */
-public void assertEmpty(A)(A[] array, string message = "Failed asserting empty array", string file = __FILE__, ulong line = __LINE__)
+public void assertEmpty(A)(A array, string message = "Failed asserting empty array", string file = __FILE__, ulong line = __LINE__) if (isArray!(A) || isAssociativeArray!(A))
 {
-	if (!array.empty())
+	if (array.length > 0)
 	{
 		auto error = new DUnitAssertError(message, file, line);
 
 		error.addInfo("Elements", array);
-		error.addExpectation("Expected Count", 0);
-		error.addError("Actual Count", array.length);
+		error.addExpectation("Expected count", 0);
+		error.addError("Actual count", array.length);
 
 		throw error;
 	}
@@ -196,6 +219,13 @@ public void assertEmpty(A)(A[] array, string message = "Failed asserting empty a
  */
 unittest
 {
+	int[string] associativeArray;
+	int[] dynamicArray;
+	string string_;
+
+	associativeArray.assertEmpty();
+	dynamicArray.assertEmpty();
+	string_.assertEmpty();
 	[].assertEmpty();
 }
 
@@ -252,7 +282,7 @@ public void assertFalsey(T)(T value, string message = "Failed asserting falsey",
 		auto error = new DUnitAssertError(message, file, line);
 
 		error.addTypedInfo("Value", value);
-		error.addError("Evaluates To", !!value);
+		error.addError("Evaluates to", !!value);
 
 		throw error;
 	}
@@ -322,7 +352,7 @@ public void assertTruthy(T)(T value, string message = "Failed asserting true", s
 		auto error = new DUnitAssertError(message, file, line);
 
 		error.addTypedInfo("Value", value);
-		error.addError("Evaluates To", !!value);
+		error.addError("Evaluates to", !!value);
 
 		throw error;
 	}
@@ -393,8 +423,8 @@ public void assertGreaterThan(A, B)(A value, B threshold, string message = "Fail
 	{
 		auto error = new DUnitAssertError(message, file, line);
 
-		error.addExpectation("Minimum Value", threshold + 1);
-		error.addError("Actual Value", value);
+		error.addExpectation("Minimum value", threshold + 1);
+		error.addError("Actual value", value);
 
 		throw error;
 	}
@@ -427,8 +457,8 @@ public void assertGreaterThanOrEqual(A, B)(A value, B threshold, string message 
 	{
 		auto error = new DUnitAssertError(message, file, line);
 
-		error.addExpectation("Minimum Value", threshold);
-		error.addError("Actual Value", value);
+		error.addExpectation("Minimum value", threshold);
+		error.addError("Actual value", value);
 
 		throw error;
 	}
@@ -462,8 +492,8 @@ public void assertLessThan(A, B)(A value, B threshold, string message = "Failed 
 	{
 		auto error = new DUnitAssertError(message, file, line);
 
-		error.addExpectation("Maximum Value", threshold - 1);
-		error.addError("Actual Value", value);
+		error.addExpectation("Maximum value", threshold - 1);
+		error.addError("Actual value", value);
 
 		throw error;
 	}
@@ -496,8 +526,8 @@ public void assertLessThanOrEqual(A, B)(A value, B threshold, string message = "
 	{
 		auto error = new DUnitAssertError(message, file, line);
 
-		error.addExpectation("Maximum Value", threshold);
-		error.addError("Actual Value", value);
+		error.addExpectation("Maximum value", threshold);
+		error.addError("Actual value", value);
 
 		throw error;
 	}
@@ -530,7 +560,7 @@ public void assertNull(A)(A value, string message = "Failed asserting null", str
 	{
 		auto error = new DUnitAssertError(message, file, line);
 
-		error.addTypedError("Actual Value", value);
+		error.addTypedError("Actual value", value);
 
 		throw error;
 
@@ -608,8 +638,8 @@ public void assertStartsWith(string value, string prefix, string message = "Fail
 	{
 		auto error = new DUnitAssertError(message, file, line);
 
-		error.addExpectation("Expected Start", prefix ~ "...");
-		error.addError("Actual Value", value);
+		error.addExpectation("Expected start", prefix ~ "...");
+		error.addError("Actual value", value);
 
 		throw error;
 	}
@@ -643,8 +673,8 @@ public void assertEndsWith(string value, string suffix, string message = "Failed
 	{
 		auto error = new DUnitAssertError(message, file, line);
 
-		error.addExpectation("Expected End", "..." ~ suffix);
-		error.addError("Actual Value", value);
+		error.addExpectation("Expected end", "..." ~ suffix);
+		error.addError("Actual value", value);
 
 		throw error;
 	}
