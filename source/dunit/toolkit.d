@@ -69,7 +69,7 @@ unittest
  * Throws:
  *     DUnitAssertError if the assertation fails.
  */
-public void assertHasKey(A, B)(A[B] haystack, B needle, string message = "Failed asserting array has key", string file = __FILE__, ulong line = __LINE__)
+public void assertHasKey(A, B)(A haystack, B needle, string message = "Failed asserting array has key", string file = __FILE__, ulong line = __LINE__) if (isAssociativeArray!(A))
 {
 	if (needle !in haystack)
 	{
@@ -77,7 +77,7 @@ public void assertHasKey(A, B)(A[B] haystack, B needle, string message = "Failed
 
 		error.addInfo("Array type", typeof(haystack).stringof);
 		error.addInfo("Elements", haystack);
-		error.addError("Missing key", needle);
+		error.addTypedError("Missing key", needle);
 
 		throw error;
 	}
@@ -107,13 +107,13 @@ unittest
  */
 public void assertHasValue(A, B)(A haystack, B needle, string message = "Failed asserting array has value", string file = __FILE__, ulong line = __LINE__) if (isArray!(A) || isAssociativeArray!(A))
 {
-	static if (isAssociativeArray!(A))
-	{
-		bool foundValue = canFind(haystack.values, needle);
-	}
-	else
+	static if (isArray!(A))
 	{
 		bool foundValue = canFind(haystack, needle);
+	}
+	else static if (isAssociativeArray!(A))
+	{
+		bool foundValue = canFind(haystack.values, needle);
 	}
 
 	if (!foundValue)

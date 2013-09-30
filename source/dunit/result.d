@@ -84,7 +84,7 @@ unittest
 
 	collator.getResults().assertCount(2);
 	collator.getResults()["Module1"].assertNull();
-	(cast(DUnitAssertError)collator.getResults()["Module2"]).assertTruthy();
+	collator.getResults()["Module2"].assertType!(DUnitAssertError);
 }
 
 /**
