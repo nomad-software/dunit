@@ -11,7 +11,7 @@ module dunit.result;
  */
 import core.exception;
 import core.runtime;
-import dunit.exception;
+import dunit.error;
 import dunit.output.console;
 
 /**
@@ -69,7 +69,6 @@ class ResultCollator
 
 unittest
 {
-	import dunit.exception;
 	import dunit.toolkit;
 
 	auto collator = new ResultCollator();

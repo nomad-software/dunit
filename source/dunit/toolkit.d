@@ -13,7 +13,7 @@ module dunit.toolkit;
  * Imports.
  */
 import dunit.result;
-import dunit.exception;
+import dunit.error;
 import std.algorithm;
 import std.array;
 import std.regex;
@@ -398,10 +398,57 @@ public void assertType(A, B)(B value, string message = "Failed asserting type", 
  */
 unittest
 {
-	1.assertType!(int)();
-	"foo".assertType!(string)();
-	["bar"].assertType!(string[])();
-	['a'].assertType!(char[])();
+	1.assertType!(int);
+	"foo".assertType!(string);
+	["bar"].assertType!(string[]);
+	['a'].assertType!(char[]);
+}
+
+/**
+ * Assert that a value is an instance of a type.
+ *
+ * Params:
+ *     value = The value used during the assertion.
+ *     message = The error message to display.
+ *     file = The file name where the error occurred. The value is added automatically at the call site.
+ *     line = The line where the error occurred. The value is added automatically at the call site.
+ *
+ * Throws:
+ *     DUnitAssertError if the assertation fails.
+ */
+public void assertInstanceOf(A, B)(B value, string message = "Failed asserting instance of", string file = __FILE__, ulong line = __LINE__)
+{
+	if (!cast(A)value)
+	{
+		auto error = new DUnitAssertError(message, file, line);
+
+		error.addExpectation("Expected instance", A.stringof);
+		error.addError("Non derived type", B.stringof);
+
+		throw error;
+	}
+}
+
+/**
+ * A simple example.
+ */
+unittest
+{
+	interface A {}
+	class B : A {}
+	class C : B {}
+
+	auto b = new B();
+	auto c = new C();
+
+	b.assertInstanceOf!(Object);
+	b.assertInstanceOf!(A);
+	b.assertInstanceOf!(B);
+
+	c.assertInstanceOf!(Object);
+	c.assertInstanceOf!(A);
+	c.assertInstanceOf!(B);
+	c.assertInstanceOf!(C);
 }
 
 /**

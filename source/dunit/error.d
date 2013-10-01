@@ -4,7 +4,7 @@
  * License:
  *     MIT. See LICENSE for full details.
  */
-module dunit.exception;
+module dunit.error;
 
 /**
  * Imports.

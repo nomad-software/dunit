@@ -40,7 +40,7 @@
 </pre>
 </p></div>
 </div>
-<h2><a name="assertHasKey"></a>void <span class="symbol">assertHasKey</span>(A, B)(A[B] <em>haystack</em>, B <em>needle</em>, string <em>message</em> = "Failed asserting array has key", string <em>file</em> = __FILE__, ulong <em>line</em> = __LINE__);
+<h2><a name="assertHasKey"></a>void <span class="symbol">assertHasKey</span>(A, B)(A <em>haystack</em>, B <em>needle</em>, string <em>message</em> = "Failed asserting array has key", string <em>file</em> = __FILE__, ulong <em>line</em> = __LINE__);
 </h2>
 <div class="declaration-description"><div class="sections"><p>Assert that an associative array contains a particular key.
 </p>
@@ -261,10 +261,45 @@ string_.<span class="symbol">assertEmpty</span>();
 <h3>Examples</h3><p>A simple example.
  
 <pre>
-1.<span class="symbol">assertType</span>!(<span class="keyword">int</span>)();
-<span class="string">"foo"</span>.<span class="symbol">assertType</span>!(string)();
-[<span class="string">"bar"</span>].<span class="symbol">assertType</span>!(string[])();
-['a'].<span class="symbol">assertType</span>!(<span class="keyword">char</span>[])();
+1.<span class="symbol">assertType</span>!(<span class="keyword">int</span>);
+<span class="string">"foo"</span>.<span class="symbol">assertType</span>!(string);
+[<span class="string">"bar"</span>].<span class="symbol">assertType</span>!(string[]);
+['a'].<span class="symbol">assertType</span>!(<span class="keyword">char</span>[]);
+</pre>
+</p></div>
+</div>
+<h2><a name="assertInstanceOf"></a>void <span class="symbol">assertInstanceOf</span>(A, B)(B <em>value</em>, string <em>message</em> = "Failed asserting instance of", string <em>file</em> = __FILE__, ulong <em>line</em> = __LINE__);
+</h2>
+<div class="declaration-description"><div class="sections"><p>Assert that a value is an instance of a type.
+</p>
+<h3>Parameters</h3><table class="parameter-list"><tr><td>value</td>
+<td>The value used during the assertion.</td></tr>
+<tr><td>message</td>
+<td>The error message to display.</td></tr>
+<tr><td>file</td>
+<td>The file name where the error occurred. The value is added automatically at the call site.</td></tr>
+<tr><td>line</td>
+<td>The line where the error occurred. The value is added automatically at the call site.</td></tr>
+</table>
+<h3>Exceptions Thrown</h3><p>DUnitAssertError if the assertation fails.</p>
+<h3>Examples</h3><p>A simple example.
+ 
+<pre>
+<span class="keyword">interface</span> A {}
+<span class="keyword">class</span> B : A {}
+<span class="keyword">class</span> C : B {}
+
+<span class="keyword">auto</span> b = <span class="keyword">new</span> B();
+<span class="keyword">auto</span> c = <span class="keyword">new</span> C();
+
+b.<span class="symbol">assertInstanceOf</span>!(Object);
+b.<span class="symbol">assertInstanceOf</span>!(A);
+b.<span class="symbol">assertInstanceOf</span>!(B);
+
+c.<span class="symbol">assertInstanceOf</span>!(Object);
+c.<span class="symbol">assertInstanceOf</span>!(A);
+c.<span class="symbol">assertInstanceOf</span>!(B);
+c.<span class="symbol">assertInstanceOf</span>!(C);
 </pre>
 </p></div>
 </div>

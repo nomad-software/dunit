@@ -9,7 +9,7 @@ module dunit.output.console;
 /**
  * Imports.
  */
-import dunit.exception;
+import dunit.error;
 import std.stdio;
 import std.string;
 
