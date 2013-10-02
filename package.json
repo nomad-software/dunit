@@ -1,7 +1,7 @@
 {
 	"name": "dunit",
 	"description": "Advanced unit testing toolkit.",
-	"homepage": "https://github.com/kalekold/dunit",
+	"homepage": "https://github.com/nomad-software/dunit",
 	"authors": ["Gary Willoughby"],
 	"copyright": "Copyright (c) 2013 Gary Willoughby",
 	"license": "MIT",
