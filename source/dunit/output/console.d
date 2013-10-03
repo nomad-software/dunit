@@ -24,7 +24,7 @@ class Console
 	public void writeHeader()
 	{
 		writeln("");
-		writeln("DUnit v1.0b by Gary Willoughby.");
+		writeln("DUnit by Gary Willoughby.");
 		writeln("> Running unit tests");
 	}
 
