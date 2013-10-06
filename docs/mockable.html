@@ -165,7 +165,8 @@ Only module level types can be made mockable.
     <span class="keyword">auto</span> mock = T.getMock();
     mock.<span class="symbol">disableParentMethods</span>();
 
-    <span class="comment">// All mock object methods must now be replaced.
+    <span class="comment">// All mock object methods that are used in the test
+</span>    <span class="comment">// must now be replaced to avoid an error being thrown.
 </span>}
 </pre>
 </p>

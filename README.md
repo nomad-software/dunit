@@ -13,7 +13,7 @@ DUnit was developed and tested with DMD v2.063.2 and should support any platform
 ## Features
 
 ### Object mocking
-DUnit features a mixin template to inject mockable behaviour into a class. Once injected, a static method allows creation of mock objects from that class. Mock objects behave and act as their parent but with the added feature that all methods can be disabled or replaced by a delegate at runtime. *The mixin only injects code in debug mode.*
+DUnit features a mixin template to inject mockable behaviour into a class. Once injected, a static method allows creation of mock objects from that class. Mock objects behave and act as their parent but with the added feature that all methods can be disabled or replaced by a delegate at runtime. *The mixin only injects code when the `-unittest` compiler flag is used.*
 
 ### Helpful asserts
 When using DUnit the built-in unit test handler has been replaced to give more helpful error messages. When something goes wrong the error tries to be as helpful as possible by showing file, line, and assert value output.
@@ -34,7 +34,7 @@ When using DUnit the built-in unit test handler has been replaced to give more h
 ## Compilier flags
 
 ### Required
-1. Mocking behaviour is only injected in debug mode so you must used the `-debug` flag for mocking to work.
+1. Mocking behaviour is only injected in unit test mode so you must used the `-unittest` flag for mocking to work.
 1. Usually when using DUnit all unit testing code is placed within unittest blocks. If this is the case you must compile using the `-unittest` flag to enable their execution.
 
 ### Notes

@@ -34,7 +34,7 @@ public import dunit.reflection;
  */
 public mixin template Mockable(C) if (is(C == class))
 {
-	debug:
+	version(unittest):
 
 	/*
 	 * Struct for holding method count information.
