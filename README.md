@@ -18,6 +18,19 @@ DUnit features a mixin template to inject mockable behaviour into a class. Once 
 ### Helpful asserts
 When using DUnit the built-in unit test handler has been replaced to give more helpful error messages. When something goes wrong the error tries to be as helpful as possible by showing file, line, and assert value output.
 
+	DUnit by Gary Willoughby.
+	> Running unit tests
+	> Failed
+
+	+----------------------------------------------------------------------
+	| Failed asserting equal
+	+----------------------------------------------------------------------
+	| File: example.d
+	| Line: 91
+	+----------------------------------------------------------------------
+	| ✓ Expected value: (int) 1
+	| ✗ Actual value: (ulong) 2
+
 ## Compilier flags
 
 ### Required
