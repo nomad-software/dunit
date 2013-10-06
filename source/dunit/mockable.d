@@ -337,7 +337,8 @@ public mixin template Mockable(C) if (is(C == class))
 		 *     auto mock = T.getMock();
 		 *     mock.disableParentMethods();
 		 *
-		 *     // All mock object methods must now be replaced.
+		 *     // All mock object methods that are used in the test
+		 *     // must now be replaced to avoid an error being thrown.
 		 * }
 		 * ---
 		 */

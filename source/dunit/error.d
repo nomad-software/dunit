@@ -14,6 +14,9 @@ import std.string;
 
 /**
  * An exception thrown when a unit test fails.
+ *
+ * This exception derives from AssertError to make it possible for
+ * these errors to be thrown from nothrow methods.
  */
 class DUnitAssertError : AssertError
 {
