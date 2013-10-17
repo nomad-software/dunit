@@ -398,10 +398,10 @@ public void assertType(A, B)(B value, string message = "Failed asserting type", 
  */
 unittest
 {
-	1.assertType!(int);
-	"foo".assertType!(string);
-	["bar"].assertType!(string[]);
-	['a'].assertType!(char[]);
+	1.assertType!(int)();
+	"foo".assertType!(string)();
+	["bar"].assertType!(string[])();
+	['a'].assertType!(char[])();
 }
 
 /**
@@ -441,14 +441,14 @@ unittest
 	auto b = new B();
 	auto c = new C();
 
-	b.assertInstanceOf!(Object);
-	b.assertInstanceOf!(A);
-	b.assertInstanceOf!(B);
+	b.assertInstanceOf!(Object)();
+	b.assertInstanceOf!(A)();
+	b.assertInstanceOf!(B)();
 
-	c.assertInstanceOf!(Object);
-	c.assertInstanceOf!(A);
-	c.assertInstanceOf!(B);
-	c.assertInstanceOf!(C);
+	c.assertInstanceOf!(Object)();
+	c.assertInstanceOf!(A)();
+	c.assertInstanceOf!(B)();
+	c.assertInstanceOf!(C)();
 }
 
 /**

@@ -261,10 +261,10 @@ string_.<span class="symbol">assertEmpty</span>();
 <h3>Examples</h3><p>A simple example.
  
 <pre>
-1.<span class="symbol">assertType</span>!(<span class="keyword">int</span>);
-<span class="string">"foo"</span>.<span class="symbol">assertType</span>!(string);
-[<span class="string">"bar"</span>].<span class="symbol">assertType</span>!(string[]);
-['a'].<span class="symbol">assertType</span>!(<span class="keyword">char</span>[]);
+1.<span class="symbol">assertType</span>!(<span class="keyword">int</span>)();
+<span class="string">"foo"</span>.<span class="symbol">assertType</span>!(string)();
+[<span class="string">"bar"</span>].<span class="symbol">assertType</span>!(string[])();
+['a'].<span class="symbol">assertType</span>!(<span class="keyword">char</span>[])();
 </pre>
 </p></div>
 </div>
@@ -292,14 +292,14 @@ string_.<span class="symbol">assertEmpty</span>();
 <span class="keyword">auto</span> b = <span class="keyword">new</span> B();
 <span class="keyword">auto</span> c = <span class="keyword">new</span> C();
 
-b.<span class="symbol">assertInstanceOf</span>!(Object);
-b.<span class="symbol">assertInstanceOf</span>!(A);
-b.<span class="symbol">assertInstanceOf</span>!(B);
+b.<span class="symbol">assertInstanceOf</span>!(Object)();
+b.<span class="symbol">assertInstanceOf</span>!(A)();
+b.<span class="symbol">assertInstanceOf</span>!(B)();
 
-c.<span class="symbol">assertInstanceOf</span>!(Object);
-c.<span class="symbol">assertInstanceOf</span>!(A);
-c.<span class="symbol">assertInstanceOf</span>!(B);
-c.<span class="symbol">assertInstanceOf</span>!(C);
+c.<span class="symbol">assertInstanceOf</span>!(Object)();
+c.<span class="symbol">assertInstanceOf</span>!(A)();
+c.<span class="symbol">assertInstanceOf</span>!(B)();
+c.<span class="symbol">assertInstanceOf</span>!(C)();
 </pre>
 </p></div>
 </div>

@@ -17,7 +17,7 @@ public import dunit.reflection;
 /**
  * A template mixin used to inject code into a class to provide mockable behaviour.
  * Code is nested within the host class to provide access to all host types.
- * $(B Only injects code in debug mode.)
+ * $(B Only injects code when using the -unittest compiler switch.)
  *
  * Caveats:
  *     Only module level types can be made mockable.
