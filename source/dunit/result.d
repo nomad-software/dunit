@@ -89,7 +89,7 @@ unittest
 /**
  * Replace the standard unit test handler.
  */
-shared static this()
+version(unittest) shared static this()
 {
 	Runtime.moduleUnitTester = function()
 	{
