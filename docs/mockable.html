@@ -77,7 +77,7 @@ Only module level types can be made mockable.
  An instance of this class can dynamically replace any of its methods at runtime using the 'mockMethod' method.
  All mocked methods can optionally have their call counts asserted to be within set limits.</p>
 </div>
-<div class="class-members"><h2><a name="mockMethod"></a>void <span class="symbol">mockMethod</span>(T)(string <em>name</em>, T <em>delegate_</em>, ulong <em>minimumCount</em> = 0, ulong <em>maximumCount</em> = (ulong).max, string <em>file</em> = __FILE__, ulong <em>line</em> = __LINE__);
+<div class="class-members"><h2><a name="mockMethod"></a>void <span class="symbol">mockMethod</span>(T)(string <em>name</em>, T <em>delegate_</em>, ulong <em>minimumCount</em> = 0, ulong <em>maximumCount</em> = (ulong).max, string <em>file</em> = __FILE__, size_t <em>line</em> = __LINE__);
 </h2>
 <div class="declaration-description"><div class="sections"><p>Replace a method in the mock object by adding a mock method to be called in its place.
  <b>By default parent methods are called in lieu of any replacements unless parent methods are disabled.</b>
@@ -138,7 +138,7 @@ Only module level types can be made mockable.
 </p>
 </div>
 </div>
-<h2><a name="disableParentMethods"></a>void <span class="symbol">disableParentMethods</span>(string <em>file</em> = __FILE__, ulong <em>line</em> = __LINE__);
+<h2><a name="disableParentMethods"></a>void <span class="symbol">disableParentMethods</span>(string <em>file</em> = __FILE__, size_t <em>line</em> = __LINE__);
 </h2>
 <div class="declaration-description"><div class="sections"><p>Disable parent methods being called if mock replacements are not implemented.
  If parent methods have been disabled a helpful assert error will be raised on any attempt to call methods that haven't been replaced.
@@ -146,7 +146,7 @@ Only module level types can be made mockable.
 </p>
 <h3>Parameters</h3><table class="parameter-list"><tr><td>string <em>file</em></td>
 <td>The <em>file</em> name where the error occurred. The value is added automatically at the call site.</td></tr>
-<tr><td>ulong <em>line</em></td>
+<tr><td>size_t <em>line</em></td>
 <td>The <em>line</em> where the error occurred. The value is added automatically at the call site.</td></tr>
 </table>
 <h3>See Also</h3><p>mockMethod()
@@ -172,7 +172,7 @@ Only module level types can be made mockable.
 </p>
 </div>
 </div>
-<h2><a name="assertMethodCalls"></a>void <span class="symbol">assertMethodCalls</span>(string <em>message</em> = "Failed asserting call count", string <em>file</em> = __FILE__, ulong <em>line</em> = __LINE__);
+<h2><a name="assertMethodCalls"></a>void <span class="symbol">assertMethodCalls</span>(string <em>message</em> = "Failed asserting call count", string <em>file</em> = __FILE__, size_t <em>line</em> = __LINE__);
 </h2>
 <div class="declaration-description"><div class="sections"><p>Assert all replaced methods are called the defined amount of times.
 </p>
@@ -180,7 +180,7 @@ Only module level types can be made mockable.
 <td>The error <em>message</em> to display.</td></tr>
 <tr><td>string <em>file</em></td>
 <td>The <em>file</em> name where the error occurred. The value is added automatically at the call site.</td></tr>
-<tr><td>ulong <em>line</em></td>
+<tr><td>size_t <em>line</em></td>
 <td>The <em>line</em> where the error occurred. The value is added automatically at the call site.</td></tr>
 </table>
 <h3>Exceptions Thrown</h3><p>DUnitAssertError if any method was called outside of preset boundries.

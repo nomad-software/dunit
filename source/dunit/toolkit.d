@@ -34,7 +34,7 @@ import std.traits;
  * Throws:
  *     DUnitAssertError if the assertation fails.
  */
-public void assertEqual(A, B)(A value, B target, string message = "Failed asserting equal", string file = __FILE__, ulong line = __LINE__)
+public void assertEqual(A, B)(A value, B target, string message = "Failed asserting equal", string file = __FILE__, size_t line = __LINE__)
 {
 	if (target != value)
 	{
@@ -69,7 +69,7 @@ unittest
  * Throws:
  *     DUnitAssertError if the assertation fails.
  */
-public void assertHasKey(A, B)(A haystack, B needle, string message = "Failed asserting array has key", string file = __FILE__, ulong line = __LINE__) if (isAssociativeArray!(A))
+public void assertHasKey(A, B)(A haystack, B needle, string message = "Failed asserting array has key", string file = __FILE__, size_t line = __LINE__) if (isAssociativeArray!(A))
 {
 	if (needle !in haystack)
 	{
@@ -105,7 +105,7 @@ unittest
  * Throws:
  *     DUnitAssertError if the assertation fails.
  */
-public void assertHasValue(A, B)(A haystack, B needle, string message = "Failed asserting array has value", string file = __FILE__, ulong line = __LINE__) if (isArray!(A) || isAssociativeArray!(A))
+public void assertHasValue(A, B)(A haystack, B needle, string message = "Failed asserting array has value", string file = __FILE__, size_t line = __LINE__) if (isArray!(A) || isAssociativeArray!(A))
 {
 	static if (isArray!(A))
 	{
@@ -153,7 +153,7 @@ unittest
  * Throws:
  *     DUnitAssertError if the assertation fails.
  */
-public void assertCount(A)(A array, ulong count, string message = "Failed asserting array count", string file = __FILE__, ulong line = __LINE__) if (isArray!(A) || isAssociativeArray!(A))
+public void assertCount(A)(A array, ulong count, string message = "Failed asserting array count", string file = __FILE__, size_t line = __LINE__) if (isArray!(A) || isAssociativeArray!(A))
 {
 	if (array.length != count)
 	{
@@ -200,7 +200,7 @@ unittest
  * Throws:
  *     DUnitAssertError if the assertation fails.
  */
-public void assertEmpty(A)(A array, string message = "Failed asserting empty array", string file = __FILE__, ulong line = __LINE__) if (isArray!(A) || isAssociativeArray!(A))
+public void assertEmpty(A)(A array, string message = "Failed asserting empty array", string file = __FILE__, size_t line = __LINE__) if (isArray!(A) || isAssociativeArray!(A))
 {
 	if (array.length > 0)
 	{
@@ -241,7 +241,7 @@ unittest
  * Throws:
  *     DUnitAssertError if the assertation fails.
  */
-public void assertFalse(T)(T value, string message = "Failed asserting false", string file = __FILE__, ulong line = __LINE__)
+public void assertFalse(T)(T value, string message = "Failed asserting false", string file = __FILE__, size_t line = __LINE__)
 {
 	value.assertType!(bool)("Wrong type for asserting false", file, line);
 
@@ -275,7 +275,7 @@ unittest
  * Throws:
  *     DUnitAssertError if the assertation fails.
  */
-public void assertFalsey(T)(T value, string message = "Failed asserting falsey", string file = __FILE__, ulong line = __LINE__)
+public void assertFalsey(T)(T value, string message = "Failed asserting falsey", string file = __FILE__, size_t line = __LINE__)
 {
 	if (value)
 	{
@@ -311,7 +311,7 @@ unittest
  * Throws:
  *     DUnitAssertError if the assertation fails.
  */
-public void assertTrue(T)(T value, string message = "Failed asserting false", string file = __FILE__, ulong line = __LINE__)
+public void assertTrue(T)(T value, string message = "Failed asserting false", string file = __FILE__, size_t line = __LINE__)
 {
 	value.assertType!(bool)("Wrong type for asserting true", file, line);
 
@@ -345,7 +345,7 @@ unittest
  * Throws:
  *     DUnitAssertError if the assertation fails.
  */
-public void assertTruthy(T)(T value, string message = "Failed asserting true", string file = __FILE__, ulong line = __LINE__)
+public void assertTruthy(T)(T value, string message = "Failed asserting true", string file = __FILE__, size_t line = __LINE__)
 {
 	if (!value)
 	{
@@ -380,7 +380,7 @@ unittest
  * Throws:
  *     DUnitAssertError if the assertation fails.
  */
-public void assertType(A, B)(B value, string message = "Failed asserting type", string file = __FILE__, ulong line = __LINE__)
+public void assertType(A, B)(B value, string message = "Failed asserting type", string file = __FILE__, size_t line = __LINE__)
 {
 	if (!is(A == B))
 	{
@@ -416,7 +416,7 @@ unittest
  * Throws:
  *     DUnitAssertError if the assertation fails.
  */
-public void assertInstanceOf(A, B)(B value, string message = "Failed asserting instance of", string file = __FILE__, ulong line = __LINE__)
+public void assertInstanceOf(A, B)(B value, string message = "Failed asserting instance of", string file = __FILE__, size_t line = __LINE__)
 {
 	if (!cast(A)value)
 	{
@@ -464,7 +464,7 @@ unittest
  * Throws:
  *     DUnitAssertError if the assertation fails.
  */
-public void assertGreaterThan(A, B)(A value, B threshold, string message = "Failed asserting greater than", string file = __FILE__, ulong line = __LINE__)
+public void assertGreaterThan(A, B)(A value, B threshold, string message = "Failed asserting greater than", string file = __FILE__, size_t line = __LINE__)
 {
 	if (value <= threshold)
 	{
@@ -498,7 +498,7 @@ unittest
  * Throws:
  *     DUnitAssertError if the assertation fails.
  */
-public void assertGreaterThanOrEqual(A, B)(A value, B threshold, string message = "Failed asserting greater than or equal", string file = __FILE__, ulong line = __LINE__)
+public void assertGreaterThanOrEqual(A, B)(A value, B threshold, string message = "Failed asserting greater than or equal", string file = __FILE__, size_t line = __LINE__)
 {
 	if (value < threshold)
 	{
@@ -533,7 +533,7 @@ unittest
  * Throws:
  *     DUnitAssertError if the assertation fails.
  */
-public void assertLessThan(A, B)(A value, B threshold, string message = "Failed asserting less than", string file = __FILE__, ulong line = __LINE__)
+public void assertLessThan(A, B)(A value, B threshold, string message = "Failed asserting less than", string file = __FILE__, size_t line = __LINE__)
 {
 	if (value >= threshold)
 	{
@@ -567,7 +567,7 @@ unittest
  * Throws:
  *     DUnitAssertError if the assertation fails.
  */
-public void assertLessThanOrEqual(A, B)(A value, B threshold, string message = "Failed asserting less than or equal", string file = __FILE__, ulong line = __LINE__)
+public void assertLessThanOrEqual(A, B)(A value, B threshold, string message = "Failed asserting less than or equal", string file = __FILE__, size_t line = __LINE__)
 {
 	if (value > threshold)
 	{
@@ -601,7 +601,7 @@ unittest
  * Throws:
  *     DUnitAssertError if the assertation fails.
  */
-public void assertNull(A)(A value, string message = "Failed asserting null", string file = __FILE__, ulong line = __LINE__) if (A.init is null)
+public void assertNull(A)(A value, string message = "Failed asserting null", string file = __FILE__, size_t line = __LINE__) if (A.init is null)
 {
 	if (value !is null)
 	{
@@ -644,7 +644,7 @@ unittest
  * Throws:
  *     DUnitAssertError if the assertation fails.
  */
-public void assertMatchRegex(string value, string pattern, string message = "Failed asserting match to regex", string file = __FILE__, ulong line = __LINE__)
+public void assertMatchRegex(string value, string pattern, string message = "Failed asserting match to regex", string file = __FILE__, size_t line = __LINE__)
 {
 	if (match(value, pattern).empty())
 	{
@@ -679,7 +679,7 @@ unittest
  * Throws:
  *     DUnitAssertError if the assertation fails.
  */
-public void assertStartsWith(string value, string prefix, string message = "Failed asserting starts with", string file = __FILE__, ulong line = __LINE__)
+public void assertStartsWith(string value, string prefix, string message = "Failed asserting starts with", string file = __FILE__, size_t line = __LINE__)
 {
 	if (!startsWith(value, prefix))
 	{
@@ -714,7 +714,7 @@ unittest
  * Throws:
  *     DUnitAssertError if the assertation fails.
  */
-public void assertEndsWith(string value, string suffix, string message = "Failed asserting ends with", string file = __FILE__, ulong line = __LINE__)
+public void assertEndsWith(string value, string suffix, string message = "Failed asserting ends with", string file = __FILE__, size_t line = __LINE__)
 {
 	if (!endsWith(value, suffix))
 	{

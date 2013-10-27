@@ -70,7 +70,7 @@ public mixin template Mockable(C) if (is(C == class))
 		/**
 		 * The line number in the file.
 		 */
-		public ulong line;
+		public size_t line;
 	}
 
 	/**
@@ -294,7 +294,7 @@ public mixin template Mockable(C) if (is(C == class))
 		 * }
 		 * ---
 		 */
-		public void mockMethod(T)(string name, T delegate_, ulong minimumCount = 0, ulong maximumCount = ulong.max, string file = __FILE__, ulong line = __LINE__)
+		public void mockMethod(T)(string name, T delegate_, ulong minimumCount = 0, ulong maximumCount = ulong.max, string file = __FILE__, size_t line = __LINE__)
 		{
 			string signature = this.generateSignature!(T)(name, delegate_);
 
@@ -342,7 +342,7 @@ public mixin template Mockable(C) if (is(C == class))
 		 * }
 		 * ---
 		 */
-		public void disableParentMethods(string file = __FILE__, ulong line = __LINE__)
+		public void disableParentMethods(string file = __FILE__, size_t line = __LINE__)
 		{
 			this._disableMethodsLocation.file = file;
 			this._disableMethodsLocation.line = line;
@@ -393,7 +393,7 @@ public mixin template Mockable(C) if (is(C == class))
 		 * }
 		 * ---
 		 */
-		public void assertMethodCalls(string message = "Failed asserting call count", string file = __FILE__, ulong line = __LINE__)
+		public void assertMethodCalls(string message = "Failed asserting call count", string file = __FILE__, size_t line = __LINE__)
 		{
 			foreach (signature, methodCount; this._methodCount)
 			{
