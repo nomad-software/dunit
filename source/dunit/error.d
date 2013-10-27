@@ -28,7 +28,7 @@ class DUnitAssertError : AssertError
 	/**
 	 * Constructor.
 	 */
-	this(string message, string file, size_t line)
+	this(string message, string file, ulong line)
 	{
 		super(message, file, line);
 	}
