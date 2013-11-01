@@ -121,7 +121,7 @@ public mixin template Mockable(C) if (is(C == class))
 	private static class Mock(C) : C if (is(C == class))
 	{
 		import dunit.error;
-		import dunit.result;
+		import dunit.moduleunittester;
 		import std.range;
 		import std.string;
 		import std.traits;

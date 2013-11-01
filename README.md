@@ -20,7 +20,7 @@ When using DUnit the built-in unit test handler has been replaced to give more h
 
 	DUnit by Gary Willoughby.
 	> Running unit tests
-	> Failed
+	- example
 
 	+----------------------------------------------------------------------
 	| Failed asserting equal

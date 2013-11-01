@@ -10,6 +10,10 @@ module dunit.output.console;
  * Imports.
  */
 import dunit.error;
+import dunit.result.moduleresultcollection;
+import std.array;
+import std.conv;
+import std.range;
 import std.stdio;
 import std.string;
 
@@ -19,68 +23,110 @@ import std.string;
 class Console
 {
 	/**
+	 * Write a line to the console.
+	 *
+	 * params:
+	 *     line = The line to write.
+	 */
+	public void write(string line)
+	{
+		writefln("%s", line);
+	}
+
+	/**
+	 * Write an indented line to the console.
+	 *
+	 * params:
+	 *     line = The line to write.
+	 *     indent = The space indent before the line.
+	 */
+	public void write(string line, int indent)
+	{
+		this.write(format("%s%s", " ".repeat(indent).join(), line));
+	}
+
+	/**
+	 * Write a prefixed line to the console.
+	 *
+	 * params:
+	 *     prefix = The prefix of the line.
+	 *     line = The line to write.
+	 */
+	public void write(string prefix, string line)
+	{
+		this.write(format("%s %s", prefix, line));
+	}
+
+	/**
+	 * Write an intented, prefixed line to the console.
+	 *
+	 * params:
+	 *     prefix = The prefix of the line.
+	 *     line = The line to write.
+	 *     indent = The space indent before the line.
+	 */
+	public void write(string prefix, string line, int indent)
+	{
+		this.write(format("%s%s %s", " ".repeat(indent).join(), prefix, line));
+	}
+
+	/**
 	 * Write the header.
 	 */
 	public void writeHeader()
 	{
-		writeln("");
-		writeln("DUnit by Gary Willoughby.");
-		writeln("> Running unit tests");
+		this.write("");
+		this.write("DUnit by Gary Willoughby.");
+		this.write("");
+		this.write(">", "Running unit tests");
 	}
 
 	/**
-	 * Write the success message.
-	 */
-	public void writeSuccessMessage()
-	{
-		writeln("> Success");
-	}
-
-	/**
-	 * Write the fail message.
-	 */
-	public void writeFailMessage()
-	{
-		writeln("> Failed");
-	}
-
-	/**
-	 * Format and write an exception to the console.
+	 * Format and write an error to the console.
 	 *
 	 * Params:
 	 *     ex = The exception to output.
 	 */
-	private void writeException(DUnitAssertError ex)
+	private void writeError(DUnitAssertError ex)
 	{
-		string horizontalLine = "+----------------------------------------------------------------------";
-		string text = "\n";
-		text ~= format("%s\n", horizontalLine);
-		text ~= format("| %s\n", ex.msg);
-		text ~= format("%s\n", horizontalLine);
-		text ~= format("| File: %s\n", ex.file);
-		text ~= format("| Line: %s\n", ex.line);
-		text ~= format("%s\n", horizontalLine);
+		this.write("");
+		this.write("+----------------------------------------------------------------------", 2);
+		this.write("|", ex.msg, 2);
+		this.write("+----------------------------------------------------------------------", 2);
+		this.write("| File:", ex.file, 2);
+		this.write("| Line:", ex.line.text(), 2);
+		this.write("+----------------------------------------------------------------------", 2);
 		foreach (info; ex.log)
 		{
-			text ~= format("| %s\n", info);
+			this.write("|", info, 2);
 		}
-		write(text);
+		this.write("");
 	}
 
 	/**
 	 * Output a detailed report.
 	 *
 	 * Params:
-	 *     results = An array of results.
+	 *     results = A module result collection.
 	 */
-	public void writeDetailedResults(DUnitAssertError[string] results)
+	public void writeReport(ModuleResultCollection results)
 	{
-		foreach (ex; results)
+		bool success = true;
+
+		foreach (result; results)
 		{
-			if (ex !is null)
+			this.write("-", result.source);
+
+			if (result.error)
 			{
-				this.writeException(ex);
+				success = false;
+				this.writeError(result.error);
 			}
+		}
+
+		if (success)
+		{
+			this.write(">", "Success");
 		}
 	}
 }

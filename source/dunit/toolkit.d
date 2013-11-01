@@ -12,8 +12,8 @@ module dunit.toolkit;
 /**
  * Imports.
  */
-import dunit.result;
 import dunit.error;
+import dunit.moduleunittester;
 import std.algorithm;
 import std.array;
 import std.regex;

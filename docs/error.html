@@ -21,42 +21,100 @@
 </div>
 <div class="class-members"><h2><a name="DUnitAssertError.this"></a> this(string <em>message</em>, string <em>file</em>, size_t <em>line</em>);
 </h2>
-<div class="declaration-description"><div class="sections"><p>Constructor.</p>
+<div class="declaration-description"><div class="sections"><p>Constructor.
+</p>
+<h3>Parameters</h3><table class="parameter-list"><tr><td>string <em>message</em></td>
+<td>The error <em>message</em>.</td></tr>
+<tr><td>string <em>file</em></td>
+<td>The <em>file</em> where the error occurred.</td></tr>
+<tr><td>size_t <em>line</em></td>
+<td>The <em>line</em> where the error occurred.</td></tr>
+</table>
 </div>
 </div>
 <h2><a name="DUnitAssertError.log"></a>@property string[] <span class="symbol">log</span>();
 </h2>
-<div class="declaration-description"><div class="sections"><p>Return the exception <span class="symbol">log</span>.</p>
+<div class="declaration-description"><div class="sections"><p>Return the exception <span class="symbol">log</span>.
+</p>
+<h3>Return Value</h3><p>The error's logged info, expectations and error messages.</p>
 </div>
 </div>
-<h2><a name="DUnitAssertError.addInfo"></a>void <span class="symbol">addInfo</span>(T)(string <em>caption</em>, T <em>value</em>, string <em>prefix</em> = "\xe2\x84\xb9");
+<h2><a name="DUnitAssertError.addInfo"></a>void <span class="symbol">addInfo</span>(T)(string <em>caption</em>, T <em>value</em>, string <em>icon</em> = "\xe2\x84\xb9");
 </h2>
-<div class="declaration-description"><div class="sections"><p>Add a line of info to the exception log.</p>
+<div class="declaration-description"><div class="sections"><p>Add a line of info to the exception log.
+</p>
+<h3>Parameters</h3><table class="parameter-list"><tr><td>caption</td>
+<td>The caption.</td></tr>
+<tr><td>value</td>
+<td>The value.</td></tr>
+<tr><td>icon</td>
+<td>The icon before the caption.</td></tr>
+</table>
 </div>
 </div>
-<h2><a name="DUnitAssertError.addTypedInfo"></a>void <span class="symbol">addTypedInfo</span>(T)(string <em>caption</em>, T <em>value</em>, string <em>prefix</em> = "\xe2\x84\xb9");
+<h2><a name="DUnitAssertError.addTypedInfo"></a>void <span class="symbol">addTypedInfo</span>(T)(string <em>caption</em>, T <em>value</em>, string <em>icon</em> = "\xe2\x84\xb9");
 </h2>
-<div class="declaration-description"><div class="sections"><p>Add a line of typed info to the exception log.</p>
+<div class="declaration-description"><div class="sections"><p>Add a line of typed info to the exception log.
+</p>
+<h3>Parameters</h3><table class="parameter-list"><tr><td>caption</td>
+<td>The caption.</td></tr>
+<tr><td>value</td>
+<td>The value.</td></tr>
+<tr><td>icon</td>
+<td>The icon before the caption.</td></tr>
+</table>
 </div>
 </div>
-<h2><a name="DUnitAssertError.addExpectation"></a>void <span class="symbol">addExpectation</span>(T)(string <em>caption</em>, T <em>value</em>, string <em>prefix</em> = "\xe2\x9c\x93");
+<h2><a name="DUnitAssertError.addExpectation"></a>void <span class="symbol">addExpectation</span>(T)(string <em>caption</em>, T <em>value</em>, string <em>icon</em> = "\xe2\x9c\x93");
 </h2>
-<div class="declaration-description"><div class="sections"><p>Add a line of expected info to the exception log.</p>
+<div class="declaration-description"><div class="sections"><p>Add a line of expected info to the exception log.
+</p>
+<h3>Parameters</h3><table class="parameter-list"><tr><td>caption</td>
+<td>The caption.</td></tr>
+<tr><td>value</td>
+<td>The value.</td></tr>
+<tr><td>icon</td>
+<td>The icon before the caption.</td></tr>
+</table>
 </div>
 </div>
-<h2><a name="DUnitAssertError.addTypedExpectation"></a>void <span class="symbol">addTypedExpectation</span>(T)(string <em>caption</em>, T <em>value</em>, string <em>prefix</em> = "\xe2\x9c\x93");
+<h2><a name="DUnitAssertError.addTypedExpectation"></a>void <span class="symbol">addTypedExpectation</span>(T)(string <em>caption</em>, T <em>value</em>, string <em>icon</em> = "\xe2\x9c\x93");
 </h2>
-<div class="declaration-description"><div class="sections"><p>Add a line of typed expected info to the exception log.</p>
+<div class="declaration-description"><div class="sections"><p>Add a line of typed expected info to the exception log.
+</p>
+<h3>Parameters</h3><table class="parameter-list"><tr><td>caption</td>
+<td>The caption.</td></tr>
+<tr><td>value</td>
+<td>The value.</td></tr>
+<tr><td>icon</td>
+<td>The icon before the caption.</td></tr>
+</table>
 </div>
 </div>
-<h2><a name="DUnitAssertError.addError"></a>void <span class="symbol">addError</span>(T)(string <em>caption</em>, T <em>value</em>, string <em>prefix</em> = "\xe2\x9c\x97");
+<h2><a name="DUnitAssertError.addError"></a>void <span class="symbol">addError</span>(T)(string <em>caption</em>, T <em>value</em>, string <em>icon</em> = "\xe2\x9c\x97");
 </h2>
-<div class="declaration-description"><div class="sections"><p>Add a line of error info to the exception log.</p>
+<div class="declaration-description"><div class="sections"><p>Add a line of error info to the exception log.
+</p>
+<h3>Parameters</h3><table class="parameter-list"><tr><td>caption</td>
+<td>The caption.</td></tr>
+<tr><td>value</td>
+<td>The value.</td></tr>
+<tr><td>icon</td>
+<td>The icon before the caption.</td></tr>
+</table>
 </div>
 </div>
-<h2><a name="DUnitAssertError.addTypedError"></a>void <span class="symbol">addTypedError</span>(T)(string <em>caption</em>, T <em>value</em>, string <em>prefix</em> = "\xe2\x9c\x97");
+<h2><a name="DUnitAssertError.addTypedError"></a>void <span class="symbol">addTypedError</span>(T)(string <em>caption</em>, T <em>value</em>, string <em>icon</em> = "\xe2\x9c\x97");
 </h2>
-<div class="declaration-description"><div class="sections"><p>Add a line of typed error info to the exception log.</p>
+<div class="declaration-description"><div class="sections"><p>Add a line of typed error info to the exception log.
+</p>
+<h3>Parameters</h3><table class="parameter-list"><tr><td>caption</td>
+<td>The caption.</td></tr>
+<tr><td>value</td>
+<td>The value.</td></tr>
+<tr><td>icon</td>
+<td>The icon before the caption.</td></tr>
+</table>
 </div>
 </div>
 </div>

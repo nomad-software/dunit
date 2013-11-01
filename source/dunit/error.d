@@ -12,6 +12,7 @@ module dunit.error;
 import core.exception;
 import std.string;
 
+
 /**
  * An exception thrown when a unit test fails.
  *
@@ -27,6 +28,11 @@ class DUnitAssertError : AssertError
 
 	/**
 	 * Constructor.
+	 *
+	 * Params:
+	 *     message = The error message.
+	 *     file = The file where the error occurred.
+	 *     line = The line where the error occurred.
 	 */
 	this(string message, string file, size_t line)
 	{
@@ -35,6 +41,9 @@ class DUnitAssertError : AssertError
 
 	/**
 	 * Return the exception log.
+	 *
+	 * Returns:
+	 *     The error's logged info, expectations and error messages.
 	 */
 	public @property string[] log()
 	{
@@ -43,50 +52,80 @@ class DUnitAssertError : AssertError
 
 	/**
 	 * Add a line of info to the exception log.
+	 *
+	 * Params:
+	 *     caption = The caption.
+	 *     value = The value.
+	 *     icon = The icon before the caption.
 	 */
-	public void addInfo(T)(string caption, T value, string prefix = "ℹ")
+	public void addInfo(T)(string caption, T value, string icon = "ℹ")
 	{
-		this._log ~= format("%s %s: %s", prefix, caption, value);
+		this._log ~= format("%s %s: %s", icon, caption, value);
 	}
 
 	/**
 	 * Add a line of typed info to the exception log.
+	 *
+	 * Params:
+	 *     caption = The caption.
+	 *     value = The value.
+	 *     icon = The icon before the caption.
 	 */
-	public void addTypedInfo(T)(string caption, T value, string prefix = "ℹ")
+	public void addTypedInfo(T)(string caption, T value, string icon = "ℹ")
 	{
-		this._log ~= format("%s %s: (%s) %s", prefix, caption, T.stringof, value);
+		this._log ~= format("%s %s: (%s) %s", icon, caption, T.stringof, value);
 	}
 
 	/**
 	 * Add a line of expected info to the exception log.
+	 *
+	 * Params:
+	 *     caption = The caption.
+	 *     value = The value.
+	 *     icon = The icon before the caption.
 	 */
-	public void addExpectation(T)(string caption, T value, string prefix = "✓")
+	public void addExpectation(T)(string caption, T value, string icon = "✓")
 	{
-		this.addInfo!(T)(caption, value, prefix);
+		this.addInfo!(T)(caption, value, icon);
 	}
 
 	/**
 	 * Add a line of typed expected info to the exception log.
+	 *
+	 * Params:
+	 *     caption = The caption.
+	 *     value = The value.
+	 *     icon = The icon before the caption.
 	 */
-	public void addTypedExpectation(T)(string caption, T value, string prefix = "✓")
+	public void addTypedExpectation(T)(string caption, T value, string icon = "✓")
 	{
-		this.addTypedInfo!(T)(caption, value, prefix);
+		this.addTypedInfo!(T)(caption, value, icon);
 	}
 
 	/**
 	 * Add a line of error info to the exception log.
+	 *
+	 * Params:
+	 *     caption = The caption.
+	 *     value = The value.
+	 *     icon = The icon before the caption.
 	 */
-	public void addError(T)(string caption, T value, string prefix = "✗")
+	public void addError(T)(string caption, T value, string icon = "✗")
 	{
-		this.addInfo!(T)(caption, value, prefix);
+		this.addInfo!(T)(caption, value, icon);
 	}
 
 	/**
 	 * Add a line of typed error info to the exception log.
+	 *
+	 * Params:
+	 *     caption = The caption.
+	 *     value = The value.
+	 *     icon = The icon before the caption.
 	 */
-	public void addTypedError(T)(string caption, T value, string prefix = "✗")
+	public void addTypedError(T)(string caption, T value, string icon = "✗")
 	{
-		this.addTypedInfo!(T)(caption, value, prefix);
+		this.addTypedInfo!(T)(caption, value, icon);
 	}
 }
 

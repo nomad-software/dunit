@@ -16,27 +16,61 @@
 </h2>
 <div class="declaration-description"><div class="sections"><p>Format output to the console.</p>
 </div>
-<div class="class-members"><h2><a name="Console.writeHeader"></a>void <span class="symbol">writeHeader</span>();
+<div class="class-members"><h2><a name="Console.write"></a>void <span class="symbol">write</span>(string <em>line</em>);
+</h2>
+<div class="declaration-description"><div class="sections"><p>Write a <em>line</em> to the console.
+</p>
+<h3>Parameters</h3><table class="parameter-list"><tr><td>string <em>line</em></td>
+<td>The <em>line</em> to <span class="symbol">write</span>.</td></tr>
+</table>
+</div>
+</div>
+<h2><a name="Console.write"></a>void <span class="symbol">write</span>(string <em>line</em>, int <em>indent</em>);
+</h2>
+<div class="declaration-description"><div class="sections"><p>Write an indented <em>line</em> to the console.
+</p>
+<h3>Parameters</h3><table class="parameter-list"><tr><td>string <em>line</em></td>
+<td>The <em>line</em> to <span class="symbol">write</span>.</td></tr>
+<tr><td>int <em>indent</em></td>
+<td>The space <em>indent</em> before the <em>line</em>.</td></tr>
+</table>
+</div>
+</div>
+<h2><a name="Console.write"></a>void <span class="symbol">write</span>(string <em>prefix</em>, string <em>line</em>);
+</h2>
+<div class="declaration-description"><div class="sections"><p>Write a prefixed <em>line</em> to the console.
+</p>
+<h3>Parameters</h3><table class="parameter-list"><tr><td>string <em>prefix</em></td>
+<td>The <em>prefix</em> of the <em>line</em>.</td></tr>
+<tr><td>string <em>line</em></td>
+<td>The <em>line</em> to <span class="symbol">write</span>.</td></tr>
+</table>
+</div>
+</div>
+<h2><a name="Console.write"></a>void <span class="symbol">write</span>(string <em>prefix</em>, string <em>line</em>, int <em>indent</em>);
+</h2>
+<div class="declaration-description"><div class="sections"><p>Write an intented, prefixed <em>line</em> to the console.
+</p>
+<h3>Parameters</h3><table class="parameter-list"><tr><td>string <em>prefix</em></td>
+<td>The <em>prefix</em> of the <em>line</em>.</td></tr>
+<tr><td>string <em>line</em></td>
+<td>The <em>line</em> to <span class="symbol">write</span>.</td></tr>
+<tr><td>int <em>indent</em></td>
+<td>The space <em>indent</em> before the <em>line</em>.</td></tr>
+</table>
+</div>
+</div>
+<h2><a name="Console.writeHeader"></a>void <span class="symbol">writeHeader</span>();
 </h2>
 <div class="declaration-description"><div class="sections"><p>Write the header.</p>
 </div>
 </div>
-<h2><a name="Console.writeSuccessMessage"></a>void <span class="symbol">writeSuccessMessage</span>();
-</h2>
-<div class="declaration-description"><div class="sections"><p>Write the success message.</p>
-</div>
-</div>
-<h2><a name="Console.writeFailMessage"></a>void <span class="symbol">writeFailMessage</span>();
-</h2>
-<div class="declaration-description"><div class="sections"><p>Write the fail message.</p>
-</div>
-</div>
-<h2><a name="Console.writeDetailedResults"></a>void <span class="symbol">writeDetailedResults</span>(DUnitAssertError[string] <em>results</em>);
+<h2><a name="Console.writeReport"></a>void <span class="symbol">writeReport</span>(ModuleResultCollection <em>results</em>);
 </h2>
 <div class="declaration-description"><div class="sections"><p>Output a detailed report.
 </p>
-<h3>Parameters</h3><table class="parameter-list"><tr><td>DUnitAssertError[string] <em>results</em></td>
-<td>An array of <em>results</em>.</td></tr>
+<h3>Parameters</h3><table class="parameter-list"><tr><td>ModuleResultCollection <em>results</em></td>
+<td>A module result collection.</td></tr>
 </table>
 </div>
 </div>
