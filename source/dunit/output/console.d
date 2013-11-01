@@ -12,7 +12,13 @@ module dunit.output.console;
 import dunit.error;
 import std.stdio;
 import std.string;
-
+version(ColorOutput)
+{
+    import dunit.output.consoled;
+    alias Error = ColorTheme!(Color.red, Color.initial);
+    alias Warning= ColorTheme!(Color.yellow, Color.initial);
+    alias Info  = ColorTheme!(Color.green, Color.initial);
+}
 /**
  * Format output to the console.
  */
@@ -23,9 +29,16 @@ class Console
 	 */
 	public void writeHeader()
 	{
-		writeln("");
-		writeln("DUnit by Gary Willoughby.");
-		writeln("> Running unit tests");
+        version(ColorOutput)
+        {   title = "DUnit running unit tests...";
+            writeln();
+            writecln("DUnit by Gary Willoughby.".Info);
+            writecln("> Running unit tests".Info);
+        } else {
+            writeln("");
+            writeln("DUnit by Gary Willoughby.");
+            writeln("> Running unit tests");
+        }
 	}
 
 	/**
@@ -33,7 +46,10 @@ class Console
 	 */
 	public void writeSuccessMessage()
 	{
-		writeln("> Success");
+        version(ColorOutput)
+            writecln("> Success".Info);
+        else
+            writeln("> Success");
 	}
 
 	/**
@@ -41,7 +57,10 @@ class Console
 	 */
 	public void writeFailMessage()
 	{
-		writeln("> Failed");
+        version(ColorOutput)
+            writecln("> Failed".Error);
+        else
+            writeln("> Failed");
 	}
 
 	/**
@@ -52,19 +71,40 @@ class Console
 	 */
 	private void writeException(DUnitAssertError ex)
 	{
-		string horizontalLine = "+----------------------------------------------------------------------";
-		string text = "\n";
-		text ~= format("%s\n", horizontalLine);
-		text ~= format("| %s\n", ex.msg);
-		text ~= format("%s\n", horizontalLine);
-		text ~= format("| File: %s\n", ex.file);
-		text ~= format("| Line: %s\n", ex.line);
-		text ~= format("%s\n", horizontalLine);
-		foreach (info; ex.log)
-		{
-			text ~= format("| %s\n", info);
-		}
-		write(text);
+        version(ColorOutput)
+        {
+            string horizontalLine = "+";
+            foreach(num; 0..size.x-1)
+                horizontalLine ~= "-";
+
+            string text = "\n";
+            text ~= format("%s\n", horizontalLine);
+            text ~= format("| %s\n", ex.msg);
+            text ~= format("%s\n", horizontalLine);
+            text ~= format("| File: %s\n", ex.file);
+            text ~= format("| Line: %s\n", ex.line);
+            text ~= format("%s\n", horizontalLine);
+            foreach (info; ex.log)
+            {
+                text ~= format("| %s\n", info);
+            }
+            text ~= format("%s\n", horizontalLine);
+            writec(text.Error);
+        } else {
+            string horizontalLine = "+----------------------------------------------------------------------";
+            string text = "\n";
+            text ~= format("%s\n", horizontalLine);
+            text ~= format("| %s\n", ex.msg);
+            text ~= format("%s\n", horizontalLine);
+            text ~= format("| File: %s\n", ex.file);
+            text ~= format("| Line: %s\n", ex.line);
+            text ~= format("%s\n", horizontalLine);
+            foreach (info; ex.log)
+            {
+                text ~= format("| %s\n", info);
+            }
+            write(text);
+        }
 	}
 
 	/**
