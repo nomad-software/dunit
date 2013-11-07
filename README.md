@@ -31,7 +31,7 @@ When using DUnit the built-in unit test handler has been replaced to give more h
 	| ✓ Expected value: (int) 1
 	| ✗ Actual value: (ulong) 2
 
-## Compilier flags
+## Compiler flags
 
 ### Required
 1. Mocking behaviour is only injected in unit test mode so you must used the `-unittest` flag for mocking to work.
