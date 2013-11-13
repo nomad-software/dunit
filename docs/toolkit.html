@@ -20,15 +20,15 @@
 </h2>
 <div class="declaration-description"><div class="sections"><p>Assert that two values are equal.
 </p>
-<h3>Parameters</h3><table class="parameter-list"><tr><td>value</td>
+<h3>Parameters</h3><table class="parameter-list"><tr><td>A value</td>
 <td>The value used during the assertion.</td></tr>
-<tr><td>target</td>
+<tr><td>B target</td>
 <td>The target value.</td></tr>
-<tr><td>message</td>
+<tr><td>string message</td>
 <td>The error message to display.</td></tr>
-<tr><td>file</td>
+<tr><td>string file</td>
 <td>The file name where the error occurred. The value is added automatically at the call site.</td></tr>
-<tr><td>line</td>
+<tr><td>size_t line</td>
 <td>The line where the error occurred. The value is added automatically at the call site.</td></tr>
 </table>
 <h3>Exceptions Thrown</h3><p>DUnitAssertError if the assertation fails.</p>
@@ -40,19 +40,19 @@
 </pre>
 </p></div>
 </div>
-<h2><a name="assertHasKey"></a>void <span class="symbol">assertHasKey</span>(A, B)(A <em>haystack</em>, B <em>needle</em>, string <em>message</em> = "Failed asserting array has key", string <em>file</em> = __FILE__, size_t <em>line</em> = __LINE__);
+<h2><a name="assertHasKey"></a>void <span class="symbol">assertHasKey</span>(A, B)(A <em>haystack</em>, B <em>needle</em>, string <em>message</em> = "Failed asserting array has key", string <em>file</em> = __FILE__, size_t <em>line</em> = __LINE__) if (isAssociativeArray!A);
 </h2>
 <div class="declaration-description"><div class="sections"><p>Assert that an associative array contains a particular key.
 </p>
-<h3>Parameters</h3><table class="parameter-list"><tr><td>haystack</td>
+<h3>Parameters</h3><table class="parameter-list"><tr><td>A haystack</td>
 <td>The associative array to interogate.</td></tr>
-<tr><td>needle</td>
+<tr><td>B needle</td>
 <td>The key the array should contain.</td></tr>
-<tr><td>message</td>
+<tr><td>string message</td>
 <td>The error message to display.</td></tr>
-<tr><td>file</td>
+<tr><td>string file</td>
 <td>The file name where the error occurred. The value is added automatically at the call site.</td></tr>
-<tr><td>line</td>
+<tr><td>size_t line</td>
 <td>The line where the error occurred. The value is added automatically at the call site.</td></tr>
 </table>
 <h3>Exceptions Thrown</h3><p>DUnitAssertError if the assertation fails.</p>
@@ -64,19 +64,19 @@
 </pre>
 </p></div>
 </div>
-<h2><a name="assertHasValue"></a>void <span class="symbol">assertHasValue</span>(A, B)(A <em>haystack</em>, B <em>needle</em>, string <em>message</em> = "Failed asserting array has value", string <em>file</em> = __FILE__, size_t <em>line</em> = __LINE__);
+<h2><a name="assertHasValue"></a>void <span class="symbol">assertHasValue</span>(A, B)(A <em>haystack</em>, B <em>needle</em>, string <em>message</em> = "Failed asserting array has value", string <em>file</em> = __FILE__, size_t <em>line</em> = __LINE__) if (isArray!A || isAssociativeArray!A);
 </h2>
 <div class="declaration-description"><div class="sections"><p>Assert that an array contains a particular value.
 </p>
-<h3>Parameters</h3><table class="parameter-list"><tr><td>haystack</td>
+<h3>Parameters</h3><table class="parameter-list"><tr><td>A haystack</td>
 <td>The array to interogate.</td></tr>
-<tr><td>needle</td>
+<tr><td>B needle</td>
 <td>The value the array should contain.</td></tr>
-<tr><td>message</td>
+<tr><td>string message</td>
 <td>The error message to display.</td></tr>
-<tr><td>file</td>
+<tr><td>string file</td>
 <td>The file name where the error occurred. The value is added automatically at the call site.</td></tr>
-<tr><td>line</td>
+<tr><td>size_t line</td>
 <td>The line where the error occurred. The value is added automatically at the call site.</td></tr>
 </table>
 <h3>Exceptions Thrown</h3><p>DUnitAssertError if the assertation fails.</p>
@@ -91,19 +91,19 @@
 </pre>
 </p></div>
 </div>
-<h2><a name="assertCount"></a>void <span class="symbol">assertCount</span>(A)(A <em>array</em>, ulong <em>count</em>, string <em>message</em> = "Failed asserting <em>array</em> <em>count</em>", string <em>file</em> = __FILE__, size_t <em>line</em> = __LINE__);
+<h2><a name="assertCount"></a>void <span class="symbol">assertCount</span>(A)(A <em>array</em>, ulong <em>count</em>, string <em>message</em> = "Failed asserting <em>array</em> <em>count</em>", string <em>file</em> = __FILE__, size_t <em>line</em> = __LINE__) if (isArray!A || isAssociativeArray!A);
 </h2>
 <div class="declaration-description"><div class="sections"><p>Assert that an array contains a particular value count.
 </p>
-<h3>Parameters</h3><table class="parameter-list"><tr><td>array</td>
+<h3>Parameters</h3><table class="parameter-list"><tr><td>A array</td>
 <td>The array to interogate.</td></tr>
-<tr><td>count</td>
+<tr><td>ulong count</td>
 <td>The amount of values the array should hold.</td></tr>
-<tr><td>message</td>
+<tr><td>string message</td>
 <td>The error message to display.</td></tr>
-<tr><td>file</td>
+<tr><td>string file</td>
 <td>The file name where the error occurred. The value is added automatically at the call site.</td></tr>
-<tr><td>line</td>
+<tr><td>size_t line</td>
 <td>The line where the error occurred. The value is added automatically at the call site.</td></tr>
 </table>
 <h3>Exceptions Thrown</h3><p>DUnitAssertError if the assertation fails.</p>
@@ -127,17 +127,17 @@ string_.<span class="symbol">assertCount</span>(0);
 </pre>
 </p></div>
 </div>
-<h2><a name="assertEmpty"></a>void <span class="symbol">assertEmpty</span>(A)(A <em>array</em>, string <em>message</em> = "Failed asserting empty <em>array</em>", string <em>file</em> = __FILE__, size_t <em>line</em> = __LINE__);
+<h2><a name="assertEmpty"></a>void <span class="symbol">assertEmpty</span>(A)(A <em>array</em>, string <em>message</em> = "Failed asserting empty <em>array</em>", string <em>file</em> = __FILE__, size_t <em>line</em> = __LINE__) if (isArray!A || isAssociativeArray!A);
 </h2>
 <div class="declaration-description"><div class="sections"><p>Assert that an array is empty.
 </p>
-<h3>Parameters</h3><table class="parameter-list"><tr><td>array</td>
+<h3>Parameters</h3><table class="parameter-list"><tr><td>A array</td>
 <td>The array to interogate.</td></tr>
-<tr><td>message</td>
+<tr><td>string message</td>
 <td>The error message to display.</td></tr>
-<tr><td>file</td>
+<tr><td>string file</td>
 <td>The file name where the error occurred. The value is added automatically at the call site.</td></tr>
-<tr><td>line</td>
+<tr><td>size_t line</td>
 <td>The line where the error occurred. The value is added automatically at the call site.</td></tr>
 </table>
 <h3>Exceptions Thrown</h3><p>DUnitAssertError if the assertation fails.</p>
@@ -159,13 +159,13 @@ string_.<span class="symbol">assertEmpty</span>();
 </h2>
 <div class="declaration-description"><div class="sections"><p>Assert that a boolean value is <strong>false</strong>.
 </p>
-<h3>Parameters</h3><table class="parameter-list"><tr><td>value</td>
+<h3>Parameters</h3><table class="parameter-list"><tr><td>T value</td>
 <td>The value used during the assertion.</td></tr>
-<tr><td>message</td>
+<tr><td>string message</td>
 <td>The error message to display.</td></tr>
-<tr><td>file</td>
+<tr><td>string file</td>
 <td>The file name where the error occurred. The value is added automatically at the call site.</td></tr>
-<tr><td>line</td>
+<tr><td>size_t line</td>
 <td>The line where the error occurred. The value is added automatically at the call site.</td></tr>
 </table>
 <h3>Exceptions Thrown</h3><p>DUnitAssertError if the assertation fails.</p>
@@ -180,13 +180,13 @@ string_.<span class="symbol">assertEmpty</span>();
 </h2>
 <div class="declaration-description"><div class="sections"><p>Assert that a value evaluates as <strong>false</strong>.
 </p>
-<h3>Parameters</h3><table class="parameter-list"><tr><td>value</td>
+<h3>Parameters</h3><table class="parameter-list"><tr><td>T value</td>
 <td>The value used during the assertion.</td></tr>
-<tr><td>message</td>
+<tr><td>string message</td>
 <td>The error message to display.</td></tr>
-<tr><td>file</td>
+<tr><td>string file</td>
 <td>The file name where the error occurred. The value is added automatically at the call site.</td></tr>
-<tr><td>line</td>
+<tr><td>size_t line</td>
 <td>The line where the error occurred. The value is added automatically at the call site.</td></tr>
 </table>
 <h3>Exceptions Thrown</h3><p>DUnitAssertError if the assertation fails.</p>
@@ -204,13 +204,13 @@ string_.<span class="symbol">assertEmpty</span>();
 </h2>
 <div class="declaration-description"><div class="sections"><p>Assert that a boolean value is <strong>true</strong>.
 </p>
-<h3>Parameters</h3><table class="parameter-list"><tr><td>value</td>
+<h3>Parameters</h3><table class="parameter-list"><tr><td>T value</td>
 <td>The value used during the assertion.</td></tr>
-<tr><td>message</td>
+<tr><td>string message</td>
 <td>The error message to display.</td></tr>
-<tr><td>file</td>
+<tr><td>string file</td>
 <td>The file name where the error occurred. The value is added automatically at the call site.</td></tr>
-<tr><td>line</td>
+<tr><td>size_t line</td>
 <td>The line where the error occurred. The value is added automatically at the call site.</td></tr>
 </table>
 <h3>Exceptions Thrown</h3><p>DUnitAssertError if the assertation fails.</p>
@@ -225,13 +225,13 @@ string_.<span class="symbol">assertEmpty</span>();
 </h2>
 <div class="declaration-description"><div class="sections"><p>Assert that a value evaluates as <strong>true</strong>.
 </p>
-<h3>Parameters</h3><table class="parameter-list"><tr><td>value</td>
+<h3>Parameters</h3><table class="parameter-list"><tr><td>T value</td>
 <td>The value used during the assertion.</td></tr>
-<tr><td>message</td>
+<tr><td>string message</td>
 <td>The error message to display.</td></tr>
-<tr><td>file</td>
+<tr><td>string file</td>
 <td>The file name where the error occurred. The value is added automatically at the call site.</td></tr>
-<tr><td>line</td>
+<tr><td>size_t line</td>
 <td>The line where the error occurred. The value is added automatically at the call site.</td></tr>
 </table>
 <h3>Exceptions Thrown</h3><p>DUnitAssertError if the assertation fails.</p>
@@ -248,13 +248,13 @@ string_.<span class="symbol">assertEmpty</span>();
 </h2>
 <div class="declaration-description"><div class="sections"><p>Assert that a value is of a particular type.
 </p>
-<h3>Parameters</h3><table class="parameter-list"><tr><td>value</td>
+<h3>Parameters</h3><table class="parameter-list"><tr><td>B value</td>
 <td>The value used during the assertion.</td></tr>
-<tr><td>message</td>
+<tr><td>string message</td>
 <td>The error message to display.</td></tr>
-<tr><td>file</td>
+<tr><td>string file</td>
 <td>The file name where the error occurred. The value is added automatically at the call site.</td></tr>
-<tr><td>line</td>
+<tr><td>size_t line</td>
 <td>The line where the error occurred. The value is added automatically at the call site.</td></tr>
 </table>
 <h3>Exceptions Thrown</h3><p>DUnitAssertError if the assertation fails.</p>
@@ -272,13 +272,13 @@ string_.<span class="symbol">assertEmpty</span>();
 </h2>
 <div class="declaration-description"><div class="sections"><p>Assert that a value is an instance of a type.
 </p>
-<h3>Parameters</h3><table class="parameter-list"><tr><td>value</td>
+<h3>Parameters</h3><table class="parameter-list"><tr><td>B value</td>
 <td>The value used during the assertion.</td></tr>
-<tr><td>message</td>
+<tr><td>string message</td>
 <td>The error message to display.</td></tr>
-<tr><td>file</td>
+<tr><td>string file</td>
 <td>The file name where the error occurred. The value is added automatically at the call site.</td></tr>
-<tr><td>line</td>
+<tr><td>size_t line</td>
 <td>The line where the error occurred. The value is added automatically at the call site.</td></tr>
 </table>
 <h3>Exceptions Thrown</h3><p>DUnitAssertError if the assertation fails.</p>
@@ -307,15 +307,15 @@ c.<span class="symbol">assertInstanceOf</span>!(C)();
 </h2>
 <div class="declaration-description"><div class="sections"><p>Assert that a value is greater than a threshold value.
 </p>
-<h3>Parameters</h3><table class="parameter-list"><tr><td>value</td>
+<h3>Parameters</h3><table class="parameter-list"><tr><td>A value</td>
 <td>The value used during the assertion.</td></tr>
-<tr><td>threshold</td>
+<tr><td>B threshold</td>
 <td>The threshold value.</td></tr>
-<tr><td>message</td>
+<tr><td>string message</td>
 <td>The error message to display.</td></tr>
-<tr><td>file</td>
+<tr><td>string file</td>
 <td>The file name where the error occurred. The value is added automatically at the call site.</td></tr>
-<tr><td>line</td>
+<tr><td>size_t line</td>
 <td>The line where the error occurred. The value is added automatically at the call site.</td></tr>
 </table>
 <h3>Exceptions Thrown</h3><p>DUnitAssertError if the assertation fails.</p>
@@ -330,15 +330,15 @@ c.<span class="symbol">assertInstanceOf</span>!(C)();
 </h2>
 <div class="declaration-description"><div class="sections"><p>Assert that a value is greater than or equal to a threshold value.
 </p>
-<h3>Parameters</h3><table class="parameter-list"><tr><td>value</td>
+<h3>Parameters</h3><table class="parameter-list"><tr><td>A value</td>
 <td>The value used during the assertion.</td></tr>
-<tr><td>threshold</td>
+<tr><td>B threshold</td>
 <td>The threshold value.</td></tr>
-<tr><td>message</td>
+<tr><td>string message</td>
 <td>The error message to display.</td></tr>
-<tr><td>file</td>
+<tr><td>string file</td>
 <td>The file name where the error occurred. The value is added automatically at the call site.</td></tr>
-<tr><td>line</td>
+<tr><td>size_t line</td>
 <td>The line where the error occurred. The value is added automatically at the call site.</td></tr>
 </table>
 <h3>Exceptions Thrown</h3><p>DUnitAssertError if the assertation fails.</p>
@@ -354,15 +354,15 @@ c.<span class="symbol">assertInstanceOf</span>!(C)();
 </h2>
 <div class="declaration-description"><div class="sections"><p>Assert that a value is less than a threshold value.
 </p>
-<h3>Parameters</h3><table class="parameter-list"><tr><td>value</td>
+<h3>Parameters</h3><table class="parameter-list"><tr><td>A value</td>
 <td>The value used during the assertion.</td></tr>
-<tr><td>threshold</td>
+<tr><td>B threshold</td>
 <td>The threshold value.</td></tr>
-<tr><td>message</td>
+<tr><td>string message</td>
 <td>The error message to display.</td></tr>
-<tr><td>file</td>
+<tr><td>string file</td>
 <td>The file name where the error occurred. The value is added automatically at the call site.</td></tr>
-<tr><td>line</td>
+<tr><td>size_t line</td>
 <td>The line where the error occurred. The value is added automatically at the call site.</td></tr>
 </table>
 <h3>Exceptions Thrown</h3><p>DUnitAssertError if the assertation fails.</p>
@@ -377,15 +377,15 @@ c.<span class="symbol">assertInstanceOf</span>!(C)();
 </h2>
 <div class="declaration-description"><div class="sections"><p>Assert that a value is less than or equal to a threshold value.
 </p>
-<h3>Parameters</h3><table class="parameter-list"><tr><td>value</td>
+<h3>Parameters</h3><table class="parameter-list"><tr><td>A value</td>
 <td>The value used during the assertion.</td></tr>
-<tr><td>threshold</td>
+<tr><td>B threshold</td>
 <td>The threshold value.</td></tr>
-<tr><td>message</td>
+<tr><td>string message</td>
 <td>The error message to display.</td></tr>
-<tr><td>file</td>
+<tr><td>string file</td>
 <td>The file name where the error occurred. The value is added automatically at the call site.</td></tr>
-<tr><td>line</td>
+<tr><td>size_t line</td>
 <td>The line where the error occurred. The value is added automatically at the call site.</td></tr>
 </table>
 <h3>Exceptions Thrown</h3><p>DUnitAssertError if the assertation fails.</p>
@@ -397,17 +397,17 @@ c.<span class="symbol">assertInstanceOf</span>!(C)();
 </pre>
 </p></div>
 </div>
-<h2><a name="assertNull"></a>void <span class="symbol">assertNull</span>(A)(A <em>value</em>, string <em>message</em> = "Failed asserting null", string <em>file</em> = __FILE__, size_t <em>line</em> = __LINE__);
+<h2><a name="assertNull"></a>void <span class="symbol">assertNull</span>(A)(A <em>value</em>, string <em>message</em> = "Failed asserting null", string <em>file</em> = __FILE__, size_t <em>line</em> = __LINE__) if (A.init is null);
 </h2>
 <div class="declaration-description"><div class="sections"><p>Assert that a value is <strong>null</strong>.
 </p>
-<h3>Parameters</h3><table class="parameter-list"><tr><td>value</td>
+<h3>Parameters</h3><table class="parameter-list"><tr><td>A value</td>
 <td>The value to assert as <strong>null</strong>.</td></tr>
-<tr><td>message</td>
+<tr><td>string message</td>
 <td>The error message to display.</td></tr>
-<tr><td>file</td>
+<tr><td>string file</td>
 <td>The file name where the error occurred. The value is added automatically at the call site.</td></tr>
-<tr><td>line</td>
+<tr><td>size_t line</td>
 <td>The line where the error occurred. The value is added automatically at the call site.</td></tr>
 </table>
 <h3>Exceptions Thrown</h3><p>DUnitAssertError if the assertation fails.</p>

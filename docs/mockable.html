@@ -39,7 +39,7 @@ Only module level types can be made mockable.
 </h2>
 <div class="declaration-description"><div class="sections"><p>Injected by the Mockable mixin template this method allows creation of mock object instances of the mockable class.
 </p>
-<h3>Parameters</h3><table class="parameter-list"><tr><td>args</td>
+<h3>Parameters</h3><table class="parameter-list"><tr><td>A args</td>
 <td>The constructor arguments of the host class.</td></tr>
 </table>
 <p><h3>Example:</h3>
@@ -82,18 +82,18 @@ Only module level types can be made mockable.
 <div class="declaration-description"><div class="sections"><p>Replace a method in the mock object by adding a mock method to be called in its place.
  <b>By default parent methods are called in lieu of any replacements unless parent methods are disabled.</b>
 </p>
-<h3>Parameters</h3><table class="parameter-list"><tr><td>name</td>
+<h3>Parameters</h3><table class="parameter-list"><tr><td>string name</td>
 <td>The name of the method to replace. (Only the name should be used, no parameters, etc.)</td></tr>
-<tr><td>delegate_</td>
+<tr><td>T delegate_</td>
 <td>The delegate to be used instead of calling the original method.
               The delegate must have the exact signature of the method being replaced.</td></tr>
-<tr><td>minimumCount</td>
+<tr><td>ulong minimumCount</td>
 <td>The minimum amount of times this method must be called when asserting calls.</td></tr>
-<tr><td>maximumCount</td>
+<tr><td>ulong maximumCount</td>
 <td>The maximum amount of times this method must be called when asserting calls.</td></tr>
-<tr><td>file</td>
+<tr><td>string file</td>
 <td>The file name where the error occurred. The value is added automatically at the call site.</td></tr>
-<tr><td>line</td>
+<tr><td>size_t line</td>
 <td>The line where the error occurred. The value is added automatically at the call site.</td></tr>
 </table>
 <h3>Exceptions Thrown</h3><p>DUnitAssertError if the passed delegate does not match the signature of any overload of the method named.
