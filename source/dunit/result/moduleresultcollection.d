@@ -65,8 +65,7 @@ class ModuleResultCollection
 	public void add(ModuleResult result)
 	{
 		this._results ~= result;
-		this._results.sort!("a.source < b.source")();
-		this._results.sort!("a.error is null && b.error !is null")();
+		this._results.multiSort!("a.error is null && b.error !is null", "a.source < b.source")();
 	}
 
 	/**
