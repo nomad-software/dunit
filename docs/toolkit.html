@@ -40,6 +40,57 @@
 </pre>
 </p></div>
 </div>
+<h2><a name="assertApprox"></a>void <span class="symbol">assertApprox</span>(A, B)(A <em>value</em>, B <em>target</em>, int <em>ulps</em> = 10, string <em>message</em> = "Failed asserting approximately equal", string <em>file</em> = __FILE__, size_t <em>line</em> = __LINE__) if (isFloatingPoint!(CommonType!(A, B)));
+</h2>
+<div class="declaration-description"><div class="sections"><p>Assert that two floating point values are approximately equal.
+</p>
+<h3>See Also</h3><p><a href="http://www.cygnus-software.com/papers/comparingfloats/comparingfloats.htm">http://www.cygnus-software.com/papers/comparingfloats/comparingfloats.htm</a>
+
+</p>
+<h3>Parameters</h3><table class="parameter-list"><tr><td>A value</td>
+<td>The value used during the assertion.</td></tr>
+<tr><td>B target</td>
+<td>The target value.</td></tr>
+<tr><td>int ulps</td>
+<td>The maximum space between two approximately equal floating point numbers measured in <a href="http://en.wikipedia.org/wiki/Unit_in_the_last_place">units of least precision</a>. A higher number means more approximation.</td></tr>
+<tr><td>string message</td>
+<td>The error message to display.</td></tr>
+<tr><td>string file</td>
+<td>The file name where the error occurred. The value is added automatically at the call site.</td></tr>
+<tr><td>size_t line</td>
+<td>The line where the error occurred. The value is added automatically at the call site.</td></tr>
+</table>
+<h3>Exceptions Thrown</h3><p>DUnitAssertError if the assertation fails.</p>
+<h3>Examples</h3><p>A simple example.
+ 
+<pre>
+<span class="keyword">float</span> smallestFloatDenormal = 0;
+*(<span class="keyword">cast</span>(<span class="keyword">int</span>*)&amp;smallestFloatDenormal) += 1;
+smallestFloatDenormal.<span class="symbol">assertApprox</span>(-smallestFloatDenormal);
+
+<span class="keyword">double</span> smallestDoubleDenormal = 0;
+*(<span class="keyword">cast</span>(<span class="keyword">int</span>*)&amp;smallestDoubleDenormal) += 1;
+smallestDoubleDenormal.<span class="symbol">assertApprox</span>(-smallestDoubleDenormal);
+
+0.0f.<span class="symbol">assertApprox</span>(-0.0f);
+(-0.0f).<span class="symbol">assertApprox</span>(0.0f);
+0.0.<span class="symbol">assertApprox</span>(-0.0);
+(-0.0).<span class="symbol">assertApprox</span>(0.0);
+2.0f.<span class="symbol">assertApprox</span>(1.999999f);
+1.999999f.<span class="symbol">assertApprox</span>(2.0f);
+2.0.<span class="symbol">assertApprox</span>(1.999999999999999);
+1.999999999999999.<span class="symbol">assertApprox</span>(2.0);
+
+<span class="comment">// The following tests pass but are open for debate whether or not they should.
+</span><span class="keyword">float</span>.max.<span class="symbol">assertApprox</span>(<span class="keyword">float</span>.infinity);
+<span class="keyword">float</span>.infinity.<span class="symbol">assertApprox</span>(<span class="keyword">float</span>.max);
+<span class="keyword">double</span>.infinity.<span class="symbol">assertApprox</span>(<span class="keyword">double</span>.max);
+<span class="keyword">double</span>.max.<span class="symbol">assertApprox</span>(<span class="keyword">double</span>.infinity);
+<span class="keyword">float</span>.nan.<span class="symbol">assertApprox</span>(<span class="keyword">float</span>.nan);
+<span class="keyword">double</span>.nan.<span class="symbol">assertApprox</span>(<span class="keyword">double</span>.nan);
+</pre>
+</p></div>
+</div>
 <h2><a name="assertHasKey"></a>void <span class="symbol">assertHasKey</span>(A, B)(A <em>haystack</em>, B <em>needle</em>, string <em>message</em> = "Failed asserting array has key", string <em>file</em> = __FILE__, size_t <em>line</em> = __LINE__) if (isAssociativeArray!A);
 </h2>
 <div class="declaration-description"><div class="sections"><p>Assert that an associative array contains a particular key.

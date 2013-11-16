@@ -16,6 +16,7 @@ import dunit.error;
 import dunit.moduleunittester;
 import std.algorithm;
 import std.array;
+import std.math;
 import std.regex;
 import std.stdio;
 import std.string;
@@ -54,6 +55,99 @@ unittest
 {
 	123.assertEqual(123);
 	"hello".assertEqual("hello");
+}
+
+/**
+ * Assert that two floating point values are approximately equal.
+ *
+ * See_Also:
+ *     $(LINK http://www.cygnus-software.com/papers/comparingfloats/comparingfloats.htm)
+ *
+ * Params:
+ *     value = The value used during the assertion.
+ *     target = The target value.
+ *     ulps = The maximum space between two approximately equal floating point numbers measured in $(LINK2 http://en.wikipedia.org/wiki/Unit_in_the_last_place, units of least precision). A higher number means more approximation.
+ *     message = The error message to display.
+ *     file = The file name where the error occurred. The value is added automatically at the call site.
+ *     line = The line where the error occurred. The value is added automatically at the call site.
+ *
+ * Throws:
+ *     DUnitAssertError if the assertation fails.
+ */
+public void assertApprox(A, B)(A value, B target, int ulps = 10, string message = "Failed asserting approximately equal", string file = __FILE__, size_t line = __LINE__) if (isFloatingPoint!(CommonType!(A, B)))
+{
+	static if (is(CommonType!(A, B) == double))
+	{
+		long maximumUlps       = 0x8000000000000;
+		long negativeZeroFloat = 0x8000000000000000;
+		long intValue          = *(cast(ulong*)&value);
+		long intTarget         = *(cast(ulong*)&target);
+		long difference;
+	}
+	else
+	{
+		int maximumUlps       = 0x400000;
+		int negativeZeroFloat = 0x80000000;
+		int intValue          = *(cast(int*)&value);
+		int intTarget         = *(cast(int*)&target);
+		int difference;
+	}
+
+	ulps.assertGreaterThan(0, "Unit of least precision should be above 0", file, line);
+	ulps.assertLessThan(maximumUlps, format("Unit of least precision should be below %s", maximumUlps), file, line);
+
+	if (intValue < 0)
+	{
+		intValue = negativeZeroFloat - intValue;
+	}
+
+	if (intTarget < 0)
+	{
+		intTarget = negativeZeroFloat - intTarget;
+	}
+
+	difference = abs(intValue - intTarget);
+
+	if (difference > ulps)
+	{
+		auto error = new DUnitAssertError(message, file, line);
+
+		error.addTypedExpectation("Expected value", target);
+		error.addTypedError("Actual value", value);
+
+		throw error;
+	}
+}
+
+/**
+ * A simple example.
+ */
+unittest
+{
+    float smallestFloatDenormal = 0;
+    *(cast(int*)&smallestFloatDenormal) += 1;
+	smallestFloatDenormal.assertApprox(-smallestFloatDenormal);
+
+    double smallestDoubleDenormal = 0;
+    *(cast(int*)&smallestDoubleDenormal) += 1;
+	smallestDoubleDenormal.assertApprox(-smallestDoubleDenormal);
+
+	0.0f.assertApprox(-0.0f);
+	(-0.0f).assertApprox(0.0f);
+	0.0.assertApprox(-0.0);
+	(-0.0).assertApprox(0.0);
+	2.0f.assertApprox(1.999999f);
+	1.999999f.assertApprox(2.0f);
+	2.0.assertApprox(1.999999999999999);
+	1.999999999999999.assertApprox(2.0);
+
+	// The following tests pass but are open for debate whether or not they should.
+	float.max.assertApprox(float.infinity);
+	float.infinity.assertApprox(float.max);
+	double.infinity.assertApprox(double.max);
+	double.max.assertApprox(double.infinity);
+	float.nan.assertApprox(float.nan);
+	double.nan.assertApprox(double.nan);
 }
 
 /**
