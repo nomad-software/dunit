@@ -43,6 +43,11 @@ When using DUnit the built-in unit test handler has been replaced to give more h
 ## Documentation
 There is full HTML documentation within the repository inside the [docs](https://github.com/kalekold/dunit/tree/master/docs) directory.
 
+### Building with dub
+To build DUnit as a static library using [dub](https://github.com/rejectedsoftware/dub) use the following command.
+
+	dub build --build=unittest --config=library
+
 ### View online
 - [Mockable mixin](http://htmlpreview.github.io/?https://github.com/kalekold/dunit/blob/master/docs/mockable.html)
 - [Assert toolkit](http://htmlpreview.github.io/?https://github.com/kalekold/dunit/blob/master/docs/toolkit.html)

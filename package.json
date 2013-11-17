@@ -5,4 +5,10 @@
 	"authors": ["Gary Willoughby"],
 	"copyright": "Copyright (c) 2013 Gary Willoughby",
 	"license": "MIT",
+	"configurations": [
+		{
+			"name": "library",
+			"excludedSourceFiles": ["source/example.d"]
+		}
+	],
 }

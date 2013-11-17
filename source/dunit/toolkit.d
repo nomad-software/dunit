@@ -124,12 +124,12 @@ public void assertApprox(A, B)(A value, B target, int ulps = 10, string message 
  */
 unittest
 {
-    float smallestFloatDenormal = 0;
-    *(cast(int*)&smallestFloatDenormal) += 1;
+	float smallestFloatDenormal = 0;
+	*(cast(int*)&smallestFloatDenormal) += 1;
 	smallestFloatDenormal.assertApprox(-smallestFloatDenormal);
 
-    double smallestDoubleDenormal = 0;
-    *(cast(int*)&smallestDoubleDenormal) += 1;
+	double smallestDoubleDenormal = 0;
+	*(cast(int*)&smallestDoubleDenormal) += 1;
 	smallestDoubleDenormal.assertApprox(-smallestDoubleDenormal);
 
 	0.0f.assertApprox(-0.0f);
