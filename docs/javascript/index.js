@@ -2,13 +2,14 @@ $(document).ready(function(){
 
 	var container = $('<div id="index"><h2>Index</h2></div>');
 	var list      = $('<ul id="list"></ul>');
+	var url       = window.location.protocol + "//" + window.location.host + "/" + window.location.pathname;
 
 	// Create the list.
 	var anchorIteration = 0;
 	$("h2 .symbol").each(function(){
 		var text = $(this).text();
 		$(this).before('<a name="' + text + anchorIteration + '"></a>');
-		list.append('<li class="item"><a href="#' + text + anchorIteration + '">' + text + '</li>');
+		list.append('<li class="item"><a href="' + url + '#' + text + anchorIteration + '">' + text + '</li>');
 		anchorIteration++;
 	});
 
