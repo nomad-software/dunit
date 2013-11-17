@@ -3,10 +3,10 @@
 html, body
 {
 	font-family: "Droid Sans", Calibri, Helvetica, Arial, sans-serif;
-	font-size: 14px;
+	font-size: 12px;
 	color: #494949;
 	background-color: #F8F8F8;
-	padding: 0 100px 25px 100px;
+	padding: 0 100px 25px 130px;
 }
 
 h1
@@ -28,11 +28,6 @@ h2 .symbol
 {
 	color: #5C7444;
 	font-weight: bold;
-}
-
-h2 u
-{
-	text-decoration: none;
 }
 
 h3
@@ -110,7 +105,9 @@ pre .parameter
 
 .module-members .declaration-description
 {
-	border-bottom: 2px dotted #E8E8E8;
+	border-bottom: 2px solid #9FB18E;
+	padding: 0 0 25px 0;
+	margin: 0 0 45px 0;
 }
 
 /**
@@ -133,6 +130,7 @@ pre .parameter
 	border-width: 0 1px 1px 1px;
 	border-style: solid;
 	border-color: #E8E8E8;
+	padding: 0 0 10px 0;
 	margin: 0 0 20px 0;
 }
 
@@ -205,17 +203,50 @@ pre .parameter
  */
 .parameter-list
 {
-	border: 1px solid #CCCCCC;
 	border-collapse: collapse;
 	margin: 0 0 20px 0;
 }
 
-.parameter-list td
+
+.parameter-list td:first-child
 {
-	background-color: #F8F8F8;
-	border-width: 1px 1px 1px 1px;
-	border-style: solid dashed;
-	border-color: #CCCCCC;
-	padding: 10px;
+	color: #7A9362;
+	white-space: nowrap;
 }
 
+.parameter-list td
+{
+	border-width: 0px 0px 1px 0px;
+	border-style: dashed;
+	border-color: #CCCCCC;
+	vertical-align: top;
+	padding: 5px;
+}
+
+#index
+{
+	float: left;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+
+	padding: 15px 0px 0px 30px;
+}
+
+#index h2
+{
+	color: #494949;
+	font-weight: bold;
+	margin: 10px 0 20px 0;
+}
+
+#index #list
+{
+	padding: 0;
+	list-style: none;
+}
+
+#index #list .item
+{
+	margin: 0 0 2px 0;
+}
