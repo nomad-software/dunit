@@ -2,16 +2,15 @@ $(document).ready(function(){
 
 	var container  = $('<div id="index"><h2>Index</h2></div>');
 	var list       = $('<ul id="list"></ul>');
-	var urlPattern = new RegExp("^.*\.html", "ig");
-	url            = urlPattern.exec(window.location.href)[0];
 
 	// Create the list.
-	var anchorIteration = 0;
 	$("h2 .symbol").each(function(){
-		var text = $(this).text();
-		$(this).before('<a name="' + text + anchorIteration + '"></a>');
-		list.append('<li class="item"><a href="' + url + '#' + text + anchorIteration + '">' + text + '</li>');
-		anchorIteration++;
+		var target = $(this);
+		var item   = $('<li class="item"><a href="#">' + target.text() + '</a></li>');
+		item.on("click", function() {
+			$.scrollTo(target, 200);
+		});
+		list.append(item);
 	});
 
 	list.appendTo(container);
