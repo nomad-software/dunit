@@ -5,5 +5,4 @@
 	"authors": ["Gary Willoughby"],
 	"copyright": "Copyright (c) 2013 Gary Willoughby",
 	"license": "MIT",
-	"dflags": ["-unittest"],
 }
