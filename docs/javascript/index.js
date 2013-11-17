@@ -2,7 +2,7 @@ $(document).ready(function(){
 
 	var container  = $('<div id="index"><h2>Index</h2></div>');
 	var list       = $('<ul id="list"></ul>');
-	var urlPattern = new RegExp("^(.*?)#.*$", "ig");
+	var urlPattern = new RegExp("^(.+)(#)?", "ig");
 	url            = urlPattern.exec(window.location.href)[1];
 
 	// Create the list.
