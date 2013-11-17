@@ -2,8 +2,8 @@ $(document).ready(function(){
 
 	var container  = $('<div id="index"><h2>Index</h2></div>');
 	var list       = $('<ul id="list"></ul>');
-	var urlPattern = new RegExp("^(.*\.html)", "ig");
-	url            = urlPattern.exec(window.location.href)[1];
+	var urlPattern = new RegExp("^.*\.html", "ig");
+	url            = urlPattern.exec(window.location.href)[0];
 
 	// Create the list.
 	var anchorIteration = 0;
