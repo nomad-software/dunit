@@ -7,8 +7,9 @@ $(document).ready(function(){
 	$("h2 .symbol").each(function(){
 		var target = $(this);
 		var item   = $('<li class="item"><a href="#">' + target.text() + '</a></li>');
-		item.on("click", function() {
+		item.on("click", function(event) {
 			$.scrollTo(target, 200);
+			event.preventDefault();
 		});
 		list.append(item);
 	});
