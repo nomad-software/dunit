@@ -8,7 +8,7 @@ DUnit is a unit testing toolkit for the D programming language. The toolkit comp
 Unit testing is necessary to assert *units* of code perform in isolation and conform to repeatable and known expectations. DUnit gives you the tools to make this task an easier one.
 
 ## Supported platforms
-DUnit was developed and tested with DMD v2.063.2 and should support any platform DMD supports as it only contains platform independent code. Other compilers have not been tested but should build fine.
+DUnit was developed and tested with DMD v2.064.2 and should support any platform DMD supports as it only contains platform independent code. Other compilers have not been tested but should build fine.
 
 ## Features
 
