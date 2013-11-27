@@ -40,16 +40,12 @@
 <td>The line where the error occurred. The value is added automatically at the call site.</td></tr>
 </table>
 <h3>Exceptions Thrown</h3><p>DUnitAssertError if the assertation fails.</p>
-<h3>Examples</h3><p>A simple example.
- 
-<pre>
-<span class="keyword">float</span> smallestFloatDenormal = 0;
-*(<span class="keyword">cast</span>(<span class="keyword">int</span>*)&amp;smallestFloatDenormal) += 1;
-smallestFloatDenormal.<span class="symbol">assertApprox</span>(-smallestFloatDenormal);
+<h3>Examples</h3><p><pre>
+<span class="keyword">float</span> smallestFloatSubnormal = <span class="keyword">float</span>.min_normal * <span class="keyword">float</span>.epsilon;
+smallestFloatSubnormal.<span class="symbol">assertApprox</span>(-smallestFloatSubnormal);
 
-<span class="keyword">double</span> smallestDoubleDenormal = 0;
-*(<span class="keyword">cast</span>(<span class="keyword">int</span>*)&amp;smallestDoubleDenormal) += 1;
-smallestDoubleDenormal.<span class="symbol">assertApprox</span>(-smallestDoubleDenormal);
+<span class="keyword">double</span> smallestDoubleSubnormal = <span class="keyword">double</span>.min_normal * <span class="keyword">double</span>.epsilon;
+smallestDoubleSubnormal.<span class="symbol">assertApprox</span>(-smallestDoubleSubnormal);
 
 0.0f.<span class="symbol">assertApprox</span>(-0.0f);
 (-0.0f).<span class="symbol">assertApprox</span>(0.0f);
@@ -86,9 +82,7 @@ smallestDoubleDenormal.<span class="symbol">assertApprox</span>(-smallestDoubleD
 <td>The line where the error occurred. The value is added automatically at the call site.</td></tr>
 </table>
 <h3>Exceptions Thrown</h3><p>DUnitAssertError if the assertation fails.</p>
-<h3>Examples</h3><p>A simple example.
- 
-<pre>
+<h3>Examples</h3><p><pre>
 <span class="keyword">int</span>[string] associativeArray;
 <span class="keyword">int</span>[] dynamicArray;
 string string_;
@@ -120,9 +114,7 @@ string_.<span class="symbol">assertCount</span>(0);
 <td>The line where the error occurred. The value is added automatically at the call site.</td></tr>
 </table>
 <h3>Exceptions Thrown</h3><p>DUnitAssertError if the assertation fails.</p>
-<h3>Examples</h3><p>A simple example.
- 
-<pre>
+<h3>Examples</h3><p><pre>
 <span class="keyword">int</span>[string] associativeArray;
 <span class="keyword">int</span>[] dynamicArray;
 string string_;
@@ -150,9 +142,7 @@ string_.<span class="symbol">assertEmpty</span>();
 <td>The <em>line</em> where the error occurred. The <em>value</em> is added automatically at the call site.</td></tr>
 </table>
 <h3>Exceptions Thrown</h3><p>DUnitAssertError if the assertation fails.</p>
-<h3>Examples</h3><p>A simple example.
- 
-<pre>
+<h3>Examples</h3><p><pre>
 <span class="string">"foo bar"</span>.<span class="symbol">assertEndsWith</span>(<span class="string">"bar"</span>);
 <span class="string">"baz qux"</span>.<span class="symbol">assertEndsWith</span>(<span class="string">"qux"</span>);
 </pre>
@@ -174,9 +164,7 @@ string_.<span class="symbol">assertEmpty</span>();
 <td>The line where the error occurred. The value is added automatically at the call site.</td></tr>
 </table>
 <h3>Exceptions Thrown</h3><p>DUnitAssertError if the assertation fails.</p>
-<h3>Examples</h3><p>A simple example.
- 
-<pre>
+<h3>Examples</h3><p><pre>
 123.<span class="symbol">assertEqual</span>(123);
 <span class="string">"hello"</span>.<span class="symbol">assertEqual</span>(<span class="string">"hello"</span>);
 </pre>
@@ -196,9 +184,7 @@ string_.<span class="symbol">assertEmpty</span>();
 <td>The line where the error occurred. The value is added automatically at the call site.</td></tr>
 </table>
 <h3>Exceptions Thrown</h3><p>DUnitAssertError if the assertation fails.</p>
-<h3>Examples</h3><p>A simple example.
- 
-<pre>
+<h3>Examples</h3><p><pre>
 <span class="keyword">false</span>.<span class="symbol">assertFalse</span>();
 </pre>
 </p></div>
@@ -217,9 +203,7 @@ string_.<span class="symbol">assertEmpty</span>();
 <td>The line where the error occurred. The value is added automatically at the call site.</td></tr>
 </table>
 <h3>Exceptions Thrown</h3><p>DUnitAssertError if the assertation fails.</p>
-<h3>Examples</h3><p>A simple example.
- 
-<pre>
+<h3>Examples</h3><p><pre>
 <span class="keyword">false</span>.<span class="symbol">assertFalsey</span>();
 [].<span class="symbol">assertFalsey</span>();
 <span class="keyword">null</span>.<span class="symbol">assertFalsey</span>();
@@ -243,9 +227,7 @@ string_.<span class="symbol">assertEmpty</span>();
 <td>The line where the error occurred. The value is added automatically at the call site.</td></tr>
 </table>
 <h3>Exceptions Thrown</h3><p>DUnitAssertError if the assertation fails.</p>
-<h3>Examples</h3><p>A simple example.
- 
-<pre>
+<h3>Examples</h3><p><pre>
 11.<span class="symbol">assertGreaterThan</span>(10);
 </pre>
 </p></div>
@@ -266,9 +248,7 @@ string_.<span class="symbol">assertEmpty</span>();
 <td>The line where the error occurred. The value is added automatically at the call site.</td></tr>
 </table>
 <h3>Exceptions Thrown</h3><p>DUnitAssertError if the assertation fails.</p>
-<h3>Examples</h3><p>A simple example.
- 
-<pre>
+<h3>Examples</h3><p><pre>
 10.<span class="symbol">assertGreaterThanOrEqual</span>(10);
 11.<span class="symbol">assertGreaterThanOrEqual</span>(10);
 </pre>
@@ -290,9 +270,7 @@ string_.<span class="symbol">assertEmpty</span>();
 <td>The line where the error occurred. The value is added automatically at the call site.</td></tr>
 </table>
 <h3>Exceptions Thrown</h3><p>DUnitAssertError if the assertation fails.</p>
-<h3>Examples</h3><p>A simple example.
- 
-<pre>
+<h3>Examples</h3><p><pre>
 [<span class="string">"foo"</span>:1, <span class="string">"bar"</span>:2, <span class="string">"baz"</span>:3, <span class="string">"qux"</span>:4].<span class="symbol">assertHasKey</span>(<span class="string">"foo"</span>);
 [1:<span class="string">"foo"</span>, 2:<span class="string">"bar"</span>, 3:<span class="string">"baz"</span>, 4:<span class="string">"qux"</span>].<span class="symbol">assertHasKey</span>(1);
 </pre>
@@ -314,9 +292,7 @@ string_.<span class="symbol">assertEmpty</span>();
 <td>The line where the error occurred. The value is added automatically at the call site.</td></tr>
 </table>
 <h3>Exceptions Thrown</h3><p>DUnitAssertError if the assertation fails.</p>
-<h3>Examples</h3><p>A simple example.
- 
-<pre>
+<h3>Examples</h3><p><pre>
 <span class="string">"Hello"</span>.<span class="symbol">assertHasValue</span>(<span class="string">"H"</span>);
 [1, 2, 3, 4].<span class="symbol">assertHasValue</span>(2);
 [<span class="string">"foo"</span>, <span class="string">"bar"</span>, <span class="string">"baz"</span>, <span class="string">"qux"</span>].<span class="symbol">assertHasValue</span>(<span class="string">"foo"</span>);
@@ -339,9 +315,7 @@ string_.<span class="symbol">assertEmpty</span>();
 <td>The line where the error occurred. The value is added automatically at the call site.</td></tr>
 </table>
 <h3>Exceptions Thrown</h3><p>DUnitAssertError if the assertation fails.</p>
-<h3>Examples</h3><p>A simple example.
- 
-<pre>
+<h3>Examples</h3><p><pre>
 <span class="keyword">interface</span> A {}
 <span class="keyword">class</span> B : A {}
 <span class="keyword">class</span> C : B {}
@@ -376,9 +350,7 @@ c.<span class="symbol">assertInstanceOf</span>!(C)();
 <td>The line where the error occurred. The value is added automatically at the call site.</td></tr>
 </table>
 <h3>Exceptions Thrown</h3><p>DUnitAssertError if the assertation fails.</p>
-<h3>Examples</h3><p>A simple example.
- 
-<pre>
+<h3>Examples</h3><p><pre>
 9.<span class="symbol">assertLessThan</span>(10);
 </pre>
 </p></div>
@@ -399,9 +371,7 @@ c.<span class="symbol">assertInstanceOf</span>!(C)();
 <td>The line where the error occurred. The value is added automatically at the call site.</td></tr>
 </table>
 <h3>Exceptions Thrown</h3><p>DUnitAssertError if the assertation fails.</p>
-<h3>Examples</h3><p>A simple example.
- 
-<pre>
+<h3>Examples</h3><p><pre>
 10.<span class="symbol">assertLessThanOrEqual</span>(10);
 9.<span class="symbol">assertLessThanOrEqual</span>(10);
 </pre>
@@ -423,9 +393,7 @@ c.<span class="symbol">assertInstanceOf</span>!(C)();
 <td>The <em>line</em> where the error occurred. The <em>value</em> is added automatically at the call site.</td></tr>
 </table>
 <h3>Exceptions Thrown</h3><p>DUnitAssertError if the assertation fails.</p>
-<h3>Examples</h3><p>A simple example.
- 
-<pre>
+<h3>Examples</h3><p><pre>
 <span class="string">"foo"</span>.<span class="symbol">assertMatchRegex</span>(<span class="string">r"^foo$"</span>);
 <span class="string">"192.168.0.1"</span>.<span class="symbol">assertMatchRegex</span>(<span class="string">r"((?:[\d]{1,3}\.){3}[\d]{1,3})"</span>);
 </pre>
@@ -445,9 +413,7 @@ c.<span class="symbol">assertInstanceOf</span>!(C)();
 <td>The line where the error occurred. The value is added automatically at the call site.</td></tr>
 </table>
 <h3>Exceptions Thrown</h3><p>DUnitAssertError if the assertation fails.</p>
-<h3>Examples</h3><p>A simple example.
- 
-<pre>
+<h3>Examples</h3><p><pre>
 <span class="keyword">class</span> T {}
 
 string foo;
@@ -477,11 +443,57 @@ t.<span class="symbol">assertNull</span>();
 <td>The <em>line</em> where the error occurred. The <em>value</em> is added automatically at the call site.</td></tr>
 </table>
 <h3>Exceptions Thrown</h3><p>DUnitAssertError if the assertation fails.</p>
-<h3>Examples</h3><p>A simple example.
- 
-<pre>
+<h3>Examples</h3><p><pre>
 <span class="string">"foo bar"</span>.<span class="symbol">assertStartsWith</span>(<span class="string">"foo"</span>);
 <span class="string">"baz qux"</span>.<span class="symbol">assertStartsWith</span>(<span class="string">"baz"</span>);
+</pre>
+</p></div>
+</div>
+<h2><a name="assertThrow"></a>void <span class="symbol">assertThrow</span>(A : Throwable, B)(lazy B <em>expression</em>, string <em>expressionMsg</em> = null, string <em>message</em> = "Failed asserting throw", string <em>file</em> = __FILE__, size_t <em>line</em> = __LINE__);
+</h2>
+<div class="declaration-description"><div class="sections"><p>Assert that an expression throws an exception.
+</p>
+<h3>Parameters</h3><table class="parameter-list"><tr><td>B expression</td>
+<td>The expression to evaluate in order to assert the exception is thrown.</td></tr>
+<tr><td>string expressionMsg</td>
+<td>An optional expected message of the thrown exception.</td></tr>
+<tr><td>string message</td>
+<td>The error message to display.</td></tr>
+<tr><td>string file</td>
+<td>The file name where the error occurred. The value is added automatically at the call site.</td></tr>
+<tr><td>size_t line</td>
+<td>The line where the error occurred. The value is added automatically at the call site.</td></tr>
+</table>
+<h3>Exceptions Thrown</h3><p>DUnitAssertError if the assertation fails.</p>
+<h3>Examples</h3><p><pre>
+<span class="keyword">import</span> core.exception : AssertError, RangeError;
+
+<span class="keyword">class</span> Foo : Exception
+{
+	<span class="keyword">this</span>(string message)
+	{
+		<span class="keyword">super</span>(message);
+	}
+}
+
+<span class="keyword">class</span> Bar
+{
+	<span class="keyword">public</span> <span class="keyword">void</span> baz()
+	{
+		<span class="keyword">throw</span> <span class="keyword">new</span> Foo(<span class="string">"Thrown from baz."</span>);
+	}
+}
+
+<span class="keyword">auto</span> bar = <span class="keyword">new</span> Bar();
+bar.baz().<span class="symbol">assertThrow</span>!(Foo)();
+bar.baz().<span class="symbol">assertThrow</span>!(Exception)(<span class="string">"Thrown from baz."</span>);
+
+<span class="keyword">delegate</span>(){<span class="keyword">throw</span> <span class="keyword">new</span> Foo(<span class="string">"Thrown from delegate."</span>);}().<span class="symbol">assertThrow</span>!(Exception)(<span class="string">"Thrown from delegate."</span>);
+
+<span class="keyword">auto</span> baz = [0, 1, 2];
+baz[3].<span class="symbol">assertThrow</span>!(RangeError)();
+
+<span class="keyword">assert</span>(<span class="keyword">false</span>).<span class="symbol">assertThrow</span>!(AssertError)(<span class="string">"Assertion failure"</span>);
 </pre>
 </p></div>
 </div>
@@ -499,9 +511,7 @@ t.<span class="symbol">assertNull</span>();
 <td>The line where the error occurred. The value is added automatically at the call site.</td></tr>
 </table>
 <h3>Exceptions Thrown</h3><p>DUnitAssertError if the assertation fails.</p>
-<h3>Examples</h3><p>A simple example.
- 
-<pre>
+<h3>Examples</h3><p><pre>
 <span class="keyword">true</span>.<span class="symbol">assertTrue</span>();
 </pre>
 </p></div>
@@ -520,9 +530,7 @@ t.<span class="symbol">assertNull</span>();
 <td>The line where the error occurred. The value is added automatically at the call site.</td></tr>
 </table>
 <h3>Exceptions Thrown</h3><p>DUnitAssertError if the assertation fails.</p>
-<h3>Examples</h3><p>A simple example.
- 
-<pre>
+<h3>Examples</h3><p><pre>
 <span class="keyword">true</span>.<span class="symbol">assertTruthy</span>();
 [<span class="string">"foo"</span>].<span class="symbol">assertTruthy</span>();
 1.<span class="symbol">assertTruthy</span>();
@@ -543,9 +551,7 @@ t.<span class="symbol">assertNull</span>();
 <td>The line where the error occurred. The value is added automatically at the call site.</td></tr>
 </table>
 <h3>Exceptions Thrown</h3><p>DUnitAssertError if the assertation fails.</p>
-<h3>Examples</h3><p>A simple example.
- 
-<pre>
+<h3>Examples</h3><p><pre>
 1.<span class="symbol">assertType</span>!(<span class="keyword">int</span>)();
 <span class="string">"foo"</span>.<span class="symbol">assertType</span>!(string)();
 [<span class="string">"bar"</span>].<span class="symbol">assertType</span>!(string[])();

@@ -84,9 +84,7 @@ public void assertApprox(A, B)(A value, B target, int ulps = 10, string message 
 	}
 }
 
-/**
- * A simple example.
- */
+///
 unittest
 {
 	float smallestFloatSubnormal = float.min_normal * float.epsilon;
@@ -140,9 +138,7 @@ public void assertCount(A)(A array, ulong count, string message = "Failed assert
 	}
 }
 
-/**
- * A simple example.
- */
+///
 unittest
 {
 	int[string] associativeArray;
@@ -187,9 +183,7 @@ public void assertEmpty(A)(A array, string message = "Failed asserting empty arr
 	}
 }
 
-/**
- * A simple example.
- */
+///
 unittest
 {
 	int[string] associativeArray;
@@ -228,9 +222,7 @@ public void assertEndsWith(string value, string suffix, string message = "Failed
 	}
 }
 
-/**
- * A simple example.
- */
+///
 unittest
 {
 	"foo bar".assertEndsWith("bar");
@@ -263,9 +255,7 @@ public void assertEqual(A, B)(A value, B target, string message = "Failed assert
 	}
 }
 
-/**
- * A simple example.
- */
+///
 unittest
 {
 	123.assertEqual(123);
@@ -298,9 +288,7 @@ public void assertFalse(T)(T value, string message = "Failed asserting false", s
 	}
 }
 
-/**
- * A simple example.
- */
+///
 unittest
 {
 	false.assertFalse();
@@ -331,9 +319,7 @@ public void assertFalsey(T)(T value, string message = "Failed asserting falsey",
 	}
 }
 
-/**
- * A simple example.
- */
+///
 unittest
 {
 	false.assertFalsey();
@@ -368,9 +354,7 @@ public void assertGreaterThan(A, B)(A value, B threshold, string message = "Fail
 	}
 }
 
-/**
- * A simple example.
- */
+///
 unittest
 {
 	11.assertGreaterThan(10);
@@ -402,9 +386,7 @@ public void assertGreaterThanOrEqual(A, B)(A value, B threshold, string message 
 	}
 }
 
-/**
- * A simple example.
- */
+///
 unittest
 {
 	10.assertGreaterThanOrEqual(10);
@@ -438,9 +420,7 @@ public void assertHasKey(A, B)(A haystack, B needle, string message = "Failed as
 	}
 }
 
-/**
- * A simple example.
- */
+///
 unittest
 {
 	["foo":1, "bar":2, "baz":3, "qux":4].assertHasKey("foo");
@@ -483,9 +463,7 @@ public void assertHasValue(A, B)(A haystack, B needle, string message = "Failed 
 	}
 }
 
-/**
- * A simple example.
- */
+///
 unittest
 {
 	"Hello".assertHasValue("H");
@@ -520,9 +498,7 @@ public void assertInstanceOf(A, B)(B value, string message = "Failed asserting i
 	}
 }
 
-/**
- * A simple example.
- */
+///
 unittest
 {
 	interface A {}
@@ -568,9 +544,7 @@ public void assertLessThan(A, B)(A value, B threshold, string message = "Failed 
 	}
 }
 
-/**
- * A simple example.
- */
+///
 unittest
 {
 	9.assertLessThan(10);
@@ -602,9 +576,7 @@ public void assertLessThanOrEqual(A, B)(A value, B threshold, string message = "
 	}
 }
 
-/**
- * A simple example.
- */
+///
 unittest
 {
 	10.assertLessThanOrEqual(10);
@@ -637,9 +609,7 @@ public void assertMatchRegex(string value, string pattern, string message = "Fai
 	}
 }
 
-/**
- * A simple example.
- */
+///
 unittest
 {
 	"foo".assertMatchRegex(r"^foo$");
@@ -671,9 +641,7 @@ public void assertNull(A)(A value, string message = "Failed asserting null", str
 	}
 }
 
-/**
- * A simple example.
- */
+///
 unittest
 {
 	class T {}
@@ -714,13 +682,92 @@ public void assertStartsWith(string value, string prefix, string message = "Fail
 	}
 }
 
-/**
- * A simple example.
- */
+///
 unittest
 {
 	"foo bar".assertStartsWith("foo");
 	"baz qux".assertStartsWith("baz");
+}
+
+/**
+ * Assert that an expression throws an exception.
+ *
+ * Params:
+ *     expression = The expression to evaluate in order to assert the exception is thrown.
+ *     expressionMsg = An optional expected message of the thrown exception.
+ *     message = The error message to display.
+ *     file = The file name where the error occurred. The value is added automatically at the call site.
+ *     line = The line where the error occurred. The value is added automatically at the call site.
+ *
+ * Throws:
+ *     DUnitAssertError if the assertation fails.
+ */
+public void assertThrow(A : Throwable, B)(lazy B expression, string expressionMsg = null, string message = "Failed asserting throw", string file = __FILE__, size_t line = __LINE__)
+{
+	try
+	{
+		try
+		{
+			expression;
+		}
+		catch (A ex)
+		{
+			if (expressionMsg !is null && expressionMsg != ex.msg)
+			{
+				auto error = new DUnitAssertError(message, file, line);
+
+				error.addExpectation("Expected message", expressionMsg);
+				error.addError("Thrown message", ex.msg);
+
+				throw error;
+			}
+			return;
+		}
+	}
+	catch (Exception ex)
+	{
+		// If the expression throws an exception other than the one specified just let it pass.
+		// We can't get any meaningful information about what was thrown anyway.
+	}
+
+	auto error = new DUnitAssertError(message, file, line);
+
+	error.addError("Expected exception", A.stringof);
+
+	throw error;
+}
+
+///
+unittest
+{
+	import core.exception : AssertError, RangeError;
+
+	class Foo : Exception
+	{
+		this(string message)
+		{
+			super(message);
+		}
+	}
+
+	class Bar
+	{
+		public void baz()
+		{
+			throw new Foo("Thrown from baz.");
+		}
+	}
+
+	auto bar = new Bar();
+	bar.baz().assertThrow!(Foo)();
+	bar.baz().assertThrow!(Exception)("Thrown from baz.");
+
+	delegate(){throw new Foo("Thrown from delegate.");}().assertThrow!(Exception)("Thrown from delegate.");
+
+	auto baz = [0, 1, 2];
+	baz[3].assertThrow!(RangeError)();
+
+	assert(false).assertThrow!(AssertError)("Assertion failure");
 }
 
 /**
@@ -749,9 +796,7 @@ public void assertTrue(T)(T value, string message = "Failed asserting false", st
 	}
 }
 
-/**
- * A simple example.
- */
+///
 unittest
 {
 	true.assertTrue();
@@ -782,9 +827,7 @@ public void assertTruthy(T)(T value, string message = "Failed asserting true", s
 	}
 }
 
-/**
- * A simple example.
- */
+///
 unittest
 {
 	true.assertTruthy();
@@ -817,9 +860,7 @@ public void assertType(A, B)(B value, string message = "Failed asserting type", 
 	}
 }
 
-/**
- * A simple example.
- */
+///
 unittest
 {
 	1.assertType!(int)();
