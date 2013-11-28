@@ -49,9 +49,9 @@ To build DUnit as a static library using [dub](https://github.com/rejectedsoftwa
 	dub build --build=unittest --config=library
 
 ### View online
-- [Mockable mixin](http://htmlpreview.github.io/?https://github.com/kalekold/dunit/blob/master/docs/mockable.html)
-- [Assert toolkit](http://htmlpreview.github.io/?https://github.com/kalekold/dunit/blob/master/docs/toolkit.html)
+- [Mockable mixin](http://htmlpreview.github.io/?https://github.com/kalekold/dunit/master/docs/dunit/mockable.html)
+- [Assert toolkit](http://htmlpreview.github.io/?https://github.com/kalekold/dunit/master/docs/dunit/toolkit.html)
 
 ## Example
 
-[Click here to see an example of how Dunit is used.](https://github.com/kalekold/dunit/blob/master/source/example.d)
+[Click here to see an example of how Dunit is used.](https://github.com/kalekold/dunit/master/source/example.d)
