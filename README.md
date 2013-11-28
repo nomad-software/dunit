@@ -54,4 +54,4 @@ To build DUnit as a static library using [dub](https://github.com/rejectedsoftwa
 
 ## Example
 
-[Click here to see an example of how Dunit is used.](https://github.com/kalekold/dunit/master/source/example.d)
+[Click here to see an example of how Dunit is used.](https://github.com/kalekold/dunit/blob/master/source/example.d)
