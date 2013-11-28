@@ -449,7 +449,7 @@ t.<span class="symbol">assertNull</span>();
 </pre>
 </p></div>
 </div>
-<h2><a name="assertThrow"></a>void <span class="symbol">assertThrow</span>(A : Throwable, B)(lazy B <em>expression</em>, string <em>expressionMsg</em> = null, string <em>message</em> = "Failed asserting throw", string <em>file</em> = __FILE__, size_t <em>line</em> = __LINE__);
+<h2><a name="assertThrow"></a>void <span class="symbol">assertThrow</span>(A : Throwable = Exception, B)(lazy B <em>expression</em>, string <em>expressionMsg</em> = null, string <em>message</em> = "Failed asserting throw", string <em>file</em> = __FILE__, size_t <em>line</em> = __LINE__);
 </h2>
 <div class="declaration-description"><div class="sections"><p>Assert that an expression throws an exception.
 </p>
@@ -485,8 +485,8 @@ t.<span class="symbol">assertNull</span>();
 }
 
 <span class="keyword">auto</span> bar = <span class="keyword">new</span> Bar();
-bar.baz().<span class="symbol">assertThrow</span>!(Foo)();
-bar.baz().<span class="symbol">assertThrow</span>!(Exception)(<span class="string">"Thrown from baz."</span>);
+bar.baz().<span class="symbol">assertThrow</span>();
+bar.baz().<span class="symbol">assertThrow</span>!(Foo)(<span class="string">"Thrown from baz."</span>);
 
 <span class="keyword">delegate</span>(){<span class="keyword">throw</span> <span class="keyword">new</span> Foo(<span class="string">"Thrown from delegate."</span>);}().<span class="symbol">assertThrow</span>!(Exception)(<span class="string">"Thrown from delegate."</span>);
 

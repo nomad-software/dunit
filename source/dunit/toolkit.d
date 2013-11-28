@@ -702,7 +702,7 @@ unittest
  * Throws:
  *     DUnitAssertError if the assertation fails.
  */
-public void assertThrow(A : Throwable, B)(lazy B expression, string expressionMsg = null, string message = "Failed asserting throw", string file = __FILE__, size_t line = __LINE__)
+public void assertThrow(A : Throwable = Exception, B)(lazy B expression, string expressionMsg = null, string message = "Failed asserting throw", string file = __FILE__, size_t line = __LINE__)
 {
 	try
 	{
@@ -759,8 +759,8 @@ unittest
 	}
 
 	auto bar = new Bar();
-	bar.baz().assertThrow!(Foo)();
-	bar.baz().assertThrow!(Exception)("Thrown from baz.");
+	bar.baz().assertThrow();
+	bar.baz().assertThrow!(Foo)("Thrown from baz.");
 
 	delegate(){throw new Foo("Thrown from delegate.");}().assertThrow!(Exception)("Thrown from delegate.");
 
