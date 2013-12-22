@@ -39,7 +39,7 @@ import std.traits;
  * Throws:
  *     DUnitAssertError if the assertation fails.
  */
-public void assertApprox(A, B)(A value, B target, int ulps = 10, string message = "Failed asserting approximately equal", string file = __FILE__, size_t line = __LINE__) if (isFloatingPoint!(CommonType!(A, B)))
+public void assertApprox(A, B)(A value, B target, long ulps = 10, string message = "Failed asserting approximately equal", string file = __FILE__, size_t line = __LINE__) if (isFloatingPoint!(CommonType!(A, B)))
 {
 	static if (is(CommonType!(A, B) == double))
 	{
@@ -109,6 +109,67 @@ unittest
 	double.max.assertApprox(double.infinity);
 	float.nan.assertApprox(float.nan);
 	double.nan.assertApprox(double.nan);
+}
+
+/**
+ * Assert that two floating point values are approximately equal using an epsilon value.
+ *
+ * See_Also:
+ *     $(LINK http://www.cygnus-software.com/papers/comparingfloats/comparingfloats.htm)
+ *
+ * Params:
+ *     value = The value used during the assertion.
+ *     target = The target value.
+ *     epsilon = An epsilon value to be used as the maximum absolute and relative error in the comparison.
+ *     message = The error message to display.
+ *     file = The file name where the error occurred. The value is added automatically at the call site.
+ *     line = The line where the error occurred. The value is added automatically at the call site.
+ *
+ * Throws:
+ *     DUnitAssertError if the assertation fails.
+ */
+public void assertApprox(A, B)(A value, B target, double epsilon, string message = "Failed asserting approximately equal", string file = __FILE__, size_t line = __LINE__) if (isFloatingPoint!(CommonType!(A, B)))
+{
+	auto divisor       = (fabs(value) > fabs(target)) ? value : target;
+	auto absoluteError = fabs(value - target);
+	auto relativeError = fabs((value - target) / divisor);
+
+	if (absoluteError > epsilon && relativeError > epsilon)
+	{
+		auto error = new DUnitAssertError(message, file, line);
+
+		error.addTypedExpectation("Expected value", target);
+		error.addTypedError("Actual value", value);
+
+		throw error;
+	}
+}
+
+///
+unittest
+{
+	float smallestFloatSubnormal = float.min_normal * float.epsilon;
+	smallestFloatSubnormal.assertApprox(-smallestFloatSubnormal, 0.00001);
+
+	double smallestDoubleSubnormal = double.min_normal * double.epsilon;
+	smallestDoubleSubnormal.assertApprox(-smallestDoubleSubnormal, 0.00001);
+
+	0.0f.assertApprox(-0.0f, 0.00001);
+	(-0.0f).assertApprox(0.0f, 0.00001);
+	0.0.assertApprox(-0.0, 0.00001);
+	(-0.0).assertApprox(0.0, 0.00001);
+	2.0f.assertApprox(1.99f, 0.01);
+	1.99f.assertApprox(2.0f, 0.01);
+	2.0.assertApprox(1.99, 0.01);
+	1.99.assertApprox(2.0, 0.01);
+
+	// The following tests pass but are open for debate whether or not they should.
+	float.max.assertApprox(float.infinity, 0.00001);
+	float.infinity.assertApprox(float.max, 0.00001);
+	double.infinity.assertApprox(double.max, 0.00001);
+	double.max.assertApprox(double.infinity, 0.00001);
+	float.nan.assertApprox(float.nan, 0.00001);
+	double.nan.assertApprox(double.nan, 0.00001);
 }
 
 /**
