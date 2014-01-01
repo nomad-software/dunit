@@ -109,6 +109,9 @@ unittest
 	double.max.assertApprox(double.infinity);
 	float.nan.assertApprox(float.nan);
 	double.nan.assertApprox(double.nan);
+
+	// Assert a DUnitAssertError is thrown if assertApprox fails.
+	10f.assertApprox(0f).assertThrow!(DUnitAssertError)("Failed asserting approximately equal");
 }
 
 /**
@@ -170,6 +173,9 @@ unittest
 	double.max.assertApprox(double.infinity, 0.00001);
 	float.nan.assertApprox(float.nan, 0.00001);
 	double.nan.assertApprox(double.nan, 0.00001);
+
+	// Assert a DUnitAssertError is thrown if assertApprox fails.
+	10f.assertApprox(0f, 0.00001).assertThrow!(DUnitAssertError)("Failed asserting approximately equal");
 }
 
 /**
@@ -216,6 +222,9 @@ unittest
 	["foo", "bar", "baz", "qux"].assertCount(4);
 	[["foo", "bar"], ["baz", "qux"]].assertCount(2);
 	["foo":1, "bar":2, "baz":3, "qux":4].assertCount(4);
+
+	// Assert a DUnitAssertError is thrown if assertCount fails.
+	associativeArray.assertCount(1).assertThrow!(DUnitAssertError)("Failed asserting array count");
 }
 
 /**
@@ -255,6 +264,9 @@ unittest
 	dynamicArray.assertEmpty();
 	string_.assertEmpty();
 	[].assertEmpty();
+
+	// Assert a DUnitAssertError is thrown if assertEmpty fails.
+	[1].assertEmpty().assertThrow!(DUnitAssertError)("Failed asserting empty array");
 }
 
 /**
@@ -288,6 +300,9 @@ unittest
 {
 	"foo bar".assertEndsWith("bar");
 	"baz qux".assertEndsWith("qux");
+
+	// Assert a DUnitAssertError is thrown if assertEndsWith fails.
+	"foo".assertEndsWith("bar").assertThrow!(DUnitAssertError)("Failed asserting ends with");
 }
 
 /**
@@ -321,6 +336,9 @@ unittest
 {
 	123.assertEqual(123);
 	"hello".assertEqual("hello");
+
+	// Assert a DUnitAssertError is thrown if assertEqual fails.
+	1.assertEqual(2).assertThrow!(DUnitAssertError)("Failed asserting equal");
 }
 
 /**
@@ -353,6 +371,9 @@ public void assertFalse(T)(T value, string message = "Failed asserting false", s
 unittest
 {
 	false.assertFalse();
+
+	// Assert a DUnitAssertError is thrown if assertFalse fails.
+	true.assertFalse().assertThrow!(DUnitAssertError)("Failed asserting false");
 }
 
 /**
@@ -387,6 +408,9 @@ unittest
 	[].assertFalsey();
 	null.assertFalsey();
 	0.assertFalsey();
+
+	// Assert a DUnitAssertError is thrown if assertFalsey fails.
+	true.assertFalsey().assertThrow!(DUnitAssertError)("Failed asserting falsey");
 }
 
 /**
@@ -419,6 +443,9 @@ public void assertGreaterThan(A, B)(A value, B threshold, string message = "Fail
 unittest
 {
 	11.assertGreaterThan(10);
+
+	// Assert a DUnitAssertError is thrown if assertGreaterThan fails.
+	11.assertGreaterThan(12).assertThrow!(DUnitAssertError)("Failed asserting greater than");
 }
 
 /**
@@ -452,6 +479,9 @@ unittest
 {
 	10.assertGreaterThanOrEqual(10);
 	11.assertGreaterThanOrEqual(10);
+
+	// Assert a DUnitAssertError is thrown if assertGreaterThanOrEqual fails.
+	11.assertGreaterThanOrEqual(12).assertThrow!(DUnitAssertError)("Failed asserting greater than or equal");
 }
 
 /**
@@ -486,6 +516,9 @@ unittest
 {
 	["foo":1, "bar":2, "baz":3, "qux":4].assertHasKey("foo");
 	[1:"foo", 2:"bar", 3:"baz", 4:"qux"].assertHasKey(1);
+
+	// Assert a DUnitAssertError is thrown if assertHasKey fails.
+	["foo":"bar"].assertHasKey("baz").assertThrow!(DUnitAssertError)("Failed asserting array has key");
 }
 
 /**
@@ -532,6 +565,9 @@ unittest
 	["foo", "bar", "baz", "qux"].assertHasValue("foo");
 	[["foo", "bar"], ["baz", "qux"]].assertHasValue(["foo", "bar"]);
 	["foo":1, "bar":2, "baz":3, "qux":4].assertHasValue(4);
+
+	// Assert a DUnitAssertError is thrown if assertHasValue fails.
+	["foo":"bar"].assertHasValue("baz").assertThrow!(DUnitAssertError)("Failed asserting array has value");
 }
 
 /**
@@ -577,6 +613,9 @@ unittest
 	c.assertInstanceOf!(A)();
 	c.assertInstanceOf!(B)();
 	c.assertInstanceOf!(C)();
+
+	// Assert a DUnitAssertError is thrown if assertInstanceOf fails.
+	b.assertInstanceOf!(C)().assertThrow!(DUnitAssertError)("Failed asserting instance of");
 }
 
 /**
@@ -609,6 +648,9 @@ public void assertLessThan(A, B)(A value, B threshold, string message = "Failed 
 unittest
 {
 	9.assertLessThan(10);
+
+	// Assert a DUnitAssertError is thrown if assertLessThan fails.
+	9.assertLessThan(8).assertThrow!(DUnitAssertError)("Failed asserting less than");
 }
 
 /**
@@ -642,6 +684,9 @@ unittest
 {
 	10.assertLessThanOrEqual(10);
 	9.assertLessThanOrEqual(10);
+
+	// Assert a DUnitAssertError is thrown if assertLessThanOrEqual fails.
+	9.assertLessThanOrEqual(8).assertThrow!(DUnitAssertError)("Failed asserting less than or equal");
 }
 
 /**
@@ -675,6 +720,9 @@ unittest
 {
 	"foo".assertMatchRegex(r"^foo$");
 	"192.168.0.1".assertMatchRegex(r"((?:[\d]{1,3}\.){3}[\d]{1,3})");
+
+	// Assert a DUnitAssertError is thrown if assertMatchRegex fails.
+	"foo".assertMatchRegex(r"^bar$").assertThrow!(DUnitAssertError)("Failed asserting match to regex");
 }
 
 /**
@@ -715,6 +763,9 @@ unittest
 	bar.assertNull();
 	t.assertNull();
 	null.assertNull();
+
+	// Assert a DUnitAssertError is thrown if assertNull fails.
+	"foo".assertNull().assertThrow!(DUnitAssertError)("Failed asserting null");
 }
 
 /**
@@ -748,6 +799,9 @@ unittest
 {
 	"foo bar".assertStartsWith("foo");
 	"baz qux".assertStartsWith("baz");
+
+	// Assert a DUnitAssertError is thrown if assertStartsWith fails.
+	"foo bar".assertStartsWith("baz").assertThrow!(DUnitAssertError)("Failed asserting starts with");
 }
 
 /**
@@ -829,6 +883,12 @@ unittest
 	baz[3].assertThrow!(RangeError)();
 
 	assert(false).assertThrow!(AssertError)("Assertion failure");
+
+	// Assert a DUnitAssertError is thrown if assertThrow fails.
+	null.assertThrow().assertThrow!(DUnitAssertError)("Failed asserting throw");
+
+	// Assert a DUnitAssertError is thrown if assertThrow fails due to mismatched error message.
+	baz[3].assertThrow!(RangeError)("Foo").assertThrow!(DUnitAssertError)("Failed asserting throw");
 }
 
 /**
@@ -843,7 +903,7 @@ unittest
  * Throws:
  *     DUnitAssertError if the assertation fails.
  */
-public void assertTrue(T)(T value, string message = "Failed asserting false", string file = __FILE__, size_t line = __LINE__)
+public void assertTrue(T)(T value, string message = "Failed asserting true", string file = __FILE__, size_t line = __LINE__)
 {
 	value.assertType!(bool)("Wrong type for asserting true", file, line);
 
@@ -861,6 +921,9 @@ public void assertTrue(T)(T value, string message = "Failed asserting false", st
 unittest
 {
 	true.assertTrue();
+
+	// Assert a DUnitAssertError is thrown if assertTrue fails.
+	false.assertTrue().assertThrow!(DUnitAssertError)("Failed asserting true");
 }
 
 /**
@@ -875,7 +938,7 @@ unittest
  * Throws:
  *     DUnitAssertError if the assertation fails.
  */
-public void assertTruthy(T)(T value, string message = "Failed asserting true", string file = __FILE__, size_t line = __LINE__)
+public void assertTruthy(T)(T value, string message = "Failed asserting truthy", string file = __FILE__, size_t line = __LINE__)
 {
 	if (!value)
 	{
@@ -894,6 +957,9 @@ unittest
 	true.assertTruthy();
 	["foo"].assertTruthy();
 	1.assertTruthy();
+
+	// Assert a DUnitAssertError is thrown if assertTruthy fails.
+	false.assertTruthy().assertThrow!(DUnitAssertError)("Failed asserting truthy");
 }
 
 /**
@@ -928,4 +994,7 @@ unittest
 	"foo".assertType!(string)();
 	["bar"].assertType!(string[])();
 	['a'].assertType!(char[])();
+
+	// Assert a DUnitAssertError is thrown if assertType fails.
+	false.assertType!(string)().assertThrow!(DUnitAssertError)("Failed asserting type");
 }
