@@ -1,5 +1,5 @@
 # DUnit
-**Advanced unit testing toolkit.**
+**Advanced unit testing toolkit for the D programming language**
 
 ---
 
