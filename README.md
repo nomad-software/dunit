@@ -13,7 +13,11 @@ DUnit was developed and tested with DMD v2.064.2 and should support any platform
 ## Features
 
 ### Object mocking
-DUnit features a mixin template to inject mockable behaviour into a class. Once injected, a static method allows creation of mock objects from that class. Mock objects behave and act as their parent but with the added feature that all methods can be disabled or replaced by a delegate at runtime. *The mixin only injects code when the `-unittest` compiler flag is used.*
+DUnit features a mixin template to inject mockable behaviour into a class or interface. Once injected, a static method allows you to retrieve an object with the same properties as the class or interface it was retrieved from. Mock objects behave and act as their parent (or in the case of interfaces an implemention) but with the added feature that all methods can be replaced by a delegate at runtime*.
+
+#### Notes:
+* Final methods cannot be replaced.
+* The mixin only injects code when the `-unittest` compiler flag is used.
 
 ### Helpful asserts
 When using DUnit the built-in unit test handler has been replaced to give more helpful error messages. When something goes wrong the error tries to be as helpful as possible by showing file, line, and assert value output.

@@ -19,7 +19,7 @@
 </p>
 <h3>License</h3><p>MIT. See LICENSE for full details.</p>
 </div>
-<div class="module-members"><h2><a name="assertApprox"></a>void <span class="symbol">assertApprox</span>(A, B)(A <em>value</em>, B <em>target</em>, long <em>ulps</em> = 10, string <em>message</em> = "Failed asserting approximately equal", string <em>file</em> = __FILE__, size_t <em>line</em> = __LINE__) if (isFloatingPoint!(CommonType!(A, B)));
+<div class="module-members"><h2><a name="assertApprox"></a>void <span class="symbol">assertApprox</span>(A, B)(A value, B target, long ulps = 10, string message = "Failed asserting approximately equal", string file = __FILE__, size_t line = __LINE__) if (isFloatingPoint!(CommonType!(A, B)));
 </h2>
 <div class="declaration-description"><div class="sections"><p>Assert that two floating point values are approximately equal.
 </p>
@@ -69,7 +69,7 @@ smallestDoubleSubnormal.<span class="symbol">assertApprox</span>(-smallestDouble
 </pre>
 </p></div>
 </div>
-<h2><a name="assertApprox"></a>void <span class="symbol">assertApprox</span>(A, B)(A <em>value</em>, B <em>target</em>, double <em>epsilon</em>, string <em>message</em> = "Failed asserting approximately equal", string <em>file</em> = __FILE__, size_t <em>line</em> = __LINE__) if (isFloatingPoint!(CommonType!(A, B)));
+<h2><a name="assertApprox"></a>void <span class="symbol">assertApprox</span>(A, B)(A value, B target, double epsilon, string message = "Failed asserting approximately equal", string file = __FILE__, size_t line = __LINE__) if (isFloatingPoint!(CommonType!(A, B)));
 </h2>
 <div class="declaration-description"><div class="sections"><p>Assert that two floating point values are approximately equal using an epsilon value.
 </p>
@@ -119,7 +119,7 @@ smallestDoubleSubnormal.<span class="symbol">assertApprox</span>(-smallestDouble
 </pre>
 </p></div>
 </div>
-<h2><a name="assertCount"></a>void <span class="symbol">assertCount</span>(A)(A <em>array</em>, ulong <em>count</em>, string <em>message</em> = "Failed asserting <em>array</em> <em>count</em>", string <em>file</em> = __FILE__, size_t <em>line</em> = __LINE__) if (isArray!A || isAssociativeArray!A);
+<h2><a name="assertCount"></a>void <span class="symbol">assertCount</span>(A)(A array, ulong count, string message = "Failed asserting array count", string file = __FILE__, size_t line = __LINE__) if (isArray!A || isAssociativeArray!A);
 </h2>
 <div class="declaration-description"><div class="sections"><p>Assert that an array contains a particular value count.
 </p>
@@ -156,7 +156,7 @@ string_.<span class="symbol">assertCount</span>(0);
 </pre>
 </p></div>
 </div>
-<h2><a name="assertEmpty"></a>void <span class="symbol">assertEmpty</span>(A)(A <em>array</em>, string <em>message</em> = "Failed asserting empty <em>array</em>", string <em>file</em> = __FILE__, size_t <em>line</em> = __LINE__) if (isArray!A || isAssociativeArray!A);
+<h2><a name="assertEmpty"></a>void <span class="symbol">assertEmpty</span>(A)(A array, string message = "Failed asserting empty array", string file = __FILE__, size_t line = __LINE__) if (isArray!A || isAssociativeArray!A);
 </h2>
 <div class="declaration-description"><div class="sections"><p>Assert that an array is empty.
 </p>
@@ -185,20 +185,20 @@ string_.<span class="symbol">assertEmpty</span>();
 </pre>
 </p></div>
 </div>
-<h2><a name="assertEndsWith"></a>void <span class="symbol">assertEndsWith</span>(string <em>value</em>, string <em>suffix</em>, string <em>message</em> = "Failed asserting ends with", string <em>file</em> = __FILE__, size_t <em>line</em> = __LINE__);
+<h2><a name="assertEndsWith"></a>void <span class="symbol">assertEndsWith</span>(string value, string suffix, string message = "Failed asserting ends with", string file = __FILE__, size_t line = __LINE__);
 </h2>
 <div class="declaration-description"><div class="sections"><p>Assert that a string ends with a particular string.
 </p>
-<h3>Parameters</h3><table class="parameter-list"><tr><td>string <em>value</em></td>
-<td>The <em>value</em> used during the assertion.</td></tr>
-<tr><td>string <em>suffix</em></td>
-<td>The <em>suffix</em> to match.</td></tr>
-<tr><td>string <em>message</em></td>
-<td>The error <em>message</em> to display.</td></tr>
-<tr><td>string <em>file</em></td>
-<td>The <em>file</em> name where the error occurred. The <em>value</em> is added automatically at the call site.</td></tr>
-<tr><td>size_t <em>line</em></td>
-<td>The <em>line</em> where the error occurred. The <em>value</em> is added automatically at the call site.</td></tr>
+<h3>Parameters</h3><table class="parameter-list"><tr><td>string value</td>
+<td>The value used during the assertion.</td></tr>
+<tr><td>string suffix</td>
+<td>The suffix to match.</td></tr>
+<tr><td>string message</td>
+<td>The error message to display.</td></tr>
+<tr><td>string file</td>
+<td>The file name where the error occurred. The value is added automatically at the call site.</td></tr>
+<tr><td>size_t line</td>
+<td>The line where the error occurred. The value is added automatically at the call site.</td></tr>
 </table>
 <h3>Exceptions Thrown</h3><p>DUnitAssertError if the assertation fails.</p>
 <h3>Examples</h3><p><pre>
@@ -210,7 +210,7 @@ string_.<span class="symbol">assertEmpty</span>();
 </pre>
 </p></div>
 </div>
-<h2><a name="assertEqual"></a>void <span class="symbol">assertEqual</span>(A, B)(A <em>value</em>, B <em>target</em>, string <em>message</em> = "Failed asserting equal", string <em>file</em> = __FILE__, size_t <em>line</em> = __LINE__);
+<h2><a name="assertEqual"></a>void <span class="symbol">assertEqual</span>(A, B)(A value, B target, string message = "Failed asserting equal", string file = __FILE__, size_t line = __LINE__);
 </h2>
 <div class="declaration-description"><div class="sections"><p>Assert that two values are equal.
 </p>
@@ -235,7 +235,7 @@ string_.<span class="symbol">assertEmpty</span>();
 </pre>
 </p></div>
 </div>
-<h2><a name="assertFalse"></a>void <span class="symbol">assertFalse</span>(T)(T <em>value</em>, string <em>message</em> = "Failed asserting false", string <em>file</em> = __FILE__, size_t <em>line</em> = __LINE__);
+<h2><a name="assertFalse"></a>void <span class="symbol">assertFalse</span>(T)(T value, string message = "Failed asserting false", string file = __FILE__, size_t line = __LINE__);
 </h2>
 <div class="declaration-description"><div class="sections"><p>Assert that a boolean value is <strong>false</strong>.
 </p>
@@ -257,7 +257,7 @@ string_.<span class="symbol">assertEmpty</span>();
 </pre>
 </p></div>
 </div>
-<h2><a name="assertFalsey"></a>void <span class="symbol">assertFalsey</span>(T)(T <em>value</em>, string <em>message</em> = "Failed asserting falsey", string <em>file</em> = __FILE__, size_t <em>line</em> = __LINE__);
+<h2><a name="assertFalsey"></a>void <span class="symbol">assertFalsey</span>(T)(T value, string message = "Failed asserting falsey", string file = __FILE__, size_t line = __LINE__);
 </h2>
 <div class="declaration-description"><div class="sections"><p>Assert that a value evaluates as <strong>false</strong>.
 </p>
@@ -282,7 +282,7 @@ string_.<span class="symbol">assertEmpty</span>();
 </pre>
 </p></div>
 </div>
-<h2><a name="assertGreaterThan"></a>void <span class="symbol">assertGreaterThan</span>(A, B)(A <em>value</em>, B <em>threshold</em>, string <em>message</em> = "Failed asserting greater than", string <em>file</em> = __FILE__, size_t <em>line</em> = __LINE__);
+<h2><a name="assertGreaterThan"></a>void <span class="symbol">assertGreaterThan</span>(A, B)(A value, B threshold, string message = "Failed asserting greater than", string file = __FILE__, size_t line = __LINE__);
 </h2>
 <div class="declaration-description"><div class="sections"><p>Assert that a value is greater than a threshold value.
 </p>
@@ -306,7 +306,7 @@ string_.<span class="symbol">assertEmpty</span>();
 </pre>
 </p></div>
 </div>
-<h2><a name="assertGreaterThanOrEqual"></a>void <span class="symbol">assertGreaterThanOrEqual</span>(A, B)(A <em>value</em>, B <em>threshold</em>, string <em>message</em> = "Failed asserting greater than or equal", string <em>file</em> = __FILE__, size_t <em>line</em> = __LINE__);
+<h2><a name="assertGreaterThanOrEqual"></a>void <span class="symbol">assertGreaterThanOrEqual</span>(A, B)(A value, B threshold, string message = "Failed asserting greater than or equal", string file = __FILE__, size_t line = __LINE__);
 </h2>
 <div class="declaration-description"><div class="sections"><p>Assert that a value is greater than or equal to a threshold value.
 </p>
@@ -331,7 +331,7 @@ string_.<span class="symbol">assertEmpty</span>();
 </pre>
 </p></div>
 </div>
-<h2><a name="assertHasKey"></a>void <span class="symbol">assertHasKey</span>(A, B)(A <em>haystack</em>, B <em>needle</em>, string <em>message</em> = "Failed asserting array has key", string <em>file</em> = __FILE__, size_t <em>line</em> = __LINE__) if (isAssociativeArray!A);
+<h2><a name="assertHasKey"></a>void <span class="symbol">assertHasKey</span>(A, B)(A haystack, B needle, string message = "Failed asserting array has key", string file = __FILE__, size_t line = __LINE__) if (isAssociativeArray!A);
 </h2>
 <div class="declaration-description"><div class="sections"><p>Assert that an associative array contains a particular key.
 </p>
@@ -356,7 +356,7 @@ string_.<span class="symbol">assertEmpty</span>();
 </pre>
 </p></div>
 </div>
-<h2><a name="assertHasValue"></a>void <span class="symbol">assertHasValue</span>(A, B)(A <em>haystack</em>, B <em>needle</em>, string <em>message</em> = "Failed asserting array has value", string <em>file</em> = __FILE__, size_t <em>line</em> = __LINE__) if (isArray!A || isAssociativeArray!A);
+<h2><a name="assertHasValue"></a>void <span class="symbol">assertHasValue</span>(A, B)(A haystack, B needle, string message = "Failed asserting array has value", string file = __FILE__, size_t line = __LINE__) if (isArray!A || isAssociativeArray!A);
 </h2>
 <div class="declaration-description"><div class="sections"><p>Assert that an array contains a particular value.
 </p>
@@ -384,7 +384,7 @@ string_.<span class="symbol">assertEmpty</span>();
 </pre>
 </p></div>
 </div>
-<h2><a name="assertInstanceOf"></a>void <span class="symbol">assertInstanceOf</span>(A, B)(B <em>value</em>, string <em>message</em> = "Failed asserting instance of", string <em>file</em> = __FILE__, size_t <em>line</em> = __LINE__);
+<h2><a name="assertInstanceOf"></a>void <span class="symbol">assertInstanceOf</span>(A, B)(B value, string message = "Failed asserting instance of", string file = __FILE__, size_t line = __LINE__);
 </h2>
 <div class="declaration-description"><div class="sections"><p>Assert that a value is an instance of a type.
 </p>
@@ -420,7 +420,7 @@ c.<span class="symbol">assertInstanceOf</span>!(C)();
 </pre>
 </p></div>
 </div>
-<h2><a name="assertLessThan"></a>void <span class="symbol">assertLessThan</span>(A, B)(A <em>value</em>, B <em>threshold</em>, string <em>message</em> = "Failed asserting less than", string <em>file</em> = __FILE__, size_t <em>line</em> = __LINE__);
+<h2><a name="assertLessThan"></a>void <span class="symbol">assertLessThan</span>(A, B)(A value, B threshold, string message = "Failed asserting less than", string file = __FILE__, size_t line = __LINE__);
 </h2>
 <div class="declaration-description"><div class="sections"><p>Assert that a value is less than a threshold value.
 </p>
@@ -444,7 +444,7 @@ c.<span class="symbol">assertInstanceOf</span>!(C)();
 </pre>
 </p></div>
 </div>
-<h2><a name="assertLessThanOrEqual"></a>void <span class="symbol">assertLessThanOrEqual</span>(A, B)(A <em>value</em>, B <em>threshold</em>, string <em>message</em> = "Failed asserting less than or equal", string <em>file</em> = __FILE__, size_t <em>line</em> = __LINE__);
+<h2><a name="assertLessThanOrEqual"></a>void <span class="symbol">assertLessThanOrEqual</span>(A, B)(A value, B threshold, string message = "Failed asserting less than or equal", string file = __FILE__, size_t line = __LINE__);
 </h2>
 <div class="declaration-description"><div class="sections"><p>Assert that a value is less than or equal to a threshold value.
 </p>
@@ -469,20 +469,20 @@ c.<span class="symbol">assertInstanceOf</span>!(C)();
 </pre>
 </p></div>
 </div>
-<h2><a name="assertMatchRegex"></a>void <span class="symbol">assertMatchRegex</span>(string <em>value</em>, string <em>pattern</em>, string <em>message</em> = "Failed asserting match to regex", string <em>file</em> = __FILE__, size_t <em>line</em> = __LINE__);
+<h2><a name="assertMatchRegex"></a>void <span class="symbol">assertMatchRegex</span>(string value, string pattern, string message = "Failed asserting match to regex", string file = __FILE__, size_t line = __LINE__);
 </h2>
 <div class="declaration-description"><div class="sections"><p>Assert that a string matches a regular expression.
 </p>
-<h3>Parameters</h3><table class="parameter-list"><tr><td>string <em>value</em></td>
-<td>The <em>value</em> used during the assertion.</td></tr>
-<tr><td>string <em>pattern</em></td>
-<td>The regular expression <em>pattern</em>.</td></tr>
-<tr><td>string <em>message</em></td>
-<td>The error <em>message</em> to display.</td></tr>
-<tr><td>string <em>file</em></td>
-<td>The <em>file</em> name where the error occurred. The <em>value</em> is added automatically at the call site.</td></tr>
-<tr><td>size_t <em>line</em></td>
-<td>The <em>line</em> where the error occurred. The <em>value</em> is added automatically at the call site.</td></tr>
+<h3>Parameters</h3><table class="parameter-list"><tr><td>string value</td>
+<td>The value used during the assertion.</td></tr>
+<tr><td>string pattern</td>
+<td>The regular expression pattern.</td></tr>
+<tr><td>string message</td>
+<td>The error message to display.</td></tr>
+<tr><td>string file</td>
+<td>The file name where the error occurred. The value is added automatically at the call site.</td></tr>
+<tr><td>size_t line</td>
+<td>The line where the error occurred. The value is added automatically at the call site.</td></tr>
 </table>
 <h3>Exceptions Thrown</h3><p>DUnitAssertError if the assertation fails.</p>
 <h3>Examples</h3><p><pre>
@@ -494,7 +494,7 @@ c.<span class="symbol">assertInstanceOf</span>!(C)();
 </pre>
 </p></div>
 </div>
-<h2><a name="assertNull"></a>void <span class="symbol">assertNull</span>(A)(A <em>value</em>, string <em>message</em> = "Failed asserting null", string <em>file</em> = __FILE__, size_t <em>line</em> = __LINE__) if (A.init is null);
+<h2><a name="assertNull"></a>void <span class="symbol">assertNull</span>(A)(A value, string message = "Failed asserting null", string file = __FILE__, size_t line = __LINE__) if (A.init is null);
 </h2>
 <div class="declaration-description"><div class="sections"><p>Assert that a value is <strong>null</strong>.
 </p>
@@ -525,20 +525,20 @@ t.<span class="symbol">assertNull</span>();
 </pre>
 </p></div>
 </div>
-<h2><a name="assertStartsWith"></a>void <span class="symbol">assertStartsWith</span>(string <em>value</em>, string <em>prefix</em>, string <em>message</em> = "Failed asserting starts with", string <em>file</em> = __FILE__, size_t <em>line</em> = __LINE__);
+<h2><a name="assertStartsWith"></a>void <span class="symbol">assertStartsWith</span>(string value, string prefix, string message = "Failed asserting starts with", string file = __FILE__, size_t line = __LINE__);
 </h2>
 <div class="declaration-description"><div class="sections"><p>Assert that a string starts with a particular string.
 </p>
-<h3>Parameters</h3><table class="parameter-list"><tr><td>string <em>value</em></td>
-<td>The <em>value</em> used during the assertion.</td></tr>
-<tr><td>string <em>prefix</em></td>
-<td>The <em>prefix</em> to match.</td></tr>
-<tr><td>string <em>message</em></td>
-<td>The error <em>message</em> to display.</td></tr>
-<tr><td>string <em>file</em></td>
-<td>The <em>file</em> name where the error occurred. The <em>value</em> is added automatically at the call site.</td></tr>
-<tr><td>size_t <em>line</em></td>
-<td>The <em>line</em> where the error occurred. The <em>value</em> is added automatically at the call site.</td></tr>
+<h3>Parameters</h3><table class="parameter-list"><tr><td>string value</td>
+<td>The value used during the assertion.</td></tr>
+<tr><td>string prefix</td>
+<td>The prefix to match.</td></tr>
+<tr><td>string message</td>
+<td>The error message to display.</td></tr>
+<tr><td>string file</td>
+<td>The file name where the error occurred. The value is added automatically at the call site.</td></tr>
+<tr><td>size_t line</td>
+<td>The line where the error occurred. The value is added automatically at the call site.</td></tr>
 </table>
 <h3>Exceptions Thrown</h3><p>DUnitAssertError if the assertation fails.</p>
 <h3>Examples</h3><p><pre>
@@ -550,7 +550,7 @@ t.<span class="symbol">assertNull</span>();
 </pre>
 </p></div>
 </div>
-<h2><a name="assertThrow"></a>void <span class="symbol">assertThrow</span>(A : Throwable = Exception, B)(lazy B <em>expression</em>, string <em>expressionMsg</em> = null, string <em>message</em> = "Failed asserting throw", string <em>file</em> = __FILE__, size_t <em>line</em> = __LINE__);
+<h2><a name="assertThrow"></a>void <span class="symbol">assertThrow</span>(A : Throwable = Exception, B)(lazy B expression, string expressionMsg = null, string message = "Failed asserting throw", string file = __FILE__, size_t line = __LINE__);
 </h2>
 <div class="declaration-description"><div class="sections"><p>Assert that an expression throws an exception.
 </p>
@@ -604,7 +604,7 @@ baz[3].<span class="symbol">assertThrow</span>!(RangeError)();
 </pre>
 </p></div>
 </div>
-<h2><a name="assertTrue"></a>void <span class="symbol">assertTrue</span>(T)(T <em>value</em>, string <em>message</em> = "Failed asserting true", string <em>file</em> = __FILE__, size_t <em>line</em> = __LINE__);
+<h2><a name="assertTrue"></a>void <span class="symbol">assertTrue</span>(T)(T value, string message = "Failed asserting true", string file = __FILE__, size_t line = __LINE__);
 </h2>
 <div class="declaration-description"><div class="sections"><p>Assert that a boolean value is <strong>true</strong>.
 </p>
@@ -626,7 +626,7 @@ baz[3].<span class="symbol">assertThrow</span>!(RangeError)();
 </pre>
 </p></div>
 </div>
-<h2><a name="assertTruthy"></a>void <span class="symbol">assertTruthy</span>(T)(T <em>value</em>, string <em>message</em> = "Failed asserting truthy", string <em>file</em> = __FILE__, size_t <em>line</em> = __LINE__);
+<h2><a name="assertTruthy"></a>void <span class="symbol">assertTruthy</span>(T)(T value, string message = "Failed asserting truthy", string file = __FILE__, size_t line = __LINE__);
 </h2>
 <div class="declaration-description"><div class="sections"><p>Assert that a value evaluates as <strong>true</strong>.
 </p>
@@ -650,7 +650,7 @@ baz[3].<span class="symbol">assertThrow</span>!(RangeError)();
 </pre>
 </p></div>
 </div>
-<h2><a name="assertType"></a>void <span class="symbol">assertType</span>(A, B)(B <em>value</em>, string <em>message</em> = "Failed asserting type", string <em>file</em> = __FILE__, size_t <em>line</em> = __LINE__);
+<h2><a name="assertType"></a>void <span class="symbol">assertType</span>(A, B)(B value, string message = "Failed asserting type", string file = __FILE__, size_t line = __LINE__);
 </h2>
 <div class="declaration-description"><div class="sections"><p>Assert that a value is of a particular type.
 </p>

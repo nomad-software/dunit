@@ -382,9 +382,10 @@ private template MethodMangledName(func...) if (func.length == 1 && isCallable!(
  * Generate a string containing the body of the passed function.
  *
  * Params:
- *     func = The function to inspect.
+ *     hasParent = true if this function is replacing a parent implementation.
+ *     func = The function to inspect and generate code for.
  */
-private template MethodBody(func...)
+private template MethodBody(bool hasParent, func...)
 {
 	private string getMethodBody()
 	{
@@ -401,16 +402,27 @@ private template MethodBody(func...)
 		code ~= "\t\t}\n";
 		code ~= "\t\telse\n";
 		code ~= "\t\t{\n";
-		code ~= "\t\t\tif (this._useParentMethods)\n";
-		code ~= "\t\t\t{\n";
-		code ~= "\t\t\t\treturn super." ~ MethodName!(func) ~ "(" ~ MethodParameterIdentifiers!(func).join(", ") ~ ");\n";
-		code ~= "\t\t\t}\n";
-		code ~= "\t\t\telse\n";
-		code ~= "\t\t\t{\n";
-		code ~= "\t\t\t\tauto error = new DUnitAssertError(\"Mock method not implemented\", this._disableMethodsLocation.file, this._disableMethodsLocation.line);\n";
-		code ~= "\t\t\t\terror.addInfo(\"Method\", this.className ~ \"." ~ MethodSignature!(func) ~ "\");\n";
-		code ~= "\t\t\t\tthrow error;\n";
-		code ~= "\t\t\t}\n";
+
+		static if (hasParent)
+		{
+			code ~= "\t\t\tif (this._useParentMethods)\n";
+			code ~= "\t\t\t{\n";
+			code ~= "\t\t\t\treturn super." ~ MethodName!(func) ~ "(" ~ MethodParameterIdentifiers!(func).join(", ") ~ ");\n";
+			code ~= "\t\t\t}\n";
+			code ~= "\t\t\telse\n";
+			code ~= "\t\t\t{\n";
+			code ~= "\t\t\t\tauto error = new DUnitAssertError(\"Mock method not implemented\", this._disableMethodsLocation.file, this._disableMethodsLocation.line);\n";
+			code ~= "\t\t\t\terror.addInfo(\"Method\", this.className ~ \"." ~ MethodSignature!(func) ~ "\");\n";
+			code ~= "\t\t\t\tthrow error;\n";
+			code ~= "\t\t\t}\n";
+		}
+		else
+		{
+			code ~= "\t\t\t\tauto error = new DUnitAssertError(\"Mock method not implemented\", this._disableMethodsLocation.file, this._disableMethodsLocation.line);\n";
+			code ~= "\t\t\t\terror.addInfo(\"Method\", this.className ~ \"." ~ MethodSignature!(func) ~ "\");\n";
+			code ~= "\t\t\t\tthrow error;\n";
+		}
+
 		code ~= "\t\t}\n";
 		code ~= "\t}\n";
 		code ~= "\tcatch(Exception ex)\n";
@@ -448,24 +460,28 @@ private template MethodDelegateProperty(func...) if (func.length == 1 && isCalla
 }
 
 /**
- * Generate a string containing the entire override code for the passed function.
+ * Generate a string containing the entire code for the passed method.
  *
  * Params:
- *     func = The function to inspect.
+ *     hasParent = true if this function is replacing a parent implementation.
+ *     func = The function to inspect and generate code for.
  */
-private template Method(func...) if (func.length == 1 && isCallable!(func))
+private template Method(bool hasParent, func...) if (func.length == 1 && isCallable!(func))
 {
 	private string getMethod()
 	{
 		string code = "";
-		code ~= "override ";
+		static if (hasParent)
+		{
+			code ~= "override ";
+		}
 		code ~= MethodProtection!(func) ~ " ";
 		code ~= MethodAttributes!(func);
 		code ~= MethodReturnType!(func) ~ " ";
 		code ~= MethodName!(func);
 		code ~= MethodParameters!(func) ~ "\n";
 		code ~= "{\n";
-		code ~= MethodBody!(func);
+		code ~= MethodBody!(hasParent, func);
 		code ~= "}\n";
 		return code;
 	}
@@ -480,7 +496,7 @@ private template Method(func...) if (func.length == 1 && isCallable!(func))
  *     generator = The template to use to generate code for each method.
  *     index = The beginning index of the members.
  */
-public template DUnitMethodIterator(T, string generator, int index = 0) if (is(T == class))
+public template DUnitMethodIterator(T, string generator, int index = 0) if (is(T == class) || is(T == interface))
 {
 	private string getResult()
 	{

@@ -32,7 +32,7 @@ public import dunit.reflection;
  * }
  * ---
  */
-public mixin template Mockable(C) if (is(C == class))
+public mixin template Mockable(C) if (is(C == class) || is(C == interface))
 {
 	version(unittest):
 
@@ -118,7 +118,7 @@ public mixin template Mockable(C) if (is(C == class))
 	 * An instance of this class can dynamically replace any of its methods at runtime using the 'mockMethod' method.
 	 * All mocked methods can optionally have their call counts asserted to be within set limits.
 	 */
-	private static class Mock(C) : C if (is(C == class))
+	private static class Mock(C) : C if (is(C == class) || is(C == interface))
 	{
 		import dunit.error;
 		import dunit.moduleunittester;
@@ -149,9 +149,12 @@ public mixin template Mockable(C) if (is(C == class))
 		/**
 		 * Inject the necessary class code.
 		 */
-		mixin(DUnitConstructorIterator!(C, "Constructor!(T, func)"));
+		static if (is(C == class))
+		{
+			mixin(DUnitConstructorIterator!(C, "Constructor!(T, func)"));
+		}
 		mixin(DUnitMethodIterator!(C, "MethodDelegateProperty!(func)"));
-		mixin(DUnitMethodIterator!(C, "Method!(func)"));
+		mixin(DUnitMethodIterator!(C, "Method!(is(T == class), func)"));
 
 		/*
 		 * Get the storage classes of the passed delegate.
@@ -263,7 +266,7 @@ public mixin template Mockable(C) if (is(C == class))
 		 *     )
 		 *
 		 * See_Also:
-		 *     disableParentMethods()
+		 *     $(LINK2 mockable.html#disableParentMethods, disableParentMethods(...))
 		 *
 		 * Example:
 		 * ---
@@ -314,14 +317,16 @@ public mixin template Mockable(C) if (is(C == class))
 		/**
 		 * Disable parent methods being called if mock replacements are not implemented.
 		 * If parent methods have been disabled a helpful assert error will be raised on any attempt to call methods that haven't been replaced.
-		 * This is helpful if necessary to disable all behaviour of the mocked class.
+		 * This is helpful if it's necessary to disable all behaviour of the mocked class.
+		 *
+		 * Has no effect on mock objects derived from interfaces, by default all mocked interface methods assert an error until replaced.
 		 *
 		 * Params:
 		 *     file = The file name where the error occurred. The value is added automatically at the call site.
 		 *     line = The line where the error occurred. The value is added automatically at the call site.
 		 *
 		 * See_Also:
-		 *     mockMethod()
+		 *     $(LINK2 mockable.html#mockMethod, mockMethod(...))
 		 *
 		 * Example:
 		 * ---
