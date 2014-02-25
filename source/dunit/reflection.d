@@ -50,37 +50,38 @@ private template MethodAttributes(func...) if (func.length == 1 && isCallable!(f
 	private string getMethodAttributes()
 	{
 		string code = "";
-
-		static if (functionAttributes!(func) & FunctionAttribute.property)
-		{
-			code ~= "@property ";
+		
+		with (FunctionAttribute) {
+			static if (functionAttributes!(func) & property)
+			{
+				code ~= "@property ";
+			}
+	
+			static if (functionAttributes!(func) & trusted)
+			{
+				code ~= "@trusted ";
+			}
+	
+			static if (functionAttributes!(func) & safe)
+			{
+				code ~= "@safe ";
+			}
+	
+			static if (functionAttributes!(func) & pure_)
+			{
+				code ~= "pure ";
+			}
+	
+			static if (functionAttributes!(func) & nothrow_)
+			{
+				code ~= "nothrow ";
+			}
+	
+			static if (functionAttributes!(func) & ref_)
+			{
+				code ~= "ref ";
+			}
 		}
-
-		static if (functionAttributes!(func) & FunctionAttribute.trusted)
-		{
-			code ~= "@trusted ";
-		}
-
-		static if (functionAttributes!(func) & FunctionAttribute.safe)
-		{
-			code ~= "@safe ";
-		}
-
-		static if (functionAttributes!(func) & FunctionAttribute.pure_)
-		{
-			code ~= "pure ";
-		}
-
-		static if (functionAttributes!(func) & FunctionAttribute.nothrow_)
-		{
-			code ~= "nothrow ";
-		}
-
-		static if (functionAttributes!(func) & FunctionAttribute.ref_)
-		{
-			code ~= "ref ";
-		}
-
 		return code;
 	}
 	enum MethodAttributes = getMethodAttributes();
@@ -389,13 +390,17 @@ private template MethodBody(bool hasParent, func...)
 {
 	private string getMethodBody()
 	{
+		static immutable bool isConst = !isMutable!(FunctionTypeOf!(func));
+		
 		string code = "";
 		code ~= "\ttry\n";
 		code ~= "\t{\n";
-		code ~= "\t\tif (\"" ~ MethodSignature!(func) ~ "\" in this._methodCount)\n";
-		code ~= "\t\t{\n";
-		code ~= "\t\t\tthis._methodCount[\"" ~ MethodSignature!(func) ~ "\"].actual++;\n";
-		code ~= "\t\t}\n";
+		static if (!isConst) {
+			code ~= "\t\tif (\"" ~ MethodSignature!(func) ~ "\" in this._methodCount)\n";
+			code ~= "\t\t{\n";
+			code ~= "\t\t\tthis._methodCount[\"" ~ MethodSignature!(func) ~ "\"].actual++;\n";
+			code ~= "\t\t}\n";
+		}
 		code ~= "\t\tif (this." ~ MethodMangledName!(func) ~ ")\n";
 		code ~= "\t\t{\n";
 		code ~= "\t\t\treturn this." ~ MethodMangledName!(func) ~ "(" ~ MethodParameterIdentifiers!(func).join(", ") ~ ");\n";
@@ -445,15 +450,6 @@ private template MethodDelegateProperty(func...) if (func.length == 1 && isCalla
 {
 	private string getMethodDelegateProperty()
 	{
-		string[] storageClasses = MethodParameterStorageClasses!(func);
-		string[] types          = MethodParameterTypes!(func);
-		string[] parameters;
-
-		foreach (storageClass, type; zip(storageClasses, types))
-		{
-			parameters ~= format("%s%s", storageClass, type);
-		}
-
 		return format("private %s %s;\n", MethodDelegateSignature!(func), MethodMangledName!(func));
 	}
 	enum MethodDelegateProperty = getMethodDelegateProperty();
@@ -470,6 +466,8 @@ private template Method(bool hasParent, func...) if (func.length == 1 && isCalla
 {
 	private string getMethod()
 	{
+		static immutable bool isConst = !isMutable!(FunctionTypeOf!(func));
+		
 		string code = "";
 		static if (hasParent)
 		{
@@ -479,7 +477,7 @@ private template Method(bool hasParent, func...) if (func.length == 1 && isCalla
 		code ~= MethodAttributes!(func);
 		code ~= MethodReturnType!(func) ~ " ";
 		code ~= MethodName!(func);
-		code ~= MethodParameters!(func) ~ "\n";
+		code ~= MethodParameters!(func) ~ (isConst ? " const \n" : "\n");
 		code ~= "{\n";
 		code ~= MethodBody!(hasParent, func);
 		code ~= "}\n";
@@ -685,7 +683,7 @@ private template MethodDelegateSignature(func...) if (func.length == 1 && isCall
 {
 	private string getMethodDelegateSignature()
 	{
-		return format("%s delegate(%s)", MethodReturnType!(func), MethodParameterSignature!(func));
+		return format("%s delegate(%s)%s", MethodReturnType!(func), MethodParameterSignature!(func), MethodAttributes!(func));
 	}
 	enum MethodDelegateSignature = getMethodDelegateSignature();
 }

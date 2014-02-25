@@ -9,6 +9,69 @@
  */
 module dunit.mockable;
 
+unittest {
+	import dunit.toolkit;
+	
+	interface T {
+		public int method1(int param) const;
+		public void method2(int param) const;
+		public int method3(int param) const pure @safe nothrow;
+		public void method4(int param) const pure @safe nothrow;
+		public int method5(int param) const pure @trusted nothrow;
+		public void method6(int param) const pure @trusted nothrow;
+		
+		mixin Mockable!T;
+	}
+	
+	auto mock = T.getMock();
+	
+	mock.mockMethod("method1", delegate(int param) { return 2*param; });
+	mock.mockMethod("method2", delegate(int param) { });
+	mock.mockMethod("method3", delegate(int param) { return 2*param; });
+	mock.mockMethod("method4", delegate(int param) { });
+	mock.mockMethod("method5", delegate(int param) { return 2*param; });
+	mock.mockMethod("method6", delegate(int param) { });	
+	
+	mock.method1(10).assertEqual(20);
+	mock.method2(10);
+	mock.method3(10).assertEqual(20);
+	mock.method4(10);
+	mock.method5(10).assertEqual(20);
+	mock.method6(10);	
+}
+
+unittest {
+	import dunit.toolkit;
+	
+	static class T {
+		public int method1(int param) const { return 0; };
+		public void method2(int param) const {};
+		public int method3(int param) const pure @safe nothrow { return 0; };
+		public void method4(int param) const pure @safe nothrow {};
+		public int method5(int param) const pure @trusted nothrow { return 0; };
+		public void method6(int param) const pure @trusted nothrow {};
+		
+		mixin Mockable!T;
+	}
+	
+	auto mock = T.getMock();
+	
+	mock.mockMethod("method1", delegate(int param) { return 2*param; });
+	mock.mockMethod("method2", delegate(int param) { });
+	mock.mockMethod("method3", delegate(int param) { return 2*param; });
+	mock.mockMethod("method4", delegate(int param) { });
+	mock.mockMethod("method5", delegate(int param) { return 2*param; });
+	mock.mockMethod("method6", delegate(int param) { });	
+	
+	mock.method1(10).assertEqual(20);
+	mock.method2(10);
+	mock.method3(10).assertEqual(20);
+	mock.method4(10);
+	mock.method5(10).assertEqual(20);
+	mock.method6(10);	
+}
+
+
 /**
  * Imports.
  */
