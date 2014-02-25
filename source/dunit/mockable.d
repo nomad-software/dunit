@@ -9,6 +9,24 @@
  */
 module dunit.mockable;
 
+unittest {
+	import dunit.toolkit;
+	
+	interface T {
+		public int method1(int param) const;
+		public void method2(int param) const;
+		
+		mixin Mockable!T;
+	}
+	
+	auto mock = T.getMock();
+	
+	mock.mockMethod("method1", delegate(int param) { return 2*param; });
+	mock.mockMethod("method2", delegate(int param) { });
+	assertEqual(mock.method1(10), 20);
+	mock.method2(10);
+}
+
 /**
  * Imports.
  */

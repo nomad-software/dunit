@@ -389,13 +389,17 @@ private template MethodBody(bool hasParent, func...)
 {
 	private string getMethodBody()
 	{
+		static immutable bool isConst = !isMutable!(FunctionTypeOf!(func));
+		
 		string code = "";
 		code ~= "\ttry\n";
 		code ~= "\t{\n";
-		code ~= "\t\tif (\"" ~ MethodSignature!(func) ~ "\" in this._methodCount)\n";
-		code ~= "\t\t{\n";
-		code ~= "\t\t\tthis._methodCount[\"" ~ MethodSignature!(func) ~ "\"].actual++;\n";
-		code ~= "\t\t}\n";
+		static if (!isConst) {
+			code ~= "\t\tif (\"" ~ MethodSignature!(func) ~ "\" in this._methodCount)\n";
+			code ~= "\t\t{\n";
+			code ~= "\t\t\tthis._methodCount[\"" ~ MethodSignature!(func) ~ "\"].actual++;\n";
+			code ~= "\t\t}\n";
+		}
 		code ~= "\t\tif (this." ~ MethodMangledName!(func) ~ ")\n";
 		code ~= "\t\t{\n";
 		code ~= "\t\t\treturn this." ~ MethodMangledName!(func) ~ "(" ~ MethodParameterIdentifiers!(func).join(", ") ~ ");\n";
@@ -470,6 +474,8 @@ private template Method(bool hasParent, func...) if (func.length == 1 && isCalla
 {
 	private string getMethod()
 	{
+		static immutable bool isConst = !isMutable!(FunctionTypeOf!(func));
+		
 		string code = "";
 		static if (hasParent)
 		{
@@ -479,7 +485,7 @@ private template Method(bool hasParent, func...) if (func.length == 1 && isCalla
 		code ~= MethodAttributes!(func);
 		code ~= MethodReturnType!(func) ~ " ";
 		code ~= MethodName!(func);
-		code ~= MethodParameters!(func) ~ "\n";
+		code ~= MethodParameters!(func) ~ (isConst ? " const \n" : "\n");
 		code ~= "{\n";
 		code ~= MethodBody!(hasParent, func);
 		code ~= "}\n";
