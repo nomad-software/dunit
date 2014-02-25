@@ -10,6 +10,7 @@ module dunit.reflection;
  * Imports.
  */
 import dunit.toolkit;
+import std.array;
 import std.range;
 import std.string;
 import std.traits;
@@ -699,6 +700,10 @@ unittest
 /**
  * Generate a string containing the delegate signature of the passed function.
  *
+ * Bugs:
+ *     The 'ref' attribute is not supported in the delegate signature due to a compiler bug.
+ *     Once this bug is fixed we can enable it. http://d.puremagic.com/issues/show_bug.cgi?id=5050
+ *
  * Params:
  *     func = The function to inspect.
  */
@@ -706,7 +711,9 @@ private template MethodDelegateSignature(func...) if (func.length == 1 && isCall
 {
 	private string getMethodDelegateSignature()
 	{
-		return format("%s delegate(%s) %s", MethodReturnType!(func), MethodParameterSignature!(func), MethodAttributes!(func)).stripRight();
+		return format("%s delegate(%s) %s", MethodReturnType!(func), MethodParameterSignature!(func), MethodAttributes!(func))
+			.replace(" ref", "")
+			.stripRight();
 	}
 	enum MethodDelegateSignature = getMethodDelegateSignature();
 }
@@ -718,11 +725,13 @@ unittest
 		public void method1(const int foo, string bar) @safe pure nothrow;
 		public void method2(string baz, bool qux);
 		public void method3(ref char quux);
+		public ref int method4(string bux);
 	}
 
 	MethodDelegateSignature!(T.method1).assertEqual("void delegate(const(int), string) @safe pure nothrow");
 	MethodDelegateSignature!(T.method2).assertEqual("void delegate(string, bool)");
 	MethodDelegateSignature!(T.method3).assertEqual("void delegate(ref char)");
+	MethodDelegateSignature!(T.method4).assertEqual("int delegate(string)");
 }
 
 /**
