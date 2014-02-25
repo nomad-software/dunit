@@ -151,6 +151,41 @@ unittest
 }
 
 /**
+ * Generate a string containing teh qualifiers of the passed function.
+ *
+ * Params:
+ *     func = The function to inspect.
+ */
+private template MethodQualifiers(func...) if (isCallable!(func))
+{
+	private string getMethodQualifiers()
+	{
+		string result = "";
+		
+		with(FunctionAttribute) {
+			if (functionAttributes!func & pure_) {
+				result ~= " pure ";
+			}
+			
+			if (functionAttributes!func & safe) {
+				result ~= " @safe ";
+			}
+			
+			if (functionAttributes!func & nothrow_) {
+				result ~= " nothrow ";
+			}
+			
+			if (functionAttributes!func & trusted) {
+				result ~= " @trusted ";
+			}			
+		}
+		
+		return result;
+	}
+	enum MethodQualifiers = getMethodQualifiers();
+}
+
+/**
  * Generate a string array containing the storage classes of each parameter (if any) of the passed function.
  *
  * Params:
@@ -449,15 +484,6 @@ private template MethodDelegateProperty(func...) if (func.length == 1 && isCalla
 {
 	private string getMethodDelegateProperty()
 	{
-		string[] storageClasses = MethodParameterStorageClasses!(func);
-		string[] types          = MethodParameterTypes!(func);
-		string[] parameters;
-
-		foreach (storageClass, type; zip(storageClasses, types))
-		{
-			parameters ~= format("%s%s", storageClass, type);
-		}
-
 		return format("private %s %s;\n", MethodDelegateSignature!(func), MethodMangledName!(func));
 	}
 	enum MethodDelegateProperty = getMethodDelegateProperty();
@@ -691,7 +717,7 @@ private template MethodDelegateSignature(func...) if (func.length == 1 && isCall
 {
 	private string getMethodDelegateSignature()
 	{
-		return format("%s delegate(%s)", MethodReturnType!(func), MethodParameterSignature!(func));
+		return format("%s delegate(%s)%s", MethodReturnType!(func), MethodParameterSignature!(func), MethodQualifiers!(func));
 	}
 	enum MethodDelegateSignature = getMethodDelegateSignature();
 }

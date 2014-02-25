@@ -34,7 +34,7 @@ class DUnitAssertError : AssertError
 	 *     file = The file where the error occurred.
 	 *     line = The line where the error occurred.
 	 */
-	this(string message, string file, size_t line)
+	this(string message, string file, size_t line) pure nothrow @safe
 	{
 		super(message, file, line);
 	}
