@@ -50,33 +50,34 @@ private template MethodAttributes(func...) if (func.length == 1 && isCallable!(f
 	private string getMethodAttributes()
 	{
 		string code = "";
-		
-		with (FunctionAttribute) {
+
+		with (FunctionAttribute)
+		{
 			static if (functionAttributes!(func) & property)
 			{
 				code ~= "@property ";
 			}
-	
+
 			static if (functionAttributes!(func) & trusted)
 			{
 				code ~= "@trusted ";
 			}
-	
+
 			static if (functionAttributes!(func) & safe)
 			{
 				code ~= "@safe ";
 			}
-	
+
 			static if (functionAttributes!(func) & pure_)
 			{
 				code ~= "pure ";
 			}
-	
+
 			static if (functionAttributes!(func) & nothrow_)
 			{
 				code ~= "nothrow ";
 			}
-	
+
 			static if (functionAttributes!(func) & ref_)
 			{
 				code ~= "ref ";
@@ -418,7 +419,8 @@ private template MethodBody(bool hasParent, func...)
 		string code = "";
 		code ~= "\ttry\n";
 		code ~= "\t{\n";
-		static if (!isMethodConst!(func)) {
+		static if (!isMethodConst!(func))
+		{
 			code ~= "\t\tif (\"" ~ MethodSignature!(func) ~ "\" in this._methodCount)\n";
 			code ~= "\t\t{\n";
 			code ~= "\t\t\tthis._methodCount[\"" ~ MethodSignature!(func) ~ "\"].actual++;\n";
