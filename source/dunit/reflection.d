@@ -83,7 +83,7 @@ private template MethodAttributes(func...) if (func.length == 1 && isCallable!(f
 				code ~= "ref ";
 			}
 		}
-		return code;
+		return code.stripRight();
 	}
 	enum MethodAttributes = getMethodAttributes();
 }
@@ -97,9 +97,9 @@ unittest
 		public ref int method3(ref int foo){return foo;}
 	}
 
-	MethodAttributes!(T.method1).assertEqual("@property @trusted ");
-	MethodAttributes!(T.method2).assertEqual("@safe pure nothrow ");
-	MethodAttributes!(T.method3).assertEqual("ref ");
+	MethodAttributes!(T.method1).assertEqual("@property @trusted");
+	MethodAttributes!(T.method2).assertEqual("@safe pure nothrow");
+	MethodAttributes!(T.method3).assertEqual("ref");
 }
 
 /**
@@ -497,7 +497,7 @@ private template Method(bool hasParent, func...) if (func.length == 1 && isCalla
 			code ~= "override ";
 		}
 		code ~= MethodProtection!(func) ~ " ";
-		code ~= MethodAttributes!(func);
+		code ~= MethodAttributes!(func) ~ " ";
 		code ~= MethodReturnType!(func) ~ " ";
 		code ~= MethodName!(func);
 		code ~= MethodParameters!(func) ~ (isMethodConst!(func) ? " const \n" : "\n");
@@ -706,21 +706,21 @@ private template MethodDelegateSignature(func...) if (func.length == 1 && isCall
 {
 	private string getMethodDelegateSignature()
 	{
-		return format("%s delegate(%s)%s", MethodReturnType!(func), MethodParameterSignature!(func), MethodAttributes!(func));
+		return format("%s delegate(%s) %s", MethodReturnType!(func), MethodParameterSignature!(func), MethodAttributes!(func)).stripRight();
 	}
 	enum MethodDelegateSignature = getMethodDelegateSignature();
 }
 
 unittest
 {
-	class T
+	interface T
 	{
-		public void method1(const int foo, string bar){}
-		public void method2(string baz, bool qux){}
-		public void method3(ref char quux){}
+		public void method1(const int foo, string bar) @safe pure nothrow;
+		public void method2(string baz, bool qux);
+		public void method3(ref char quux);
 	}
 
-	MethodDelegateSignature!(T.method1).assertEqual("void delegate(const(int), string)");
+	MethodDelegateSignature!(T.method1).assertEqual("void delegate(const(int), string) @safe pure nothrow");
 	MethodDelegateSignature!(T.method2).assertEqual("void delegate(string, bool)");
 	MethodDelegateSignature!(T.method3).assertEqual("void delegate(ref char)");
 }
