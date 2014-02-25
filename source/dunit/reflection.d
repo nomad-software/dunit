@@ -50,37 +50,38 @@ private template MethodAttributes(func...) if (func.length == 1 && isCallable!(f
 	private string getMethodAttributes()
 	{
 		string code = "";
-
-		static if (functionAttributes!(func) & FunctionAttribute.property)
-		{
-			code ~= "@property ";
+		
+		with (FunctionAttribute) {
+			static if (functionAttributes!(func) & property)
+			{
+				code ~= "@property ";
+			}
+	
+			static if (functionAttributes!(func) & trusted)
+			{
+				code ~= "@trusted ";
+			}
+	
+			static if (functionAttributes!(func) & safe)
+			{
+				code ~= "@safe ";
+			}
+	
+			static if (functionAttributes!(func) & pure_)
+			{
+				code ~= "pure ";
+			}
+	
+			static if (functionAttributes!(func) & nothrow_)
+			{
+				code ~= "nothrow ";
+			}
+	
+			static if (functionAttributes!(func) & ref_)
+			{
+				code ~= "ref ";
+			}
 		}
-
-		static if (functionAttributes!(func) & FunctionAttribute.trusted)
-		{
-			code ~= "@trusted ";
-		}
-
-		static if (functionAttributes!(func) & FunctionAttribute.safe)
-		{
-			code ~= "@safe ";
-		}
-
-		static if (functionAttributes!(func) & FunctionAttribute.pure_)
-		{
-			code ~= "pure ";
-		}
-
-		static if (functionAttributes!(func) & FunctionAttribute.nothrow_)
-		{
-			code ~= "nothrow ";
-		}
-
-		static if (functionAttributes!(func) & FunctionAttribute.ref_)
-		{
-			code ~= "ref ";
-		}
-
 		return code;
 	}
 	enum MethodAttributes = getMethodAttributes();
@@ -148,41 +149,6 @@ unittest
 	MethodName!(T.method1).assertEqual("method1");
 	MethodName!(T.method2).assertEqual("method2");
 	MethodName!(T.method3).assertEqual("method3");
-}
-
-/**
- * Generate a string containing teh qualifiers of the passed function.
- *
- * Params:
- *     func = The function to inspect.
- */
-private template MethodQualifiers(func...) if (isCallable!(func))
-{
-	private string getMethodQualifiers()
-	{
-		string result = "";
-		
-		with(FunctionAttribute) {
-			if (functionAttributes!func & pure_) {
-				result ~= " pure ";
-			}
-			
-			if (functionAttributes!func & safe) {
-				result ~= " @safe ";
-			}
-			
-			if (functionAttributes!func & nothrow_) {
-				result ~= " nothrow ";
-			}
-			
-			if (functionAttributes!func & trusted) {
-				result ~= " @trusted ";
-			}			
-		}
-		
-		return result;
-	}
-	enum MethodQualifiers = getMethodQualifiers();
 }
 
 /**
@@ -717,7 +683,7 @@ private template MethodDelegateSignature(func...) if (func.length == 1 && isCall
 {
 	private string getMethodDelegateSignature()
 	{
-		return format("%s delegate(%s)%s", MethodReturnType!(func), MethodParameterSignature!(func), MethodQualifiers!(func));
+		return format("%s delegate(%s)%s", MethodReturnType!(func), MethodParameterSignature!(func), MethodAttributes!(func));
 	}
 	enum MethodDelegateSignature = getMethodDelegateSignature();
 }
