@@ -380,6 +380,31 @@ private template MethodMangledName(func...) if (func.length == 1 && isCallable!(
 }
 
 /**
+ * Returns true if the passed function is const, false if not.
+ *
+ * Params:
+ *     func = The function to inspect.
+ */
+private template isMethodConst(func...) if (func.length == 1 && isCallable!(func))
+{
+	enum isMethodConst = !isMutable!(FunctionTypeOf!(func));
+}
+
+unittest
+{
+	class T
+	{
+		public void method1() const {}
+		public void method2() immutable {}
+		public void method3(){}
+	}
+
+	isMethodConst!(T.method1).assertTrue();
+	isMethodConst!(T.method2).assertTrue();
+	isMethodConst!(T.method3).assertFalse();
+}
+
+/**
  * Generate a string containing the body of the passed function.
  *
  * Params:
@@ -390,12 +415,10 @@ private template MethodBody(bool hasParent, func...)
 {
 	private string getMethodBody()
 	{
-		static immutable bool isConst = !isMutable!(FunctionTypeOf!(func));
-		
 		string code = "";
 		code ~= "\ttry\n";
 		code ~= "\t{\n";
-		static if (!isConst) {
+		static if (!isMethodConst!(func)) {
 			code ~= "\t\tif (\"" ~ MethodSignature!(func) ~ "\" in this._methodCount)\n";
 			code ~= "\t\t{\n";
 			code ~= "\t\t\tthis._methodCount[\"" ~ MethodSignature!(func) ~ "\"].actual++;\n";
@@ -466,8 +489,6 @@ private template Method(bool hasParent, func...) if (func.length == 1 && isCalla
 {
 	private string getMethod()
 	{
-		static immutable bool isConst = !isMutable!(FunctionTypeOf!(func));
-		
 		string code = "";
 		static if (hasParent)
 		{
@@ -477,7 +498,7 @@ private template Method(bool hasParent, func...) if (func.length == 1 && isCalla
 		code ~= MethodAttributes!(func);
 		code ~= MethodReturnType!(func) ~ " ";
 		code ~= MethodName!(func);
-		code ~= MethodParameters!(func) ~ (isConst ? " const \n" : "\n");
+		code ~= MethodParameters!(func) ~ (isMethodConst!(func) ? " const \n" : "\n");
 		code ~= "{\n";
 		code ~= MethodBody!(hasParent, func);
 		code ~= "}\n";
