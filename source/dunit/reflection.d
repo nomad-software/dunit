@@ -382,6 +382,17 @@ private template MethodMangledName(func...) if (func.length == 1 && isCallable!(
 }
 
 /**
+ * Returns true if the passed function is nothrow, false if not.
+ *
+ * Params:
+ *     func = The function to inspect.
+ */
+private template isMethodNothrow(func...) if (func.length == 1 && isCallable!(func))
+{
+	enum isMethodNothrow = functionAttributes!(func) & FunctionAttribute.nothrow_;
+}
+
+/**
  * Returns true if the passed function is const, false if not.
  *
  * Params:
@@ -458,7 +469,11 @@ private template MethodBody(bool hasParent, func...)
 		code ~= "\t}\n";
 		code ~= "\tcatch(Exception ex)\n";
 		code ~= "\t{\n";
-		code ~= "\t\tassert(false, ex.msg);\n";
+		static if (isMethodNothrow!(func)) {
+			code ~= "\t\tassert(false, ex.msg);\n";
+		} else {
+			code ~= "\t\tthrow ex;\n";
+		}
 		code ~= "\t}\n";
 		code ~= "\tassert(false, \"Critical error occurred!\");\n";
 		return code;
