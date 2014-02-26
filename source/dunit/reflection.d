@@ -392,6 +392,18 @@ private template isMethodNothrow(func...) if (func.length == 1 && isCallable!(fu
 	enum isMethodNothrow = functionAttributes!(func) & FunctionAttribute.nothrow_;
 }
 
+unittest
+{
+	class T
+	{
+		public void method1() nothrow {}
+		public void method2() {}
+	}
+
+	isMethodNothrow!(T.method1).assertTrue();
+	isMethodNothrow!(T.method2).assertFalse();
+}
+
 /**
  * Returns true if the passed function is const, false if not.
  *
