@@ -493,3 +493,21 @@ unittest
 	mock.method5(10).assertEqual(20);
 	mock.method6(10);
 }
+
+unittest
+{
+	import dunit.toolkit;
+
+	static class T
+	{
+		public int method1(int param) nothrow { assert(false, "thrown from test"); };
+		public void method2(int param) { throw new Exception("thrown from test"); };
+
+		mixin Mockable!T;
+	}
+
+	auto mock = T.getMock();
+
+	mock.method1(10).assertThrow!Throwable("thrown from test");
+	mock.method2(10).assertThrow!Exception("thrown from test");
+}

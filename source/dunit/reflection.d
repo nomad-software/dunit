@@ -481,9 +481,11 @@ private template MethodBody(bool hasParent, func...)
 		code ~= "\t}\n";
 		code ~= "\tcatch(Exception ex)\n";
 		code ~= "\t{\n";
-		static if (isMethodNothrow!(func)) {
+		static if (isMethodNothrow!(func)) 
+		{
 			code ~= "\t\tassert(false, ex.msg);\n";
-		} else {
+		} else 
+		{
 			code ~= "\t\tthrow ex;\n";
 		}
 		code ~= "\t}\n";
