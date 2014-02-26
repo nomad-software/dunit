@@ -500,14 +500,21 @@ unittest
 
 	static class T
 	{
-		public int method1(int param) nothrow { assert(false, "thrown from test"); };
-		public void method2(int param) { throw new Exception("thrown from test"); };
+		public int method1() nothrow
+		{
+			assert(false, "thrown from method1");
+		}
 
-		mixin Mockable!T;
+		public void method2()
+		{
+			throw new Exception("thrown from method2");
+		}
+
+		mixin Mockable!(T);
 	}
 
 	auto mock = T.getMock();
 
-	mock.method1(10).assertThrow!Throwable("thrown from test");
-	mock.method2(10).assertThrow!Exception("thrown from test");
+	mock.method1().assertThrow!Throwable("thrown from method1");
+	mock.method2().assertThrow!Exception("thrown from method2");
 }

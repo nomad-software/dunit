@@ -387,9 +387,9 @@ private template MethodMangledName(func...) if (func.length == 1 && isCallable!(
  * Params:
  *     func = The function to inspect.
  */
-private template isMethodNothrow(func...) if (func.length == 1 && isCallable!(func))
+private template isMethodNoThrow(func...) if (func.length == 1 && isCallable!(func))
 {
-	enum isMethodNothrow = functionAttributes!(func) & FunctionAttribute.nothrow_;
+	enum isMethodNoThrow = cast(bool)(functionAttributes!(func) & FunctionAttribute.nothrow_);
 }
 
 unittest
@@ -400,8 +400,8 @@ unittest
 		public void method2() {}
 	}
 
-	isMethodNothrow!(T.method1).assertTrue();
-	isMethodNothrow!(T.method2).assertFalse();
+	isMethodNoThrow!(T.method1).assertTrue();
+	isMethodNoThrow!(T.method2).assertFalse();
 }
 
 /**
@@ -481,13 +481,16 @@ private template MethodBody(bool hasParent, func...)
 		code ~= "\t}\n";
 		code ~= "\tcatch(Exception ex)\n";
 		code ~= "\t{\n";
-		static if (isMethodNothrow!(func)) 
+
+		static if (isMethodNoThrow!(func))
 		{
 			code ~= "\t\tassert(false, ex.msg);\n";
-		} else 
+		}
+		else
 		{
 			code ~= "\t\tthrow ex;\n";
 		}
+
 		code ~= "\t}\n";
 		code ~= "\tassert(false, \"Critical error occurred!\");\n";
 		return code;
