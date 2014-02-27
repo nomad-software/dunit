@@ -110,6 +110,12 @@ public mixin template Mockable(C) if (is(C == class) || is(C == interface))
 	{
 		return new Mock!(C)(args);
 	}
+	
+	/** ditto */
+	static public auto getSharedMock(A...)(A args)
+	{
+		return new shared Mock!(C)(args);   
+	}
 
 	/**
 	 * Injected by the Mockable mixin template this class contains all mocking behaviour.
@@ -167,6 +173,17 @@ public mixin template Mockable(C) if (is(C == class) || is(C == interface))
 		 */
 		private string[] getStorageClasses(T)(T method)
 		{
+			mixin(getStorageClassesCode);
+		}
+		
+		/* ditto */
+		private shared string[] getStorageClasses(T)(T method)
+		{
+			mixin(getStorageClassesCode);
+		}
+		
+		private enum getStorageClassesCode = 
+		q{
 			string[] storageClasses;
 			string code;
 
@@ -197,7 +214,7 @@ public mixin template Mockable(C) if (is(C == class) || is(C == interface))
 				storageClasses ~= code;
 			}
 			return storageClasses;
-		}
+		};
 
 		/*
 		 * Get the types of the passed delegate.
@@ -210,14 +227,25 @@ public mixin template Mockable(C) if (is(C == class) || is(C == interface))
 		 */
 		private string[] getTypes(T)(T method)
 		{
+			mixin(getTypesCode);
+		}
+
+		/* ditto */
+		private shared string[] getTypes(T)(T method)
+		{
+			mixin(getTypesCode);
+		}
+		
+		private enum getTypesCode = 
+		q{
 			string[] types;
 			foreach (type; ParameterTypeTuple!(method))
 			{
 				types ~= type.stringof;
 			}
 			return types;
-		}
-
+		};
+		
 		/*
 		 * Generate a signature using the passed name and method. The signature is used to
 		 * match up delegates to methods behind the scenes.
@@ -231,6 +259,17 @@ public mixin template Mockable(C) if (is(C == class) || is(C == interface))
 		 */
 		private string generateSignature(T)(string name, T method)
 		{
+			mixin(generateSignatureCode);
+		}
+		
+		/* ditto */
+		private shared string generateSignature(T)(string name, T method)
+		{
+			mixin(generateSignatureCode);
+		}		
+
+		private enum generateSignatureCode = 
+		q{
 			string[] storageClasses = this.getStorageClasses!(T)(method);
 			string[] types          = this.getTypes!(T)(method);
 			string[] parameters;
@@ -241,7 +280,7 @@ public mixin template Mockable(C) if (is(C == class) || is(C == interface))
 			}
 
 			return format("%s:%s(%s)", ReturnType!(method).stringof, name, parameters.join(", "));
-		}
+		};
 
 		/**
 		 * Replace a method in the mock object by adding a mock method to be called in its place.
@@ -299,6 +338,17 @@ public mixin template Mockable(C) if (is(C == class) || is(C == interface))
 		 */
 		public void mockMethod(T)(string name, T delegate_, ulong minimumCount = 0, ulong maximumCount = ulong.max, string file = __FILE__, size_t line = __LINE__)
 		{
+			mixin(mockMethodCode);
+		}
+		
+		/** ditto */
+		public shared void mockMethod(T)(string name, T delegate_, ulong minimumCount = 0, ulong maximumCount = ulong.max, string file = __FILE__, size_t line = __LINE__)
+		{
+			mixin(mockMethodCode);
+		}
+
+		private enum mockMethodCode = 
+		q{
 			string signature = this.generateSignature!(T)(name, delegate_);
 
 			this._methodCount[signature] = MethodCount(minimumCount, maximumCount);
@@ -312,7 +362,7 @@ public mixin template Mockable(C) if (is(C == class) || is(C == interface))
 					error.addError("Delegate signature", signature);
 					throw error;
 			}
-		}
+		};
 
 		/**
 		 * Disable parent methods being called if mock replacements are not implemented.
@@ -400,6 +450,16 @@ public mixin template Mockable(C) if (is(C == class) || is(C == interface))
 		 */
 		public void assertMethodCalls(string message = "Failed asserting call count", string file = __FILE__, size_t line = __LINE__)
 		{
+			mixin(assertMethodCallsCode);
+		}
+		
+		public shared void assertMethodCalls(string message = "Failed asserting call count", string file = __FILE__, size_t line = __LINE__)
+		{
+			mixin(assertMethodCallsCode);
+		}
+		
+		private enum assertMethodCallsCode = 
+		q{
 			foreach (signature, methodCount; this._methodCount)
 			{
 				if (methodCount.actual < methodCount.minimum)
@@ -424,7 +484,7 @@ public mixin template Mockable(C) if (is(C == class) || is(C == interface))
 					throw error;
 				}
 			}
-		}
+		};
 	}
 }
 
@@ -518,3 +578,27 @@ unittest
 	mock.method1().assertThrow!Throwable("thrown from method1");
 	mock.method2().assertThrow!Exception("thrown from method2");
 }
+
+unittest
+{
+	import dunit.toolkit;
+
+	static class T
+	{
+		public synchronized this() {}
+		
+		public synchronized int method1() 
+		{
+			return 0;
+		}
+
+		mixin Mockable!(T);
+	}
+
+	shared auto mock = T.getSharedMock();
+	
+	mock.mockMethod("method1", delegate int() { return 10; }, 1, 1);
+	mock.method1().assertEqual(10);
+	mock.assertMethodCalls();
+}
+

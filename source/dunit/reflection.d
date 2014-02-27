@@ -129,6 +129,31 @@ unittest
 }
 
 /**
+ * Generate a string containing the synchronization of the passed function.
+ *
+ * Params:
+ *     func = The function to inspect.
+ */
+private template MethodSynchonization(func...) if (func.length == 1 && isCallable!(func))
+{
+	enum MethodSynchonization = isMethodShared!func ? "shared" : "";
+}
+
+unittest
+{
+	class T
+	{
+		public shared void method1(){}
+		public synchronized void method2(){}
+		public void method3(){}
+	}
+
+	MethodSynchonization!(T.method1).assertEqual("shared");
+	MethodSynchonization!(T.method2).assertEqual("shared");
+	MethodSynchonization!(T.method3).assertEqual("");
+}
+
+/**
  * Generate a string containing the name of the passed function.
  *
  * Params:
@@ -430,6 +455,60 @@ unittest
 }
 
 /**
+ * Returns true if the passed function is shared or synchronized, false if not.
+ *
+ * Params:
+ *     func = The function to inspect.
+ */
+private template isMethodShared(func...) if (func.length == 1 && isCallable!(func))
+{
+	enum isMethodShared = is(shared(FunctionTypeOf!(func)) == FunctionTypeOf!(func));
+}
+
+unittest
+{
+	static class T
+	{
+		public synchronized void method1() {}
+		public shared void method2(int value) {}
+		public shared void method3(int value) const pure nothrow @safe @property {}
+		public shared shared(T) method4() { return null; }
+		
+		public shared(T) method5() { return null; }
+		public void method6() {}
+		
+	}
+
+	isMethodShared!(T.method1).assertTrue();
+	isMethodShared!(T.method2).assertTrue();
+	isMethodShared!(T.method3).assertTrue();
+	isMethodShared!(T.method4).assertTrue();
+	isMethodShared!(T.method5).assertFalse();
+	isMethodShared!(T.method6).assertFalse();
+}
+
+/**
+ * Returns true if the passed type is shared or synchronized, false if not.
+ *
+ * Params:
+ *     T = The type to inspect.
+ */
+private template isTypeShared(T) 
+{
+	enum isTypeShared = is(T == shared(T));
+}
+
+unittest
+{
+	static class T
+	{
+	}
+
+	isTypeShared!(T).assertFalse();
+	isTypeShared!(shared T).assertTrue();
+}
+
+/**
  * Generate a string containing the body of the passed function.
  *
  * Params:
@@ -530,6 +609,7 @@ private template Method(bool hasParent, func...) if (func.length == 1 && isCalla
 			code ~= "override ";
 		}
 		code ~= MethodProtection!(func) ~ " ";
+		code ~= MethodSynchonization!(func) ~ " ";
 		code ~= MethodAttributes!(func) ~ " ";
 		code ~= MethodReturnType!(func) ~ " ";
 		code ~= MethodName!(func);
@@ -586,12 +666,13 @@ private template Constructor(T, func...) if (is(T == class) && func.length == 1 
 	private string getConstructor()
 	{
 		string code = "";
+		code ~= MethodSynchonization!(func) ~ " ";
 		code ~= "this";
 		code ~= MethodParameters!(func) ~ "\n";
 		code ~= "{\n";
 		code ~= "\tsuper(" ~ MethodParameterIdentifiers!(func).join(", ") ~ ");\n";
 		code ~= "}\n";
-		return code;
+		return code.stripLeft;
 	}
 	enum Constructor = getConstructor();
 }
