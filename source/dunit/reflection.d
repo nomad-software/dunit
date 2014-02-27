@@ -682,7 +682,7 @@ private template Constructor(T, func...) if (is(T == class) && func.length == 1 
 		code ~= "{\n";
 		code ~= "\tsuper(" ~ MethodParameterIdentifiers!(func).join(", ") ~ ");\n";
 		code ~= "}\n";
-		return code;
+		return code.stripLeft;
 	}
 	enum Constructor = getConstructor();
 }
@@ -696,7 +696,7 @@ unittest
 		}
 	}
 
-	string code = " this(int foo, int bar)
+	string code = "this(int foo, int bar)
 {
 	super(foo, bar);
 }\n";
@@ -740,11 +740,11 @@ unittest
 
 	class B {}
 
-	string code = " this()
+	string code = "this()
 {
 	super();
 }
- this(int foo, int bar)
+this(int foo, int bar)
 {
 	super(foo, bar);
 }\n";

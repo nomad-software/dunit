@@ -108,7 +108,8 @@ public mixin template Mockable(C) if (is(C == class) || is(C == interface))
 	 */
 	static public auto getMock(A...)(A args)
 	{
-		static if (isTypeShared!C) {
+		static if (isTypeShared!C) 
+		{
 			return new shared Mock!(C)(args);	
 		} else {
 			return new Mock!(C)(args);
@@ -583,10 +584,10 @@ unittest
 
 	static class T
 	{
-		public synchronized this() {
-		}
+		public synchronized this() {}
 		
-		public synchronized int method1() {
+		public synchronized int method1() 
+		{
 			return 0;
 		}
 
