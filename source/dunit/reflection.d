@@ -457,17 +457,12 @@ unittest
 /**
  * Returns true if the passed function is shared or synchronized, false if not.
  *
- * Bugs:
- *     Currently the std.traits library does not offer any official way to determine
- *     if a method is shared or not. The current solution is rather a hack that relies on the
- *     type.stringof implementation.
- *
  * Params:
  *     func = The function to inspect.
  */
 private template isMethodShared(func...) if (func.length == 1 && isCallable!(func))
 {
-	enum isMethodShared = startsWith(typeof(func).stringof, "(shared ");
+	enum isMethodShared = is(shared(FunctionTypeOf!(func)) == FunctionTypeOf!(func));
 }
 
 unittest
@@ -475,8 +470,8 @@ unittest
 	static class T
 	{
 		public synchronized void method1() {}
-		public shared void method2(){}
-		public shared void method3() const pure nothrow @safe @property {}
+		public shared void method2(int value) {}
+		public shared void method3(int value) const pure nothrow @safe @property {}
 		public shared shared(T) method4() { return null; }
 		
 		public shared(T) method5() { return null; }
@@ -495,17 +490,12 @@ unittest
 /**
  * Returns true if the passed type is shared or synchronized, false if not.
  *
- * Bugs:
- *     Currently the std.traits library does not offer any official way to determine
- *     if a method is shared or not. The current solution is rather a hack that relies on the
- *     type.stringof implementation.
- *
  * Params:
  *     T = The type to inspect.
  */
 public template isTypeShared(T) 
 {
-	enum isTypeShared = startsWith(T.stringof, "shared(");
+	enum isTypeShared = is(T == shared(T));
 }
 
 unittest
