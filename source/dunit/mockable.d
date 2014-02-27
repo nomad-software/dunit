@@ -174,6 +174,7 @@ public mixin template Mockable(C) if (is(C == class) || is(C == interface))
 			mixin(getStorageClassesCode);
 		}
 		
+		/* ditto */
 		private shared string[] getStorageClasses(T)(T method)
 		{
 			mixin(getStorageClassesCode);
@@ -226,8 +227,9 @@ public mixin template Mockable(C) if (is(C == class) || is(C == interface))
 		{
 			mixin(getTypesCode);
 		}
-		
-		private synchronized string[] getTypes(T)(T method)
+
+		/* ditto */
+		private shared string[] getTypes(T)(T method)
 		{
 			mixin(getTypesCode);
 		}
@@ -258,7 +260,8 @@ public mixin template Mockable(C) if (is(C == class) || is(C == interface))
 			mixin(generateSignatureCode);
 		}
 		
-		private synchronized string generateSignature(T)(string name, T method)
+		/* ditto */
+		private shared string generateSignature(T)(string name, T method)
 		{
 			mixin(generateSignatureCode);
 		}		
@@ -336,7 +339,8 @@ public mixin template Mockable(C) if (is(C == class) || is(C == interface))
 			mixin(mockMethodCode);
 		}
 		
-		public synchronized void mockMethod(T)(string name, T delegate_, ulong minimumCount = 0, ulong maximumCount = ulong.max, string file = __FILE__, size_t line = __LINE__)
+		/** ditto */
+		public shared void mockMethod(T)(string name, T delegate_, ulong minimumCount = 0, ulong maximumCount = ulong.max, string file = __FILE__, size_t line = __LINE__)
 		{
 			mixin(mockMethodCode);
 		}
@@ -447,7 +451,7 @@ public mixin template Mockable(C) if (is(C == class) || is(C == interface))
 			mixin(assertMethodCallsCode);
 		}
 		
-		public synchronized void assertMethodCalls(string message = "Failed asserting call count", string file = __FILE__, size_t line = __LINE__)
+		public shared void assertMethodCalls(string message = "Failed asserting call count", string file = __FILE__, size_t line = __LINE__)
 		{
 			mixin(assertMethodCallsCode);
 		}
