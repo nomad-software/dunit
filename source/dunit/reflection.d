@@ -493,7 +493,7 @@ unittest
  * Params:
  *     T = The type to inspect.
  */
-public template isTypeShared(T) 
+private template isTypeShared(T) 
 {
 	enum isTypeShared = is(T == shared(T));
 }

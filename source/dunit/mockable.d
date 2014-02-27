@@ -108,12 +108,13 @@ public mixin template Mockable(C) if (is(C == class) || is(C == interface))
 	 */
 	static public auto getMock(A...)(A args)
 	{
-		static if (isTypeShared!C) 
-		{
-			return new shared Mock!(C)(args);	
-		} else {
-			return new Mock!(C)(args);
-		}
+		return new Mock!(C)(args);
+	}
+	
+	/** ditto */
+	static public auto getSharedMock(A...)(A args)
+	{
+		return new shared Mock!(C)(args);   
 	}
 
 	/**
@@ -591,10 +592,10 @@ unittest
 			return 0;
 		}
 
-		mixin Mockable!(shared T);
+		mixin Mockable!(T);
 	}
 
-	auto mock = T.getMock();
+	shared auto mock = T.getSharedMock();
 	
 	mock.mockMethod("method1", delegate int() { return 10; }, 1, 1);
 	mock.method1().assertEqual(10);
