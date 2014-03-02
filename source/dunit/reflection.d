@@ -486,25 +486,6 @@ unittest
 }
 
 /**
- * Returns true if the passed type is shared or synchronized, false if not.
- *
- * Params:
- *     T = The type to inspect.
- */
-private template isTypeShared(T) if (is(T == class) || is(T == interface))
-{
-	enum isTypeShared = is(T == shared(T));
-}
-
-unittest
-{
-	class T {}
-
-	isTypeShared!(shared T).assertTrue();
-	isTypeShared!(T).assertFalse();
-}
-
-/**
  * Generate a string containing the body of the passed function.
  *
  * Params:
