@@ -723,6 +723,7 @@ unittest
 	class A
 	{
 		this(){}
+		shared this(){}
 		this(int foo, int bar)
 		{
 		}
@@ -731,6 +732,10 @@ unittest
 	class B {}
 
 	string code = "this()
+{
+	super();
+}
+shared this()
 {
 	super();
 }

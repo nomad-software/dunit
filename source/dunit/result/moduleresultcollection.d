@@ -65,7 +65,16 @@ class ModuleResultCollection
 	public void add(ModuleResult result)
 	{
 		this._results ~= result;
-		this._results.multiSort!("a.error is null && b.error !is null", "a.source < b.source")();
+		
+		
+		// Workaround for a not yet pulled fix in DMD that fixes
+		// an issue in conjunction with valgrind.
+		// see: 
+		//	https://d.puremagic.com/issues/show_bug.cgi?id=12183
+		//	https://github.com/D-Programming-Language/phobos/pull/1946
+		// original code: 
+		// 	this._results.multiSort!("a.error is null && b.error !is null", "a.source < b.source")();
+		this._results.sort!("a.error !is b.error ? a.error is null && b.error !is null : a.source < b.source", SwapStrategy.stable)();
 	}
 
 	/**
