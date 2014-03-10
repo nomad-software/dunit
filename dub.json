@@ -1,11 +1,17 @@
 {
 	"name": "dunit",
+	
 	"description": "Advanced unit testing toolkit for the D programming language",
 	"homepage": "https://github.com/nomad-software/dunit",
 	"authors": ["Gary Willoughby"],
 	"copyright": "Copyright (c) 2013 Gary Willoughby",
 	"license": "MIT",
-	"configurations": [
+	"version": "9999.9999.9999",
+	
+	"targetPath": "bin",
+	
+	"configurations":
+	[
 		{
 			"name": "library",
 			"excludedSourceFiles": ["source/example.d"]

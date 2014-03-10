@@ -47,6 +47,9 @@ version(unittest) shared static this()
 					}
 					catch (AssertError ex)
 					{
+					    import std.stdio, std.conv;
+					    writeln(to!string(ex.info));
+						
 						results.add(new ModuleResult(module_.name, new DUnitAssertError(ex.msg, ex.file, ex.line)));
 						continue;
 					}
