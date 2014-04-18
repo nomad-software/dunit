@@ -44,7 +44,7 @@ When using DUnit the built-in unit test handler has been replaced to give more h
 1. When compiling using the `-unittest` switch be mindful that standard assert functions will exit the program and display an error, even when compiled with the `-release` switch! To stop this happening, remove the `-unittest` switch from the compile command and `-release` will once again ignore asserts.
 
 ## Documentation
-There is full HTML documentation within the repository inside the [docs](https://github.com/kalekold/dunit/tree/master/docs) directory.
+There is full HTML documentation within the repository inside the [docs](https://github.com/nomad-software/dunit/tree/master/docs) directory.
 
 ### Building with dub
 To build DUnit as a static library using [dub](https://github.com/rejectedsoftware/dub) use the following command.
@@ -52,9 +52,9 @@ To build DUnit as a static library using [dub](https://github.com/rejectedsoftwa
 	dub build --build=unittest --config=library
 
 ### View online
-- [Mockable mixin](http://htmlpreview.github.io/?https://github.com/kalekold/dunit/master/docs/dunit/mockable.html)
-- [Assert toolkit](http://htmlpreview.github.io/?https://github.com/kalekold/dunit/master/docs/dunit/toolkit.html)
+- [Mockable mixin](http://htmlpreview.github.io/?https://github.com/nomad-software/dunit/master/docs/dunit/mockable.html)
+- [Assert toolkit](http://htmlpreview.github.io/?https://github.com/nomad-software/dunit/master/docs/dunit/toolkit.html)
 
 ## Example
 
-[Click here to see an example of how Dunit is used.](https://github.com/kalekold/dunit/blob/master/source/example.d)
+[Click here to see an example of how Dunit is used.](https://github.com/nomad-software/dunit/blob/master/source/example.d)
