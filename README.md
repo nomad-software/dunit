@@ -1,6 +1,8 @@
 # DUnit
 **Advanced unit testing toolkit for the D programming language**
 
+[![Build Status](https://travis-ci.org/nomad-software/dunit.svg?branch=master)](https://travis-ci.org/nomad-software/dunit)
+
 ---
 
 DUnit is a unit testing toolkit for the D programming language. The toolkit comprises of a solution to mocking objects and a library to enable more expressive and helpful assertions.
