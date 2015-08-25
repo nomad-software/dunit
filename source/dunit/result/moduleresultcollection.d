@@ -42,6 +42,18 @@ class ModuleResultCollection
 		return true;
 	}
 
+	public @property size_t total() {
+		return this._results.retro().length;
+	}
+
+	public @property size_t failed() {
+		return this._results.retro().count!(result => result.error !is null);
+	}
+
+	public @property size_t passed() {
+		return this._results.retro().count!(result => result.error is null);
+	}
+
 	/**
 	 * Indicate if the collection is empty.
 	 *
