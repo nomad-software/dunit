@@ -43,6 +43,39 @@ class ModuleResultCollection
 	}
 
 	/**
+	 * The total number of tests run.
+	 *
+	 * Returns:
+	 *     the number of tests that dunit has run.
+	 */
+	public @property size_t total()
+	{
+		return this._results.retro().length;
+	}
+
+	/**
+	 * The amount of tests that contain a DUnitAssertError.
+	 *
+	 * Returns:
+	 *     the number of tests that have failed.
+	 */
+	public @property size_t failed()
+	{
+		return this._results.retro().count!(result => result.error !is null);
+	}
+
+	/**
+	 * The amount of tests that don't contain a DUnitAssertError.
+	 *
+	 * Returns:
+	 *     the number of tests that have passed.
+	 */
+	public @property size_t passed()
+	{
+		return this._results.retro().count!(result => result.error is null);
+	}
+
+	/**
 	 * Indicate if the collection is empty.
 	 *
 	 * Returns:
