@@ -11,7 +11,6 @@ module dunit.result.moduleresultcollection;
  */
 import dunit.result.moduleresult;
 import std.algorithm;
-import std.array;
 import std.range;
 
 /**
@@ -25,32 +24,47 @@ class ModuleResultCollection
 	private ModuleResult[] _results;
 
 	/**
-	 * Indicate if the results where all successful.
-	 *
-	 * Returns:
-	 *     true if the results where successful, false if not.
-	 */
-	public @property bool allSuccessful()
-	{
-		foreach (result; this._results.retro())
-		{
-			if (result.error)
-			{
-				return false;
-			}
-		}
-		return true;
-	}
-
-	/**
 	 * Indicate if the collection is empty.
 	 *
 	 * Returns:
 	 *     true if the collection is empty, false if not.
 	 */
-	public @property bool empty()
+	public bool empty()
 	{
-		return this._results.empty();
+		return !this._results.length;
+	}
+
+	/**
+	 * The total number of tests in the collection.
+	 *
+	 * Returns:
+	 *     the number of tests that dunit has run.
+	 */
+	public size_t totalCount()
+	{
+		return this._results.length;
+	}
+
+	/**
+	 * The amount of tests that contain a DUnitAssertError.
+	 *
+	 * Returns:
+	 *     the number of tests that have failed.
+	 */
+	public size_t failedCount()
+	{
+		return this._results.count!(result => result.error !is null);
+	}
+
+	/**
+	 * The amount of tests that don't contain a DUnitAssertError.
+	 *
+	 * Returns:
+	 *     the number of tests that have passed.
+	 */
+	public size_t passedCount()
+	{
+		return this._results.count!(result => result.error is null);
 	}
 
 	/**
@@ -100,15 +114,19 @@ unittest
 	import dunit.toolkit;
 
 	auto results = new ModuleResultCollection();
-	results.empty.assertTrue();
+	results.empty().assertTrue();
 
 	results.add(new ModuleResult("Module1"));
-	results.allSuccessful.assertTrue();
+	results.totalCount().assertEqual(1);
+	results.failedCount().assertEqual(0);
+	results.passedCount().assertEqual(1);
 
 	results.add(new ModuleResult("Module2", new DUnitAssertError("Message", "file.d", 1)));
-	results.allSuccessful.assertFalse();
+	results.totalCount().assertEqual(2);
+	results.failedCount().assertEqual(1);
+	results.passedCount().assertEqual(1);
 
-	results.empty.assertFalse();
+	results.empty().assertFalse();
 	results[].assertCount(2);
 
 	results[0].source.assertEqual("Module1");

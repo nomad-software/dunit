@@ -57,6 +57,6 @@ version(unittest) shared static this()
 
 		console.writeReport(results);
 
-		return results.allSuccessful;
+		return !results.failedCount();
 	};
 }
