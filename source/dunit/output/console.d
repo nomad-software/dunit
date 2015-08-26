@@ -111,19 +111,24 @@ class Console
 	 */
 	public void writeReport(ModuleResultCollection results)
 	{
-		foreach (result; results) {
+		foreach (result; results)
+		{
 			string icon = result.error? "✗" : "✓";
 
 			this.write(icon, result.source, 1);
 
-			if (result.error) {
+			if (result.error)
+			{
 				this.writeError(result.error);
 			}
 		}
 
-		if (results.allSuccessful) {
+		if (results.allSuccessful)
+		{
 			this.write(">", format("All %s tests passed", results.total));
-		} else {
+		}
+		else
+		{
 			this.write(">", format("%s tests run.  %s passed, %s failed", results.total, results.passed, results.failed));
 		}
 	}

@@ -42,15 +42,36 @@ class ModuleResultCollection
 		return true;
 	}
 
-	public @property size_t total() {
+	/**
+	 * The total number of tests run.
+	 *
+	 * Returns:
+	 *     the number of tests that dunit has run.
+	 */
+	public @property size_t total()
+	{
 		return this._results.retro().length;
 	}
 
-	public @property size_t failed() {
+	/**
+	 * The amount of tests that contain a DUnitAssertError.
+	 *
+	 * Returns:
+	 *     the number of tests that have failed.
+	 */
+	public @property size_t failed()
+	{
 		return this._results.retro().count!(result => result.error !is null);
 	}
 
-	public @property size_t passed() {
+	/**
+	 * The amount of tests that don't contain a DUnitAssertError.
+	 *
+	 * Returns:
+	 *     the number of tests that have passed.
+	 */
+	public @property size_t passed()
+	{
 		return this._results.retro().count!(result => result.error is null);
 	}
 
