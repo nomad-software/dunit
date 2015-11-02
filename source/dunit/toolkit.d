@@ -21,6 +21,7 @@ import std.regex;
 import std.stdio;
 import std.string;
 import std.traits;
+import std.range : isInputRange, walkLength;
 
 /**
  * Assert that two floating point values are approximately equal.
@@ -239,7 +240,8 @@ unittest
  * Throws:
  *     DUnitAssertError if the assertation fails.
  */
-public void assertEmpty(A)(A array, string message = "Failed asserting empty array", string file = __FILE__, size_t line = __LINE__) if (isArray!(A) || isAssociativeArray!(A))
+public void assertEmpty(A)(A array, string message = "Failed asserting empty array", string file = __FILE__, size_t line = __LINE__)
+	if (isInputRange!(A) || isArray!(A) || isAssociativeArray!(A))
 {
 	if (array.length > 0)
 	{
@@ -247,7 +249,11 @@ public void assertEmpty(A)(A array, string message = "Failed asserting empty arr
 
 		error.addInfo("Elements", array);
 		error.addExpectation("Expected count", 0);
-		error.addError("Actual count", array.length);
+
+		static if (isInputRange!(A))
+			error.addError("Actual count", array.walkLength);
+		else
+			error.addError("Actual count", array.length);
 
 		throw error;
 	}
