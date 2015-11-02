@@ -21,7 +21,7 @@ import std.regex;
 import std.stdio;
 import std.string;
 import std.traits;
-import std.range : isInputRange, walkLength;
+import std.range;
 
 /**
  * Assert that two floating point values are approximately equal.
@@ -240,8 +240,7 @@ unittest
  * Throws:
  *     DUnitAssertError if the assertation fails.
  */
-public void assertEmpty(A)(A array, string message = "Failed asserting empty array", string file = __FILE__, size_t line = __LINE__)
-	if (isInputRange!(A) || isArray!(A) || isAssociativeArray!(A))
+public void assertEmpty(A)(A array, string message = "Failed asserting empty array", string file = __FILE__, size_t line = __LINE__) if (isArray!(A) || isAssociativeArray!(A))
 {
 	if (array.length > 0)
 	{
@@ -249,11 +248,7 @@ public void assertEmpty(A)(A array, string message = "Failed asserting empty arr
 
 		error.addInfo("Elements", array);
 		error.addExpectation("Expected count", 0);
-
-		static if (isInputRange!(A))
-			error.addError("Actual count", array.walkLength);
-		else
-			error.addError("Actual count", array.length);
+		error.addError("Actual count", array.length);
 
 		throw error;
 	}
@@ -273,6 +268,71 @@ unittest
 
 	// Assert a DUnitAssertError is thrown if assertEmpty fails.
 	[1].assertEmpty().assertThrow!(DUnitAssertError)("Failed asserting empty array");
+}
+
+/**
+ * Assert that a range is empty.
+ *
+ * Params:
+ *     range = The range to interogate.
+ *     message = The error message to display.
+ *     file = The file name where the error occurred. The value is added automatically at the call site.
+ *     line = The line where the error occurred. The value is added automatically at the call site.
+ *
+ * Throws:
+ *     DUnitAssertError if the assertation fails.
+ */
+public void assertEmpty(R)(R range, string message = "Failed asserting empty range", string file = __FILE__, size_t line = __LINE__) if ((is(R == class) || is (R == struct)) && isInputRange!(R))
+{
+	if (!range.empty)
+	{
+		auto error = new DUnitAssertError(message, file, line);
+
+		error.addExpectation("Expected count", 0);
+		error.addInfo("Front elements", range.take(10));
+
+		static if (isInfinite!(R))
+		{
+			error.addError("Actual count", "∞");
+		}
+		else
+		{
+			error.addError("Actual count", range.walkLength());
+		}
+
+		throw error;
+	}
+}
+
+///
+unittest
+{
+	class A
+	{
+		void popFront() {};
+		@property bool empty() { return true; };
+		@property int front() { return 0; };
+	}
+
+	struct B
+	{
+		void popFront() {};
+		enum bool empty = false;
+		@property int front() { return 1; };
+	}
+
+	static assert(isInputRange!(A));
+	static assert(isInputRange!(B));
+
+	auto emptyRange = new A();
+	emptyRange.assertEmpty();
+
+	B infiniteRange = B.init;
+	infiniteRange.takeNone.assertEmpty();
+
+	// Assert a DUnitAssertError is thrown if assertEmpty fails.
+	infiniteRange.assertEmpty().assertThrow!(DUnitAssertError)("Failed asserting empty range");
+	infiniteRange.take(10).assertEmpty().assertThrow!(DUnitAssertError)("Failed asserting empty range");
 }
 
 /**
