@@ -227,7 +227,7 @@ unittest
 {
 	class T
 	{
-		public void method1(scope int foo){}
+		public void method1(scope int* foo){}
 		public void method2(lazy int bar){}
 		public void method3(out int baz){}
 		public void method4(ref int qux){}
