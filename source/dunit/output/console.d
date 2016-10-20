@@ -76,8 +76,6 @@ class Console
 	public void writeHeader()
 	{
 		this.write("");
-		this.write("DUnit by Gary Willoughby.");
-		this.write("");
 		this.write(">", "Running unit tests");
 	}
 
