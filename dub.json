@@ -9,13 +9,13 @@
 		"docs": {
 			"buildOptions": ["deprecationErrors", "syntaxOnly", "warningsAsErrors"],
 			"dflags": ["-c", "-Ddtemp", "-op"],
-			"postBuildCommands": ["rm -rf docs", "mv temp/source docs", "rm -rf temp"],
-		},
+			"postBuildCommands": ["rm -rf docs", "mv temp/source docs", "rm -rf temp"]
+		}
 	},
 	"configurations": [
 		{
 			"name": "library",
 			"excludedSourceFiles": ["source/example.d"]
 		}
-	],
+	]
 }
