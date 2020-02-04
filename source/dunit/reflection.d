@@ -55,7 +55,7 @@ unittest
 {
 	class T
 	{
-		public shared void method1(){}
+		public void method1() shared {}
 		public synchronized void method2(){}
 		public void method3(){}
 	}
@@ -470,9 +470,9 @@ unittest
 	static class T
 	{
 		public synchronized void method1() {}
-		public shared void method2(int value) {}
-		public shared void method3(int value) const pure nothrow @safe @property {}
-		public shared shared(T) method4() { return null; }
+		public void method2(int value) shared {}
+		public void method3(int value) shared const pure nothrow @safe @property {}
+		public shared(T) method4() shared { return null; }
 		public shared(T) method5() { return null; }
 		public void method6() {}
 	}
